@@ -1,0 +1,65 @@
+<div class="main-container" *ngIf="responsavel">
+  <app-page-top-bar titulo="Responsável"></app-page-top-bar>
+  <div class="responsavel-info">
+    <div class="picture-field">
+      <div class="picture">
+        <mat-icon class="person" *ngIf="!responsavel.foto">person</mat-icon>
+        <img
+          *ngIf="responsavel.foto"
+          [src]="imageSanitizer(responsavel.foto)"
+        />
+      </div>
+    </div>
+    <div class="dados-responsavel">
+      <div class="nome">{{ responsavel.nome_responsavel }}</div>
+      <div *ngIf="responsavel.pagina_url">
+        <a target="_black" [href]="responsavel.pagina_url">{{
+          responsavel.pagina_url
+        }}</a>
+      </div>
+      <div>
+        Lattes:
+        <a
+          target="_black"
+          [href]="'http://lattes.cnpq.br/' + responsavel.id_lattes"
+          >{{ responsavel.id_lattes }}</a
+        >
+      </div>
+      <div class="links-sociais">
+        <a
+          *ngIf="responsavel.instagram"
+          [href]="responsavel.instagram"
+          target="_blank"
+        >
+          <img
+            src="../../../../assets/imgs/Instagram_Glyph_Gradient_RGB.png"
+            width="30"
+          />
+        </a>
+        <a
+          *ngIf="responsavel.twitter"
+          [href]="responsavel.twitter"
+          target="_blank"
+        >
+          <img
+            src="../../../../assets/imgs/Twitter social icons - rounded square - blue.png"
+            width="30"
+          />
+        </a>
+        <a
+          *ngIf="responsavel.facebook"
+          [href]="responsavel.facebook"
+          target="_blank"
+        >
+          <img
+            src="../../../../assets/imgs/f_logo_RGB-Blue_58.png"
+            width="30"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="descricao-responsavel">
+    {{ responsavel.descricao_responsavel }}
+  </div>
+</div>

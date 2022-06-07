@@ -1,0 +1,23 @@
+<div class="main-container">
+  <app-page-top-bar titulo="Quem Somos"></app-page-top-bar>
+  <div *ngIf="loading; else mainContent" class="loader-spinner">
+    <mat-spinner class="progress-spinner"></mat-spinner>
+  </div>
+  <ng-template #mainContent>
+    <div class="main-atividades row">
+      <div class="col-md-12 quem-somos-texto">{{ quemSomosTexto }}</div>
+      <div class="col-md-12">
+        <div class="conheca-comissao">Comissão da Semana da Química</div>
+      </div>
+      <div>
+        <div *ngFor="let c of comissao" class="comissao-foto">
+          <img [src]="c.fotoEnc" />
+          <div class="comissao-det">
+            <div>{{ c.nome_responsavel }}</div>
+            <div>Diretor</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

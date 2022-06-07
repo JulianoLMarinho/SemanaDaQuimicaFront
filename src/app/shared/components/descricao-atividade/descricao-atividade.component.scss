@@ -1,0 +1,39 @@
+.atividade-item {
+  padding: 10px;
+
+  h2 {
+    margin: 0;
+  }
+
+  .responsaveis {
+    display: flex;
+    flex-direction: column;
+    div {
+      margin-right: 3px;
+
+      a {
+        cursor: pointer;
+      }
+    }
+
+    .resp-foto-container {
+      display: flex;
+    }
+
+    .responsavel-foto {
+      width: 40px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+  }
+  p {
+    text-align: justify;
+    margin-bottom: 0;
+  }
+  .bottom-bar {
+    width: 100%;
+    hr {
+      width: calc(100% - 10px);
+    }
+  }
+}

@@ -1,0 +1,27 @@
+<div class="main-container">
+  <app-page-top-bar
+    titulo="Configurar Atividades"
+    [loading]="false"
+    [loadingSave]="false"
+  ></app-page-top-bar>
+  <div class="content">
+    <div class="atividades-opcoes">
+      <mat-form-field appearance="legacy">
+        <mat-label>Edição</mat-label>
+        <mat-select [(value)]="edicaoSelecionada">
+          <mat-option *ngFor="let edicao of edicoes" [value]="edicao">
+            {{ edicao.parsed_data_inicio.getFullYear() + " - " + edicao.tema }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <app-tabela-edicao
+      [data]="atividades"
+      [modalConfig]="obterModelo.bind(this)"
+      [salvarAction]="salvarAtividade.bind(this)"
+      [loading]="loadingAtividades"
+      nomeEntidade="Atividade"
+      (saved)="loadAtividades()"
+    ></app-tabela-edicao>
+  </div>
+</div>

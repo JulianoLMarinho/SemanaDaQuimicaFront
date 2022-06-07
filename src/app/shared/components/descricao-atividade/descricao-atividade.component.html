@@ -1,0 +1,57 @@
+<div class="atividade-item">
+  <h2 [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }">
+    {{ atividade.titulo.toLocaleUpperCase() }}
+  </h2>
+  <div class="responsaveis">
+    <b [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }">Responsáveis: </b>
+    <div class="resp-foto-container">
+      <div
+        [matTooltip]="res.nome_responsavel"
+        matTooltipPosition="above"
+        *ngFor="let res of atividade.responsaveis; let i = index"
+      >
+        <img
+          (click)="abrirDetalhesResponsavel(res)"
+          class="responsavel-foto"
+          [src]="imageSanitizer(res.foto)"
+        />
+        <!--<i>
+          <a (click)="abrirDetalhesResponsavel(res)">
+            {{ res.nome_responsavel }}</a
+          ></i
+        >
+        <span
+          *ngIf="
+            atividade.responsaveis &&
+            atividade.responsaveis.length > 0 &&
+            i < atividade.responsaveis.length - 2
+          "
+          >,</span
+        >
+        <span
+          *ngIf="
+            atividade.responsaveis &&
+            atividade.responsaveis.length > 0 &&
+            i === atividade.responsaveis.length - 2
+          "
+        >
+          e</span
+        >-->
+      </div>
+    </div>
+    <div *ngIf="!atividade.responsaveis || atividade.responsaveis.length < 1">
+      <i>Responsável não cadastrado</i>
+    </div>
+  </div>
+  <p *ngIf="atividade.nome_turno">
+    <b [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }">Turno: </b
+    >{{ atividade.nome_turno }}
+  </p>
+  <p>
+    <b [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }">Descrição: </b
+    >{{ atividade.descricao_atividade }}
+  </p>
+  <div class="bottom-bar">
+    <hr />
+  </div>
+</div>

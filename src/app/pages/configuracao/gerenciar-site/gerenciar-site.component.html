@@ -1,0 +1,120 @@
+<div class="main-container">
+  <app-page-top-bar
+    titulo="Gerenciar Site"
+    [loading]="salvando || loadingCores"
+    [loadingSave]="salvando"
+    [editando]="editar"
+    [editarAction]="editarCores.bind(this)"
+    [salvarAction]="salvarPaleta.bind(this)"
+    [cancelarAction]="cancelarEdicao.bind(this)"
+  ></app-page-top-bar>
+  <div class="content">
+    <div class="atividades-opcoes">
+      <mat-form-field appearance="legacy">
+        <mat-label>Edição</mat-label>
+        <mat-select
+          [(value)]="edicaoSelecionada"
+          (selectionChange)="selectEdicao()"
+        >
+          <mat-option *ngFor="let edicao of edicoes" [value]="edicao">
+            {{ edicao.parsed_data_inicio.getFullYear() + " - " + edicao.tema }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="selecionar-cores">
+      <div class="color-selector">
+        <div class="color-selector-field">
+          <input
+            matInput
+            type="color"
+            [disabled]="!editar"
+            [(ngModel)]="cores.cor1"
+          />
+          <div>{{ cores.cor1 }}</div>
+        </div>
+        <div class="color-selector-field">
+          <input
+            matInput
+            type="color"
+            [disabled]="!editar"
+            [(ngModel)]="cores.cor2"
+          />
+          <div>{{ cores.cor2 }}</div>
+        </div>
+        <div class="color-selector-field">
+          <input
+            matInput
+            type="color"
+            [disabled]="!editar"
+            [(ngModel)]="cores.cor3"
+          />
+          <div>{{ cores.cor3 }}</div>
+        </div>
+        <div class="color-selector-field">
+          <input
+            matInput
+            type="color"
+            [disabled]="!editar"
+            [(ngModel)]="cores.cor4"
+          />
+          <div>{{ cores.cor4 }}</div>
+        </div>
+        <div class="color-selector-field">
+          <input
+            matInput
+            type="color"
+            [disabled]="!editar"
+            [(ngModel)]="cores.cor5"
+          />
+          <div>{{ cores.cor5 }}</div>
+        </div>
+        <div class="color-selector-field">
+          <input
+            matInput
+            type="color"
+            [disabled]="!editar"
+            [(ngModel)]="cores.cor6"
+          />
+          <div>{{ cores.cor6 }}</div>
+        </div>
+      </div>
+      <div class="demonstracao">
+        <div class="main-site">
+          <div
+            class="top-bar-main-site"
+            [ngStyle]="{ 'background-color': cores.cor1, color: cores.cor4 }"
+          >
+            <div>Início</div>
+            <div>Quem Somos</div>
+            <div>Atividades</div>
+          </div>
+          <div class="main-site-conteudo">
+            <div
+              class="site-menu-lateral"
+              [ngStyle]="{ 'background-color': cores.cor2 }"
+            >
+              <div class="menu-teste" [ngStyle]="{ color: cores.cor5 }">
+                <div class="foto"></div>
+                <div class="menu-item">Inscrições</div>
+                <div class="menu-item">Meus Cursos</div>
+              </div>
+              <div>
+                <div></div>
+              </div>
+            </div>
+            <div class="conteudo-principal">
+              <div
+                class="top-principal"
+                [ngStyle]="{ 'border-color': cores.cor3, color: cores.cor6 }"
+              >
+                Exemplo
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

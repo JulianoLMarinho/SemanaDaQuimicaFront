@@ -1,0 +1,45 @@
+:host {
+  width: 100%;
+}
+
+.main-container {
+  height: 100%;
+}
+
+.content {
+  width: 100%;
+  padding: 15px;
+  height: calc(100% - 45px);
+
+  .atividades-opcoes {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .table-wrapper {
+    height: calc(100% - 57.5px);
+  }
+
+  table {
+    width: 100%;
+    background-color: #fafafa;
+  }
+
+  .bottom-bar-table {
+    display: flex;
+    justify-content: space-between;
+
+    .buttons-table {
+      display: flex;
+    }
+  }
+
+  .table-container {
+    max-height: calc(100% - 45px);
+    overflow-y: auto;
+  }
+
+  mat-paginator {
+    background-color: #fafafa;
+  }
+}

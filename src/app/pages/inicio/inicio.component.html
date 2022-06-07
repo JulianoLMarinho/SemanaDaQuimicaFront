@@ -1,0 +1,166 @@
+<div (mouseenter)="mouseOver()" (mouseleave)="showEdit = false">
+  <div class="fab-container" *ngIf="false">
+    <button
+      mat-mini-fab
+      matTooltip="Editar Informações da Atividade"
+      matTooltipPosition="above"
+      [ngStyle]="{
+        color: coresEdicao.coresAtivas.cor4,
+        'background-color': coresEdicao.coresAtivas.cor1
+      }"
+      aria-label="Botão para editar a atividade"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+  <ngb-carousel *ngIf="images">
+    <ng-template ngbSlide *ngFor="let image of images">
+      <div class="picsum-img-wrapper">
+        <div *ngIf="image.add">
+          <img src="../../../assets/imgs/slider-cinza.png" alt="slider cinza" />
+        </div>
+        <img
+          [src]="image.imageSanitized"
+          *ngIf="!image.add"
+          (click)="abrirLink(image.link)"
+          alt="Random first slide"
+        />
+        <button
+          *ngIf="!image.add && authService.userIsAdmin()"
+          mat-mini-fab
+          matTooltip="Editar"
+          matTooltipPosition="above"
+          [ngStyle]="{
+            color: coresEdicao.coresAtivas.cor4,
+            'background-color': coresEdicao.coresAtivas.cor1
+          }"
+          aria-label="Botão para editar a atividade"
+          style="position: absolute; right: 3px; z-index: 5"
+          (click)="openModal(image, contentPicture)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          *ngIf="!image.add && authService.userIsAdmin()"
+          mat-mini-fab
+          matTooltip="Deletar"
+          matTooltipPosition="above"
+          color="danger"
+          aria-label="Botão para editar a atividade"
+          style="position: absolute; right: 50px; z-index: 5"
+          (click)="deletarCarouselImage(image.id)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <div class="carousel-caption" *ngIf="!image.add">
+        <h1>{{ image.titulo }}</h1>
+        <p>{{ image.subtitulo }}</p>
+      </div>
+      <div class="carousel-caption" *ngIf="image.add">
+        <h1 (click)="openModal(image, contentPicture)">
+          <mat-icon style="font-size: 100px; width: 100px"
+            >add_circle_outline</mat-icon
+          >
+        </h1>
+        <p>Adicionar nova imagem</p>
+      </div>
+    </ng-template>
+  </ngb-carousel>
+</div>
+<div class="barra-atividades">
+  <card-atividade tipoAtividade="CURSO"></card-atividade>
+  <card-atividade tipoAtividade="PALESTRA"></card-atividade>
+  <card-atividade tipoAtividade="WORKSHOP"></card-atividade>
+  <card-atividade tipoAtividade="VISITA_TECNICA"></card-atividade>
+</div>
+<div
+  class="barra-tema"
+  [appEditContent]="editDirective"
+  [ngStyle]="{
+    'background-color': coresEdicao.coresAtivas.cor2,
+    color: coresEdicao.coresAtivas.cor5
+  }"
+>
+  "{{ tema }}"
+</div>
+<div style="padding: 20px">
+  <h1>Patrocinadores</h1>
+</div>
+<div class="carousel-patrocinadores">
+  <carousel
+    *ngIf="!carregandoPatrocinador"
+    [autoplay]="true"
+    [autoplayInterval]="3000"
+    [loop]="true"
+    [height]="240"
+  >
+    <div class="carousel-cell" *ngFor="let img of patrocinadores">
+      <sq-card-patrocinador
+        [patrocinador]="img"
+        (reloadPatrocinadores)="carregarPatrocinadores()"
+      ></sq-card-patrocinador>
+    </div>
+  </carousel>
+</div>
+
+<ng-template #contentPicture let-modal>
+  <app-page-top-bar
+    titulo="Editar Imagem"
+    [loadingSave]="false"
+    [loading]="false"
+    [salvarAction]="salvarSlideImage.bind(this, modal)"
+    [cancelarAction]="modal.dismiss"
+    [editando]="true"
+  ></app-page-top-bar>
+  <div class="modal-body" style="align-self: center">
+    <button mat-stroked-button color="primary" (click)="fileInput.click()">
+      Escolher Arquivo
+    </button>
+    <input #fileInput type="file" hidden (change)="fileChangeEvent($event)" />
+    <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [imageBase64]="croppedImage"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="3.875"
+      [roundCropper]="true"
+      [resizeToWidth]="1550"
+      [resizeToHeight]="400"
+      [imageQuality]="75"
+      format="jpeg"
+      (imageCropped)="imageCropped($event)"
+    ></image-cropper>
+    <mat-form-field appearance="legacy">
+      <mat-label>Título</mat-label>
+      <input
+        [(ngModel)]="addEditCarousel.titulo"
+        matInput
+        placeholder="Digite o título"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="legacy">
+      <mat-label>Subtitulo</mat-label>
+      <input
+        [(ngModel)]="addEditCarousel.subtitulo"
+        matInput
+        placeholder="Digite o subtitulo"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="legacy">
+      <mat-label>Ordem</mat-label>
+      <input
+        [(ngModel)]="addEditCarousel.ordem"
+        matInput
+        placeholder="Digite a ordem de apresentação"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="legacy">
+      <mat-label>Link</mat-label>
+      <input
+        [(ngModel)]="addEditCarousel.link"
+        matInput
+        placeholder="Digite o link da imagem para quando o usuário clicar"
+      />
+    </mat-form-field>
+  </div>
+</ng-template>

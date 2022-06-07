@@ -1,0 +1,15 @@
+:host {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+
+  .fab-container {
+    position: relative;
+    text-align: end;
+    width: 85%;
+
+    button {
+      position: absolute;
+    }
+  }
+}

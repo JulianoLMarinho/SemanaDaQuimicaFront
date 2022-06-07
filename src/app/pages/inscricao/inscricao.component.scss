@@ -1,0 +1,51 @@
+:host {
+  width: 100%;
+  .main-container {
+    height: 100%;
+  }
+}
+
+.calendario-wraper {
+  display: flex;
+  height: calc(100% - 45px);
+
+  .selecao-atividades {
+    width: 25%;
+    padding: 15px;
+
+    .atividade-lista {
+      width: 100%;
+      height: calc(100% - 5px);
+      overflow: auto;
+
+      .atividade-card {
+        width: 97%;
+        height: 100px;
+        margin: 5px 0;
+        overflow: hidden;
+        border-radius: 15px;
+        border: 2px solid #d900ff;
+        cursor: pointer;
+
+        &.selecionado {
+          background-color: #d900ff36;
+        }
+
+        .atividade-card-titulo {
+          text-align: center;
+          border-bottom: 2px solid #d900ff;
+          color: #d900ff;
+        }
+
+        .atividade-card-detalhes {
+          padding: 5px;
+        }
+      }
+    }
+  }
+
+  .calendario {
+    padding: 15px;
+    width: 75%;
+  }
+}

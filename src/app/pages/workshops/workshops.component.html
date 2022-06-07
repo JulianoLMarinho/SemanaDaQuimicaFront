@@ -1,0 +1,19 @@
+<div class="main-container">
+  <app-page-top-bar titulo="Atividades - Workshops"></app-page-top-bar>
+  <div *ngIf="loading; else mainAtividades" class="loader-spinner">
+    <mat-spinner class="progress-spinner"></mat-spinner>
+  </div>
+  <ng-template #mainAtividades>
+    <div class="main-atividades">
+      <div *ngIf="!atividades || !atividades.length; else mainContent">
+        Não existem Workshops cadastrados nesta edição
+      </div>
+      <ng-template #mainContent>
+        <app-descricao-atividade
+          *ngFor="let atividade of atividades"
+          [atividade]="atividade"
+        ></app-descricao-atividade>
+      </ng-template>
+    </div>
+  </ng-template>
+</div>

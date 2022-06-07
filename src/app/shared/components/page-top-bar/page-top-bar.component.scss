@@ -1,0 +1,20 @@
+.top-bar {
+  border-bottom: 2px solid;
+  display: flex;
+  justify-content: space-between;
+  height: 45px;
+  background-color: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  .title {
+    font-size: x-large;
+    padding: 10px 20px 10px 20px;
+  }
+  .actions {
+    display: flex;
+    height: 100%;
+    align-items: center;
+  }
+}

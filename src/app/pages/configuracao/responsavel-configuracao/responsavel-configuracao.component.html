@@ -1,0 +1,16 @@
+<div class="main-container">
+  <app-page-top-bar
+    titulo="Configurar Responsáveis"
+    [loading]="false"
+    [loadingSave]="false"
+  ></app-page-top-bar>
+  <div class="content">
+    <app-tabela-edicao
+      [data]="responsaveis"
+      [modalConfig]="obterModelo.bind(this)"
+      [loading]="loadingEntidade"
+      (saved)="loadResponsaveis()"
+      [salvarAction]="salvarNovoResponsavel.bind(this)"
+    ></app-tabela-edicao>
+  </div>
+</div>

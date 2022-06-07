@@ -1,0 +1,15 @@
+<div class="fab-container" *ngIf="showButton">
+  <button
+    mat-mini-fab
+    matTooltip="Editar Informações da Atividade"
+    matTooltipPosition="above"
+    [ngStyle]="{
+      color: coresEdicao.coresAtivas.cor4,
+      'background-color': coresEdicao.coresAtivas.cor1
+    }"
+    aria-label="Botão para editar a atividade"
+    (click)="editClick()"
+  >
+    <mat-icon>edit</mat-icon>
+  </button>
+</div>

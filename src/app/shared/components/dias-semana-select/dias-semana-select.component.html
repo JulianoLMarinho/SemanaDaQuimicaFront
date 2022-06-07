@@ -1,0 +1,69 @@
+<div [formGroup]="groupControl">
+  <p
+    class="field-name"
+    [ngClass]="{
+      'error-color':
+        touched &&
+        diasHora.diasSelecionado &&
+        diasHora.diasSelecionado.length < 1
+    }"
+  >
+    Dias da Semana
+  </p>
+  <div class="dia-semana-container">
+    <div
+      *ngFor="let dia of diasSemana"
+      class="dia-semana"
+      [ngClass]="{
+        selected: diasHora.diasSelecionado?.includes(dia.weekDay)
+      }"
+      (click)="selecionarDia(dia)"
+      [matTooltip]="dia.parsedDate"
+      matTooltipPosition="above"
+    >
+      {{ dia.sigla }}
+    </div>
+  </div>
+  <div class="error-container">
+    <mat-error
+      class="dias-error"
+      [ngClass]="{
+        active:
+          touched &&
+          (!diasHora.diasSelecionado || diasHora.diasSelecionado.length < 1)
+      }"
+      >Selecione ao menos um dia</mat-error
+    >
+  </div>
+  <div class="horario-inicio-fim">
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Horário de Início</mat-label>
+        <input
+          matInput
+          type="time"
+          formControlName="horInicio"
+          (change)="horaInicioChange($event)"
+          required
+        />
+        <mat-error *ngIf="groupControl.controls.horInicio.hasError('required')">
+          Insira um horário de início
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Horário de Fim</mat-label>
+        <input
+          matInput
+          formControlName="horFim"
+          type="time"
+          (change)="horaFimChange($event)"
+        />
+        <mat-error *ngIf="groupControl.controls.horFim.hasError('required')">
+          Insira um horário de fim
+        </mat-error>
+      </mat-form-field>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+.corpo-card {
+  width: 170px;
+  height: 220px;
+  background-color: rgb(228, 228, 228);
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .patrocinador-nome {
+    display: none;
+  }
+
+  &:hover {
+    .userEditButton {
+      display: inline-block !important;
+    }
+
+    .patrocinador-img {
+      width: 80%;
+      height: 80%;
+    }
+
+    .patrocinador-nome {
+      display: block;
+    }
+  }
+
+  .userEditButton {
+    display: none;
+  }
+}
+
+.modal-body {
+  width: 100%;
+
+  mat-form-field {
+    width: 100%;
+  }
+}

@@ -1,0 +1,129 @@
+<div class="loader-container" *ngIf="loading; else elseBlock">
+  <mat-spinner class="progress-spinner"></mat-spinner>
+</div>
+<ng-template #elseBlock>
+  <div class="meus_dados_container" *ngIf="usuario">
+    <app-page-top-bar
+      titulo="Meus Dados"
+      [loading]="loading"
+      [loadingSave]="loadingSave"
+      [editando]="editando"
+      [salvarAction]="salvarUsuario.bind(this)"
+      [cancelarAction]="cancelar.bind(this)"
+      [editarAction]="editar.bind(this)"
+    ></app-page-top-bar>
+    <div class="dados">
+      <div class="foto-linha">
+        <img
+          class="avatar x-large mat-elevation-z8"
+          [src]="usuario?.url_foto_perfil"
+        />
+      </div>
+      <div class="dados-cadastrais">
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              [(ngModel)]="usuario.email"
+              disabled
+              placeholder="Insira seu Email"
+            />
+            <mat-hint>Email obtido do Google</mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Nome Completo</mat-label>
+            <input
+              matInput
+              [(ngModel)]="usuario.nome"
+              disabled
+              placeholder="Insira seu Nome"
+            />
+            <mat-hint>Nome obtido do Google</mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Universidade</mat-label>
+            <input
+              matInput
+              [disabled]="!editando"
+              [(ngModel)]="usuario.universidade"
+              placeholder="Insira seu Nome"
+            />
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Curso</mat-label>
+            <input
+              matInput
+              [disabled]="!editando"
+              [(ngModel)]="usuario.curso"
+              placeholder="Insira seu Nome"
+            />
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Nível</mat-label>
+            <input
+              matInput
+              [disabled]="!editando"
+              [(ngModel)]="usuario.nivel"
+              placeholder="Insira seu Nome"
+            />
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Tamanho Da Camisa</mat-label>
+            <input
+              matInput
+              [disabled]="!editando"
+              [(ngModel)]="usuario.tamanho_camisa"
+              placeholder="Insira seu Nome"
+            />
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Gênero</mat-label>
+            <input
+              matInput
+              [disabled]="!editando"
+              [(ngModel)]="usuario.genero"
+              placeholder="Insira seu Nome"
+            />
+          </mat-form-field>
+        </p>
+        <p>
+          <app-auto-complete-input
+            [options]="estados"
+            valueField="sigla"
+            textField="nome"
+            labelText="Estado"
+            [loading]="loadingEstado"
+            [disabled]="!editando"
+            [selectedValue]="usuario.estado!"
+            (selectedOption)="selecionarEstado($event)"
+          ></app-auto-complete-input>
+        </p>
+        <p>
+          <app-auto-complete-input
+            [options]="cidades"
+            valueField="nome"
+            textField="nome"
+            labelText="Município"
+            [selectedValue]="usuario.cidade!"
+            [loading]="loadingCidade"
+            [disabled]="!editando"
+            (selectedOption)="selecionarMunicipio($event)"
+          ></app-auto-complete-input>
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-template>

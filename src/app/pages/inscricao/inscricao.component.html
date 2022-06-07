@@ -1,0 +1,33 @@
+<div class="main-container">
+  <app-page-top-bar titulo="Inscrição"></app-page-top-bar>
+  <div *ngIf="false" class="loader-spinner">
+    <mat-spinner class="progress-spinner"></mat-spinner>
+  </div>
+  <div class="calendario-wraper">
+    <div class="selecao-atividades">
+      <div>Adicione atividades ao seu plano</div>
+      <div class="atividade-lista">
+        <div
+          class="atividade-card"
+          *ngFor="let atividade of atividades"
+          (click)="adicionarEvento(atividade)"
+          [ngClass]="{ selecionado: atividade.selecionada }"
+        >
+          <div class="atividade-card-titulo">{{ atividade.titulo }}</div>
+          <div class="atividade-card-detalhes">
+            <div>Tipo: {{ atividade.nome_tipo }}</div>
+            <div>Local: Sala 9 - IQ</div>
+            <div>Vagas Restantes: 40</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="calendario">
+      <app-calendar-view
+        [viewDate]="viewDate"
+        [events]="events"
+        [refresh]="refresh"
+      ></app-calendar-view>
+    </div>
+  </div>
+</div>

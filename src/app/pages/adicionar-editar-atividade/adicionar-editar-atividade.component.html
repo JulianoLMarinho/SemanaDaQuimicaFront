@@ -1,0 +1,130 @@
+<div class="main-container">
+  <app-page-top-bar
+    titulo="Criar Atividade"
+    [loadingSave]="saving"
+    [loading]="saving"
+    [salvarAction]="salvarAtividade.bind(this)"
+    [cancelarAction]="closeModal.bind(this)"
+    [editando]="true"
+  ></app-page-top-bar>
+  <div class="content" [formGroup]="groupControl">
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Título</mat-label>
+        <input
+          matInput
+          formControlName="titulo"
+          placeholder="Insira o título"
+        />
+        <mat-error *ngIf="groupControl.controls.titulo.hasError('required')">
+          Insira um título
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Descrição</mat-label>
+        <textarea
+          matInput
+          placeholder="Insira a descrição"
+          formControlName="descricao"
+        ></textarea>
+        <mat-error *ngIf="groupControl.controls.descricao.hasError('required')">
+          Insira uma descrição
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Tipo da Atividade</mat-label>
+        <mat-select
+          [(value)]="atividade.tipo_atividade"
+          (ngModelChange)="tipoAtividadeChange($event)"
+          formControlName="tipoAtividade"
+        >
+          <mat-option *ngFor="let tipo of tiposAtividade" [value]="tipo.id">
+            {{ tipo.nome_tipo }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="groupControl.controls.tipoAtividade.hasError('required')"
+        >
+          Selecione o tipo da atividade
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Responsável da Atividade</mat-label>
+        <mat-select formControlName="responsavelAtividade" multiple>
+          <input
+            class="responsaveis-search"
+            matInput
+            placeholder="Digite para filtrar os responsáveis"
+            (keyup)="filterResponsaveis($event.target)"
+          />
+          <mat-option
+            *ngFor="let responsavel of responsaveisFiltrados"
+            [value]="responsavel.id"
+          >
+            {{ responsavel.nome_responsavel }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          *ngIf="
+            groupControl.controls.responsavelAtividade.hasError('required')
+          "
+        >
+          Selecione ao menos um responsável
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Quantidade de Vagas</mat-label>
+        <input formControlName="vagas" matInput type="number" />
+        <mat-error> Defina o número de vagas </mat-error>
+      </mat-form-field>
+    </p>
+    <p *ngIf="mostrarHorarios === false">
+      <mat-form-field appearance="legacy">
+        <mat-label>Turno</mat-label>
+        <mat-select formControlName="turnoAtividade">
+          <mat-option *ngFor="let turno of turnoAtividade" [value]="turno.id">
+            {{ turno.nome_turno }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+    <div *ngIf="mostrarHorarios">
+      <p>Dias da Semana</p>
+      <app-dias-semana-select
+        [diaInicioReferencia]="edicaoSemana.parsed_data_inicio"
+      ></app-dias-semana-select>
+      <div class="horario-inicio-fim">
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Horário de Início</mat-label>
+            <input matInput type="time" formControlName="horInicio" required />
+            <mat-error
+              *ngIf="groupControl.controls.horInicio.hasError('required')"
+            >
+              Insira um horário de início
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Horário de Fim</mat-label>
+            <input matInput formControlName="horFim" type="time" />
+            <mat-error
+              *ngIf="groupControl.controls.horFim.hasError('required')"
+            >
+              Insira um horário de fim
+            </mat-error>
+          </mat-form-field>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

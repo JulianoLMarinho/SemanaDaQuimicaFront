@@ -1,0 +1,14 @@
+<app-page-top-bar
+  titulo="Editar Tema"
+  [loadingSave]="false"
+  [loading]="false"
+  [salvarAction]="save.bind(this)"
+  [cancelarAction]="modal.dismiss"
+  [editando]="true"
+></app-page-top-bar>
+<div class="modal-body" style="align-self: center">
+  <mat-form-field appearance="legacy">
+    <mat-label>Tema da Edição</mat-label>
+    <input [(ngModel)]="atributo" matInput placeholder="Digite o tema" />
+  </mat-form-field>
+</div>

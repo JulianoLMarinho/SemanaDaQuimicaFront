@@ -1,0 +1,55 @@
+<div class="main-container">
+  <app-page-top-bar titulo="Atividades - Cursos"></app-page-top-bar>
+  <div *ngIf="loading; else mainContent" class="loader-spinner">
+    <mat-spinner
+      color="#fff"
+      class="progress-spinner"
+      [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }"
+    ></mat-spinner>
+  </div>
+  <ng-template #mainContent>
+    <div class="main-atividades">
+      <div *ngIf="!atividades || !atividades.length; else elseComponent">
+        Não há cursos cadastrados neste turno
+      </div>
+      <ng-template #elseComponent>
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let turno of atividades">
+            <mat-expansion-panel-header>
+              <div class="dia-resumo">
+                <div class="dia-resumo-titulo">
+                  <h2
+                    style="margin-bottom: 0"
+                    [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+                  >
+                    {{ turno.turno.nome_turno }}
+                  </h2>
+                </div>
+                <div
+                  *ngIf="turno.turno.horarios && turno.turno.horarios.length"
+                >
+                  <div>
+                    Cursos de <b>{{ turno.turno.duracao }} horas</b> no horário
+                    de {{ turno.turno.hor_inicio }} até às
+                    {{ turno.turno.hor_fim }}.
+                  </div>
+                  <div style="display: flex" *ngIf="turno.turno.horarios">
+                    Dias do curso:
+                    {{ getWeekString(turno.turno.horarios) }}
+                  </div>
+                </div>
+              </div>
+            </mat-expansion-panel-header>
+            <app-descricao-atividade
+              *ngFor="let atividade of turno.atividades"
+              [atividade]="atividade"
+            ></app-descricao-atividade>
+            <div class="sem-cursos" *ngIf="turno.atividades.length < 1">
+              Não há cursos cadastrados neste turno
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </ng-template>
+    </div>
+  </ng-template>
+</div>

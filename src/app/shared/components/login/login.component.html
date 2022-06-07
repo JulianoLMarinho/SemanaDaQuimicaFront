@@ -1,0 +1,122 @@
+<div class="modal-body">
+  <img class="logo-img" src="../../../../assets/imgs/semana-logo.png" />
+  <h1>
+    {{ cadastroUsuario ? "Cadastro de Usuário" : "Acesse sua conta" }}
+  </h1>
+  <mat-spinner class="progress-spinner" *ngIf="loading"></mat-spinner>
+  <hr />
+  <div *ngIf="!loading && !cadastroUsuario" class="social-login-buttons">
+    <div
+      class="social-button"
+      *ngFor="let button of socialButtons"
+      [ngStyle]="{ background: button.background, color: button.fontColor }"
+      [ngClass]="button.source"
+      (click)="button.callback(button.source)"
+    >
+      <img [src]="button.icone" />
+      <span>{{ button.texto }}</span>
+    </div>
+  </div>
+  <div *ngIf="!loading && cadastroUsuario" class="completar-cadastro">
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          [(ngModel)]="usuario.email"
+          disabled
+          placeholder="Insira seu Email"
+        />
+        <mat-hint>Email obtido do Google</mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Nome Completo</mat-label>
+        <input
+          matInput
+          [(ngModel)]="usuario.nome"
+          disabled
+          placeholder="Insira seu Nome"
+        />
+        <mat-hint>Nome obtido do Google</mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Universidade</mat-label>
+        <input
+          matInput
+          [(ngModel)]="usuario.universidade"
+          placeholder="Insira seu Nome"
+        />
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Curso</mat-label>
+        <input
+          matInput
+          [(ngModel)]="usuario.curso"
+          placeholder="Insira seu Nome"
+        />
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Nível</mat-label>
+        <input
+          matInput
+          [(ngModel)]="usuario.nivel"
+          placeholder="Insira seu Nome"
+        />
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Tamanho Da Camisa</mat-label>
+        <input
+          matInput
+          [(ngModel)]="usuario.tamanho_camisa"
+          placeholder="Insira seu Nome"
+        />
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Gênero</mat-label>
+        <input
+          matInput
+          [(ngModel)]="usuario.genero"
+          placeholder="Insira seu Nome"
+        />
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Estado</mat-label>
+        <input
+          matInput
+          [(ngModel)]="usuario.estado"
+          placeholder="Insira seu Nome"
+        />
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Cidade</mat-label>
+        <input
+          matInput
+          [(ngModel)]="usuario.cidade"
+          placeholder="Insira seu Nome"
+        />
+      </mat-form-field>
+    </p>
+    <div class="cadastro-botoes">
+      <button mat-button color="warn">Cancelar</button>
+      <button mat-button color="primary" (click)="salvarUsuario()">
+        Cadastrar
+      </button>
+    </div>
+  </div>
+</div>

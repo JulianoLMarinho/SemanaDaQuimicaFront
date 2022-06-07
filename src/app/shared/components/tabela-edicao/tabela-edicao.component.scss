@@ -1,0 +1,42 @@
+.table-wrapper {
+  height: calc(100% - 57.5px);
+}
+
+table {
+  width: 100%;
+  background-color: #fafafa;
+}
+
+.bottom-bar-table {
+  display: flex;
+  justify-content: space-between;
+
+  .buttons-table {
+    display: flex;
+  }
+}
+
+.table-container {
+  max-height: calc(100% - 45px);
+  overflow-y: auto;
+}
+
+mat-paginator {
+  background-color: #fafafa;
+}
+
+.texto-lista-vazia {
+  color: rgba(0, 0, 0, 0.54);
+  text-align: center;
+}
+
+.acoes_container {
+  display: flex;
+  justify-content: end;
+}
+
+.inner-table-text {
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

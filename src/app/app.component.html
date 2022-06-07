@@ -1,0 +1,303 @@
+<div *ngIf="!(!authService.loading && !edicaoSemanaService.loadingSemanaAtiva)">
+  <div class="loader-spinner">
+    <mat-spinner class="progress-spinner"></mat-spinner>
+  </div>
+</div>
+
+<mat-toolbar
+  class="mat-elevation-z8"
+  [hidden]="!(!authService.loading && !edicaoSemanaService.loadingSemanaAtiva)"
+  [style.background]="coresEdicao.coresAtivas.cor1"
+>
+  <mat-toolbar-row>
+    <button
+      mat-icon-button
+      *ngIf="!authService.isAuthenticated"
+      (click)="login()"
+    >
+      <mat-icon matTooltip="Entrar"> input </mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      *ngIf="sidenav.mode === 'side' && authService.isAuthenticated"
+      [ngStyle]="{ color: coresEdicao.coresAtivas.cor4 }"
+      (click)="isMenuCollapsed = true; sidenav.toggle()"
+    >
+      <img
+        class="avatar small mat-elevation-z8"
+        style="margin: 0"
+        [ngStyle]="{ color: coresEdicao.coresAtivas.cor4 }"
+        *ngIf="!sidenav.opened"
+        [src]="authService.usuarioLogado?.url_foto_perfil"
+      />
+      <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+    </button>
+    <div class="toolbar-menu-options">
+      <!--<a mat-button routerLink="/inicio">Início</a>
+      <a mat-button>Quem Somos</a>
+      <a mat-button routerLink="/atividades">Atividades</a>
+      <a mat-button>Como Chegar</a>
+      <a mat-button>Fale Conosco</a> -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+        <!-- Step 3: Toggle the value of the property when the toggler button is clicked. -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          mat-icon-button
+          [ngStyle]="{ color: coresEdicao.coresAtivas.cor4 }"
+          (click)="isMenuCollapsed = !isMenuCollapsed"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <!-- Step 2: Add the ngbCollapse directive to the element below. -->
+        <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                routerLink="/inicio"
+                [ngStyle]="{
+                  color:
+                    router.url === '/inicio'
+                      ? coresEdicao.coresAtivas.cor2
+                      : coresEdicao.coresAtivas.cor4
+                }"
+                (click)="isMenuCollapsed = true"
+                >Início</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                (click)="isMenuCollapsed = true"
+                [ngStyle]="{
+                  color:
+                    router.url === '/quem-somos'
+                      ? coresEdicao.coresAtivas.cor2
+                      : coresEdicao.coresAtivas.cor4
+                }"
+                routerLink="/quem-somos"
+                >Quem Somos</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                [matMenuTriggerFor]="atividades"
+                [ngStyle]="{
+                  color:
+                    router.url === '/cursos' ||
+                    router.url === '/palestras' ||
+                    router.url === '/workshops' ||
+                    router.url === '/visitas-tecnicas'
+                      ? coresEdicao.coresAtivas.cor2
+                      : coresEdicao.coresAtivas.cor4
+                }"
+                >Atividades</a
+              >
+              <mat-menu #atividades="matMenu">
+                <button
+                  mat-menu-item
+                  [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }"
+                  routerLink="/cursos"
+                  (click)="isMenuCollapsed = true"
+                >
+                  Cursos
+                </button>
+                <button
+                  mat-menu-item
+                  [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }"
+                  routerLink="/palestras"
+                  (click)="isMenuCollapsed = true"
+                >
+                  Palestras
+                </button>
+                <button
+                  mat-menu-item
+                  [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }"
+                  routerLink="/workshops"
+                  (click)="isMenuCollapsed = true"
+                >
+                  Workshops
+                </button>
+                <button
+                  mat-menu-item
+                  [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }"
+                  routerLink="/visitas-tecnicas"
+                  (click)="isMenuCollapsed = true"
+                >
+                  Visitas Técnicas
+                </button>
+              </mat-menu>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                [ngStyle]="{
+                  color:
+                    router.url === '/atividades'
+                      ? coresEdicao.coresAtivas.cor2
+                      : coresEdicao.coresAtivas.cor4
+                }"
+                routerLink="/atividades"
+                (click)="isMenuCollapsed = true"
+                >Como Chegar</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                [ngStyle]="{
+                  color:
+                    router.url === '/atividades'
+                      ? coresEdicao.coresAtivas.cor2
+                      : coresEdicao.coresAtivas.cor4
+                }"
+                routerLink="/atividades"
+                (click)="isMenuCollapsed = true"
+                >Fale Conosco</a
+              >
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-sidenav-container
+  [hidden]="!(!authService.loading && !edicaoSemanaService.loadingSemanaAtiva)"
+>
+  <mat-sidenav
+    #sidenav="matSidenav"
+    [opened]="false"
+    class="mat-elevation-z8 alternative-scrollbar"
+    [ngStyle]="{
+      background: coresEdicao.coresAtivas.cor2,
+      color: coresEdicao.coresAtivas.cor5
+    }"
+  >
+    <img
+      class="avatar large mat-elevation-z8"
+      [src]="authService.usuarioLogado?.url_foto_perfil"
+    />
+
+    <h4 class="name" [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }">
+      {{ authService.usuarioLogado?.nome }}
+    </h4>
+    <p class="designation" [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }">
+      {{
+        authService.usuarioLogado?.perfil === "adm" ? "Administrador" : "Aluno"
+      }}
+    </p>
+    <button
+      (click)="authService.logout(true)"
+      mat-raised-button
+      class="google-login-btn"
+    >
+      Log Out
+    </button>
+
+    <mat-divider
+      [ngStyle]="{ 'background-color': coresEdicao.coresAtivas.cor5 }"
+    ></mat-divider>
+    <div style="text-align: left">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a
+            mat-button
+            routerLink="/meus_dados"
+            [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+            >Meus Dados</a
+          >
+        </li>
+      </ul>
+
+      <mat-divider
+        [ngStyle]="{ 'background-color': coresEdicao.coresAtivas.cor5 }"
+      ></mat-divider>
+
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a
+            mat-button
+            routerLink="/inscricao"
+            [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+            >Inscrição</a
+          >
+        </li>
+        <li class="nav-item">
+          <a mat-button [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+            >Meus Cursos</a
+          >
+        </li>
+        <li class="nav-item">
+          <a mat-button [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+            >Meus Certificados</a
+          >
+        </li>
+      </ul>
+
+      <mat-divider
+        [ngStyle]="{ 'background-color': coresEdicao.coresAtivas.cor5 }"
+      ></mat-divider>
+
+      <div
+        *ngIf="authService.usuarioLogado?.perfil === 'adm'"
+        [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+      >
+        Configurações
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a
+              mat-button
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+              routerLink="/gerenciar_edicao"
+              >Gerenciar Edição</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              mat-button
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+              routerLink="/configuracao/turno"
+              >Turnos</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              routerLink="/configuracao/responsavel"
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+              mat-button
+              >Responsáveis</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              mat-button
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+              routerLink="/configuracao/atividade"
+              >Atividades</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              mat-button
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+              routerLink="/configuracao/site"
+              >Gerenciamento do Site</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content mat-elevation-z8">
+      <router-outlet
+        *ngIf="!authService.loading && !edicaoSemanaService.loadingSemanaAtiva"
+      ></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

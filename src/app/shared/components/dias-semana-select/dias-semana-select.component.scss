@@ -1,0 +1,55 @@
+.dia-semana-container {
+  display: flex;
+  justify-content: space-between;
+  .dia-semana {
+    background-color: #ffffff;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+    cursor: pointer;
+    justify-content: center;
+    font-weight: bolder;
+    border: 1px solid #cfcfcf;
+
+    &:hover {
+      background-color: #a1a1a1;
+    }
+
+    &.selected {
+      background-color: #a1a1a1;
+    }
+  }
+}
+
+.horario-inicio-fim {
+  display: flex;
+  justify-content: space-between;
+
+  mat-form-field {
+    width: 125px;
+  }
+}
+
+.field-name {
+  color: #757575;
+  margin-bottom: 3px;
+}
+
+.error-container {
+  height: 20px;
+  .dias-error {
+    font-size: 75%;
+    height: 0px;
+    overflow: hidden;
+    transition: height 0.5s;
+    &.active {
+      height: 20px;
+    }
+  }
+}
+
+.error-color {
+  color: #f44336;
+}

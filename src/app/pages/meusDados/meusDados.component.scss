@@ -1,0 +1,69 @@
+:host {
+  width: 100%;
+}
+
+.meus_dados_container {
+  width: 100%;
+  height: 100%;
+
+  .dados {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    align-items: center;
+
+    .foto-linha {
+      display: flex;
+      align-items: center;
+    }
+
+    .dados-cadastrais {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      p {
+        width: 100%;
+        text-align: center;
+      }
+
+      .botoes-container {
+        display: flex;
+        justify-content: center;
+
+        .botoes {
+          display: flex;
+          justify-content: space-between;
+          width: 50%;
+        }
+      }
+    }
+
+    mat-form-field {
+      width: 50%;
+    }
+    /* div {
+            width: calc(100% / 3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 15px;
+        } */
+  }
+}
+
+.loader-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+:host ::ng-deep {
+  app-auto-complete-input {
+    mat-form-field {
+      width: 50%;
+    }
+  }
+}

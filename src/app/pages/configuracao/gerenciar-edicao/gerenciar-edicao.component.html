@@ -1,0 +1,11 @@
+<div class="main-container">
+  <app-page-top-bar titulo="Gerenciar Edição"></app-page-top-bar>
+  <app-tabela-edicao
+    [data]="edicoes"
+    [modalConfig]="obterModelo.bind(this)"
+    [salvarAction]="salvarEdicao.bind(this)"
+    [loading]="loadingEdicoes"
+    nomeEntidade="Edição"
+    (saved)="loadEdicoes()"
+  ></app-tabela-edicao>
+</div>

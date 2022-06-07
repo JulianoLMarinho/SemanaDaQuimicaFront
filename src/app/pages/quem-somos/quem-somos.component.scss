@@ -1,0 +1,30 @@
+:host {
+  width: 100%;
+}
+
+.main-atividades {
+  margin: 0 !important;
+
+  .quem-somos-texto {
+    text-align: center;
+    padding: 20px;
+    font-size: 1rem;
+  }
+
+  .conheca-comissao {
+    font-size: x-large;
+  }
+
+  .comissao-foto {
+    display: flex;
+    width: 250px;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 65px;
+
+    img {
+      width: 100px;
+      border-radius: 60px;
+    }
+  }
+}

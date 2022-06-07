@@ -1,0 +1,28 @@
+<mat-form-field class="example-full-width" appearance="legacy">
+  <mat-spinner
+    class="progress-spinner"
+    *ngIf="loading"
+    matSuffix
+    diameter="20"
+  ></mat-spinner>
+  <mat-label>{{ labelText }}</mat-label>
+  <input
+    type="text"
+    matInput
+    [formControl]="inputControl"
+    [matAutocomplete]="auto"
+    (change)="selectNewOption($event)"
+  />
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    [displayWith]="displayFn.bind(this)"
+    (optionSelected)="selectOption($event)"
+  >
+    <mat-option
+      *ngFor="let option of filteredOptions | async"
+      [value]="option[valueField]"
+    >
+      {{ option[textField] }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

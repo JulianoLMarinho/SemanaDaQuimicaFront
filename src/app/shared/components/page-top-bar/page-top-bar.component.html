@@ -1,0 +1,44 @@
+<div
+  class="top-bar"
+  [ngStyle]="{ 'border-bottom-color': coresEdicao.coresAtivas.cor3 }"
+>
+  <div class="title" [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }">
+    {{ titulo }}
+  </div>
+  <div class="actions">
+    <mat-spinner
+      class="progress-spinner"
+      *ngIf="loading"
+      matSuffix
+      diameter="30"
+    ></mat-spinner>
+    <div class="botoes">
+      <button
+        mat-button
+        color="primary"
+        *ngIf="!editando && editarAction !== undefined"
+        (click)="editarAction()"
+      >
+        Editar
+      </button>
+      <button
+        mat-button
+        color="warn"
+        *ngIf="editando"
+        [disabled]="(loading || loadingSave) && cancelarAction !== undefined"
+        (click)="cancelarAction()"
+      >
+        Cancelar
+      </button>
+      <button
+        mat-button
+        color="primary"
+        (click)="salvarAction()"
+        *ngIf="editando"
+        [disabled]="(loading || loadingSave) && salvarAction !== undefined"
+      >
+        Salvar
+      </button>
+    </div>
+  </div>
+</div>

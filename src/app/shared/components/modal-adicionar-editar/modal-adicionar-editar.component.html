@@ -1,0 +1,232 @@
+<div class="main-container">
+  <app-page-top-bar
+    titulo="Criar Atividade"
+    [loadingSave]="saving"
+    [loading]="saving"
+    [salvarAction]="salvar.bind(this)"
+    [cancelarAction]="closeModal.bind(this)"
+    [editando]="true"
+  ></app-page-top-bar>
+  <div class="content" *ngIf="groupControl" [formGroup]="groupControl">
+    <div *ngFor="let field of modalFields">
+      <div class="picture-field" *ngIf="field.fieldType === 'picture'">
+        <div
+          class="picture"
+          (click)="
+            openModal(
+              contentPicture,
+              groupControl.controls[field.fieldProperty]
+            )
+          "
+        >
+          <mat-icon
+            class="person"
+            *ngIf="!groupControl.controls[field.fieldProperty].value"
+            >person</mat-icon
+          >
+          <div class="foto">
+            <mat-icon>photo_camera</mat-icon>
+          </div>
+          <img
+            *ngIf="groupControl.controls[field.fieldProperty].value"
+            [src]="
+              imageSanitizer(groupControl.controls[field.fieldProperty].value)
+            "
+          />
+          <mat-form-field hidden>
+            <input
+              matInput
+              [formControlName]="field.fieldProperty"
+              [placeholder]="field.fieldPlaceholder || ''"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-form-field
+        appearance="legacy"
+        *ngIf="
+          field.fieldType === 'text' &&
+          (!field.fieldVisible || showHideField(field))
+        "
+      >
+        <mat-label>{{ field.fieldName }}</mat-label>
+        <input
+          matInput
+          [formControlName]="field.fieldProperty"
+          [placeholder]="field.fieldPlaceholder || ''"
+        />
+        <mat-error *ngIf="groupControl.controls[field.fieldProperty].invalid">
+          {{ field.fieldErrorMessage }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="legacy"
+        *ngIf="
+          field.fieldType === 'textArea' &&
+          (!field.fieldVisible || showHideField(field))
+        "
+      >
+        <mat-label>{{ field.fieldName }}</mat-label>
+        <textarea
+          matInput
+          [formControlName]="field.fieldProperty"
+          [placeholder]="field.fieldPlaceholder || ''"
+        ></textarea>
+        <mat-error *ngIf="groupControl.controls[field.fieldProperty].invalid">
+          {{ field.fieldErrorMessage }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="legacy"
+        *ngIf="
+          field.fieldType === 'select' &&
+          (!field.fieldVisible || showHideField(field))
+        "
+      >
+        <mat-label>{{ field.fieldName }}</mat-label>
+        <mat-select
+          [(value)]="field.fieldInitialValue"
+          (ngModelChange)="
+            field.fieldOptionChange && field.fieldOptionChange($event)
+          "
+          [formControlName]="field.fieldProperty"
+        >
+          <mat-option *ngFor="let op of field.fieldOptions" [value]="op.value">
+            {{ op.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="groupControl.controls[field.fieldProperty].invalid">
+          {{ field.fieldErrorMessage }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="legacy"
+        *ngIf="
+          field.fieldType === 'selectFilter' &&
+          (!field.fieldVisible || showHideField(field))
+        "
+      >
+        <mat-label>{{ field.fieldName }}</mat-label>
+        <mat-select [formControlName]="field.fieldProperty" multiple>
+          <input
+            class="text-search"
+            matInput
+            placeholder="Digite para filtrar os responsáveis"
+            (keyup)="filterOptions($event.target, field)"
+          />
+          <mat-option
+            *ngFor="let op of field.fieldOptionsFiltered"
+            [value]="op.value"
+          >
+            {{ op.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="groupControl.controls[field.fieldProperty].invalid">
+          {{ field.fieldErrorMessage }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="legacy"
+        *ngIf="
+          field.fieldType === 'number' &&
+          (!field.fieldVisible || showHideField(field))
+        "
+      >
+        <mat-label>{{ field.fieldName }}</mat-label>
+        <input [formControlName]="field.fieldProperty" matInput type="number" />
+        <mat-error *ngIf="groupControl.controls[field.fieldProperty].invalid">
+          {{ field.fieldErrorMessage }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field
+        appearance="legacy"
+        *ngIf="
+          field.fieldType === 'date' &&
+          (!field.fieldVisible || showHideField(field))
+        "
+      >
+        <mat-label>{{ field.fieldName }}</mat-label>
+        <input [formControlName]="field.fieldProperty" matInput type="date" />
+        <mat-error *ngIf="groupControl.controls[field.fieldProperty].invalid">
+          {{ field.fieldErrorMessage }}
+        </mat-error>
+      </mat-form-field>
+
+      <app-dias-semana-select
+        *ngIf="
+          field.fieldType === 'dayHour' &&
+          (!field.fieldVisible || showHideField(field))
+        "
+        [formControlName]="field.fieldProperty"
+      ></app-dias-semana-select>
+    </div>
+    <!--
+  
+    <div *ngIf="mostrarHorarios">
+      <p>Dias da Semana</p>
+      <app-dias-semana-select
+        [diasSelecionados]="atividade.dias_semana"
+        [diaInicioReferencia]="edicaoSemana.data_inicio"
+      ></app-dias-semana-select>
+      <div class="horario-inicio-fim">
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Horário de Início</mat-label>
+            <input matInput type="time" formControlName="horInicio" required />
+            <mat-error
+              *ngIf="groupControl.controls.horInicio.hasError('required')"
+            >
+              Insira um horário de início
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Horário de Fim</mat-label>
+            <input matInput formControlName="horFim" type="time" />
+            <mat-error
+              *ngIf="groupControl.controls.horFim.hasError('required')"
+            >
+              Insira um horário de fim
+            </mat-error>
+          </mat-form-field>
+        </p>
+      </div>--
+    </div>-->
+  </div>
+</div>
+
+<ng-template #contentPicture let-modal>
+  <app-page-top-bar
+    titulo="Selecionar Foto"
+    [loadingSave]="saving"
+    [loading]="saving"
+    [salvarAction]="salvarFoto.bind(this, modal)"
+    [cancelarAction]="modal.dismiss"
+    [editando]="true"
+  ></app-page-top-bar>
+  <div class="modal-body" style="align-self: center">
+    <button mat-stroked-button color="primary" (click)="fileInput.click()">
+      Escolher Arquivo
+    </button>
+    <input #fileInput type="file" hidden (change)="fileChangeEvent($event)" />
+    <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="1"
+      [roundCropper]="true"
+      [resizeToWidth]="150"
+      [resizeToHeight]="150"
+      [imageQuality]="75"
+      format="png"
+      (imageCropped)="imageCropped($event)"
+      (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()"
+    ></image-cropper>
+  </div>
+</ng-template>

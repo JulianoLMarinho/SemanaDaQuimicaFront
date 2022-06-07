@@ -1,0 +1,23 @@
+<div class="main-container">
+  <app-page-top-bar titulo="Atividades - Palestras"></app-page-top-bar>
+  <div *ngIf="loading" class="loader-spinner">
+    <mat-spinner class="progress-spinner"></mat-spinner>
+  </div>
+  <div class="calendario-wraper">
+    <div class="calendario">
+      <app-calendar-view
+        [events]="events"
+        [refresh]="refresh"
+        [viewDate]="viewDate"
+        hrefClickLink="/palestras#"
+      ></app-calendar-view>
+    </div>
+  </div>
+  <div class="main-atividades">
+    <app-descricao-atividade
+      [id]="atividade.id"
+      *ngFor="let atividade of atividades"
+      [atividade]="atividade"
+    ></app-descricao-atividade>
+  </div>
+</div>

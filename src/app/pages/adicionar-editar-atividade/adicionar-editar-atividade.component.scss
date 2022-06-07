@@ -1,0 +1,33 @@
+.content {
+  padding: 15px;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .horario-inicio-fim {
+    display: flex;
+    justify-content: space-between;
+
+    mat-form-field {
+      width: 125px;
+    }
+  }
+
+  .save-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+::ng-deep {
+  .cdk-overlay-container {
+    z-index: 99999 !important;
+  }
+
+  .responsaveis-search {
+    margin: 10px 0 !important;
+    padding: 0 10px;
+    width: calc(100% - 20px);
+  }
+}

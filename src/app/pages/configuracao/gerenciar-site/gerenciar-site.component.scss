@@ -1,0 +1,111 @@
+:host {
+  width: 100%;
+}
+
+.main-container {
+  height: 100%;
+}
+
+.selecionar-cores {
+  display: flex;
+  flex-direction: column;
+
+  .demonstracao {
+    width: 100%;
+    padding: 25px;
+
+    .main-site {
+      overflow: hidden;
+      height: 400px;
+      border: 1px solid #dddddd;
+      border-radius: 15px;
+
+      .top-bar-main-site {
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        div {
+          margin-left: 5px;
+          margin-right: 5px;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .main-site-conteudo {
+      width: 100%;
+      height: calc(100% - 50px);
+      display: flex;
+
+      .site-menu-lateral {
+        width: 30%;
+        margin: 10px;
+        border-radius: 10px;
+        box-shadow: 1px 2px 7px -1px rgb(0 0 0 / 10%);
+
+        .menu-teste {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+
+          div {
+            margin-bottom: 5px;
+          }
+
+          .menu-item {
+            font-weight: bold;
+            margin-left: 10px;
+          }
+
+          .foto {
+            height: 70px;
+            width: 70px;
+            background-color: white;
+            border-radius: 35px;
+            margin-top: 15px;
+            margin-left: calc(50% - 35px);
+          }
+        }
+      }
+
+      .conteudo-principal {
+        width: 70%;
+        border-radius: 15px;
+        box-shadow: 1px 2px 7px -1px rgb(0 0 0 / 10%);
+        margin: 10px;
+
+        .top-principal {
+          height: 30px;
+          border-bottom: 3px solid;
+          display: flex;
+          padding-left: 10px;
+          align-items: center;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+.color-selector {
+  display: flex;
+  justify-content: space-around;
+
+  input {
+    width: 50px;
+    height: 50px;
+  }
+
+  .color-selector-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px;
+  }
+}
+
+.atividades-opcoes {
+  margin: 20px;
+}

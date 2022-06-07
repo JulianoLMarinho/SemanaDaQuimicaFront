@@ -1,0 +1,96 @@
+:host {
+  min-width: 360px;
+}
+
+mat-toolbar {
+  color: white;
+
+  mat-toolbar-row {
+    height: fit-content;
+  }
+}
+
+mat-sidenav {
+  margin: 16px;
+  width: 240px;
+  border-right: none;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+}
+
+.content {
+  height: calc(100vh - 98px);
+  border-radius: 10px;
+  margin: 16px;
+  margin-left: 32px;
+  min-width: 313px;
+
+  display: flex;
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  overflow-y: auto;
+}
+
+mat-sidenav-container {
+  height: calc(100vh - 65px);
+}
+
+.menu-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1rem;
+  margin-bottom: 5px;
+
+  mat-icon {
+    margin-right: 8px;
+  }
+}
+
+.name {
+  margin-top: 8px;
+  font-weight: normal;
+}
+
+.designation {
+  margin-top: 2px;
+  font-size: 0.7rem;
+}
+
+mat-divider {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.toolbar-menu-options {
+  width: 100%;
+  text-align: center;
+  a {
+    cursor: pointer;
+  }
+  nav {
+    background-color: rgba(0, 0, 0, 0) !important;
+    margin: 0 !important;
+    display: block !important;
+    text-align: end;
+
+    div {
+      text-align: center;
+      justify-content: center;
+    }
+  }
+}
+
+::ng-deep {
+  .modal-login {
+    width: 350px !important;
+  }
+}

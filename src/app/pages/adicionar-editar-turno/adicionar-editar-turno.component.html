@@ -1,0 +1,57 @@
+<div class="main-container">
+  <app-page-top-bar
+    titulo="Criar Turno"
+    [loadingSave]="saving"
+    [loading]="saving"
+    [salvarAction]="salvarTurno.bind(this)"
+    [cancelarAction]="closeModal.bind(this)"
+    [editando]="true"
+  ></app-page-top-bar>
+  <div class="content" [formGroup]="groupControl">
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Nome do Turno</mat-label>
+        <input
+          matInput
+          formControlName="nome_turno"
+          placeholder="Insira o nome"
+        />
+        <mat-error
+          *ngIf="groupControl.controls.nome_turno.hasError('required')"
+        >
+          Insira um nome
+        </mat-error>
+      </mat-form-field>
+    </p>
+    <div>
+      <p>Dias da Semana</p>
+      <app-dias-semana-select
+        [diaInicioReferencia]="edicaoSemana.parsed_data_inicio"
+      ></app-dias-semana-select>
+      <div class="horario-inicio-fim">
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Horário de Início</mat-label>
+            <input matInput type="time" formControlName="horInicio" required />
+            <mat-error
+              *ngIf="groupControl.controls.horInicio.hasError('required')"
+            >
+              Insira um horário de início
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Horário de Fim</mat-label>
+            <input matInput formControlName="horFim" type="time" />
+            <mat-error
+              *ngIf="groupControl.controls.horFim.hasError('required')"
+            >
+              Insira um horário de fim
+            </mat-error>
+          </mat-form-field>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

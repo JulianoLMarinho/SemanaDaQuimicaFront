@@ -1,0 +1,25 @@
+.cal-time {
+  padding: 0;
+}
+
+.event-link {
+  display: flex;
+  height: 100%;
+  text-decoration: none;
+  color: black;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.evento-calendario {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  font-size: small;
+  border: 2px solid;
+}

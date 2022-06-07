@@ -1,0 +1,17 @@
+:host {
+  width: 100%;
+}
+
+:host ::ng-deep {
+  mat-tab-group {
+    flex-direction: row !important;
+
+    .mat-tab-labels {
+      flex-direction: column;
+    }
+
+    .mat-tab-body-wrapper {
+      width: 100%;
+    }
+  }
+}

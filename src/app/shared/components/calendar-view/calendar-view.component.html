@@ -1,0 +1,50 @@
+<div class="calendar-component">
+  <mwl-calendar-week-view
+    [viewDate]="viewDate"
+    [events]="events"
+    [excludeDays]="[0, 6]"
+    [dayStartHour]="7"
+    [dayEndHour]="20"
+    [locale]="locale"
+    [refresh]="refresh"
+    [hourSegmentHeight]="30"
+    [hourSegments]="1"
+    [hourSegmentTemplate]="hourSegmentTemplate"
+    [eventTemplate]="weekEvent"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventTimesChanged)="eventTimesChanged($event)"
+  >
+  </mwl-calendar-week-view>
+
+  <ng-template
+    #hourSegmentTemplate
+    let-segment="segment"
+    let-isTimeLabel="isTimeLabel"
+  >
+    <div class="cal-time" *ngIf="isTimeLabel">
+      {{ getSegmentText(segment) }}
+    </div>
+  </ng-template>
+
+  <ng-template #weekEvent let-weekEvent="weekEvent">
+    <div
+      [matTooltip]="weekEvent.event.title"
+      class="evento-calendario"
+      [ngStyle]="{
+        'background-color': coresEdicao.coresAtivas.cor1 + '35',
+        'border-color': coresEdicao.coresAtivas.cor1
+      }"
+      (click)="handleEvent('', weekEvent.event)"
+    >
+      <a
+        class="event-link"
+        [ngStyle]="{
+          color: coresEdicao.coresAtivas.cor1
+        }"
+        [href]="hrefClickLink + weekEvent.event.id"
+      >
+        {{ weekEvent.event.title }}
+      </a>
+    </div>
+  </ng-template>
+</div>
