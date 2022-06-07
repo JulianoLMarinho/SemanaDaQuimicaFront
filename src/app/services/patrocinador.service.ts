@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import {
   Patrocinador,
   PatrocinadorCreate,
-} from '../shared/models/Patrocinador';
+} from '../shared/models/patrocinador';
 import { HttpService } from './http.service';
 
 @Injectable({

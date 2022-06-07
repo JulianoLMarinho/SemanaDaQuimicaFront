@@ -11,7 +11,7 @@ import { CoresEdicaoService } from '../../../services/coresEdicao.service';
 import { EdicaoSemanaService } from '../../../services/edicaoSemana.service';
 import { PatrocinadorService } from '../../../services/patrocinador.service';
 import { EditButtonDirective } from '../../models/edit-button-directive';
-import { Patrocinador } from '../../models/Patrocinador';
+import { Patrocinador } from '../../models/patrocinador';
 import { ModalAdicionarEditarComponent } from '../modal-adicionar-editar/modal-adicionar-editar.component';
 import { ModalFieldConfiguration } from '../modal-adicionar-editar/modal-field-configuration';
 import { ModalConfirmacaoComponent } from '../modal-confirmacao/modal-confirmacao.component';
