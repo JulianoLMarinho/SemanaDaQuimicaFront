@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
 import { ToastrService } from 'ngx-toastr';
+import { Patrocinador } from '../../shared/models/patrocinador';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ContentService } from '../../services/content.service';
 import { CoresEdicaoService } from '../../services/coresEdicao.service';
@@ -11,7 +12,6 @@ import { PatrocinadorService } from '../../services/patrocinador.service';
 import { EditAttributeComponent } from '../../shared/components/edit-attribute/edit-attribute.component';
 import { ModalConfirmacaoComponent } from '../../shared/components/modal-confirmacao/modal-confirmacao.component';
 import { EditButtonDirective } from '../../shared/models/edit-button-directive';
-import { Patrocinador } from '../../shared/models/Patrocinador';
 import { AppUtils } from '../../shared/utils';
 
 @Component({
