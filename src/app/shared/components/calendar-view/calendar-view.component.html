@@ -31,12 +31,17 @@
       [matTooltip]="weekEvent.event.title"
       class="evento-calendario"
       [ngStyle]="{
-        'background-color': coresEdicao.coresAtivas.cor1 + '35',
-        'border-color': coresEdicao.coresAtivas.cor1
+        'background-color': weekEvent.event.meta
+          ? coresEdicao.coresAtivas.cor1 + '35'
+          : coresEdicao.coresAtivas.cor2 + '35',
+        'border-color': weekEvent.event.meta
+          ? coresEdicao.coresAtivas.cor1
+          : coresEdicao.coresAtivas.cor2
       }"
       (click)="handleEvent('', weekEvent.event)"
     >
       <a
+        *ngIf="hrefClickLink"
         class="event-link"
         [ngStyle]="{
           color: coresEdicao.coresAtivas.cor1
@@ -45,6 +50,15 @@
       >
         {{ weekEvent.event.title }}
       </a>
+      <div
+        *ngIf="!hrefClickLink"
+        class="event-link"
+        [ngStyle]="{
+          color: coresEdicao.coresAtivas.cor1
+        }"
+      >
+        {{ weekEvent.event.title }}
+      </div>
     </div>
   </ng-template>
 </div>

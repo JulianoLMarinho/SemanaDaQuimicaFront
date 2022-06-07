@@ -42,6 +42,9 @@ import {
 } from '@abacritt/angularx-social-login';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { InscricaoModule } from './pages/inscricao/inscricao.module';
+import { MeusCursosModule } from './pages/meus-cursos/meus-cursos.module';
+import { ConfirmarInscricoesModule } from './pages/configuracao/confirmar-inscricoes/confirmar-inscricoes.module';
+import { MatBadgeModule } from '@angular/material/badge';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -87,6 +90,9 @@ export function momentAdapterFactory() {
     }),
     QuemSomosModule,
     InscricaoModule,
+    MeusCursosModule,
+    ConfirmarInscricoesModule,
+    MatBadgeModule,
   ],
   providers: [
     {

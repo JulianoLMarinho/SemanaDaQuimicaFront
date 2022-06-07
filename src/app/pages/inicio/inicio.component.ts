@@ -13,6 +13,7 @@ import { EditAttributeComponent } from '../../shared/components/edit-attribute/e
 import { ModalConfirmacaoComponent } from '../../shared/components/modal-confirmacao/modal-confirmacao.component';
 import { EditButtonDirective } from '../../shared/models/edit-button-directive';
 import { AppUtils } from '../../shared/utils';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-inicio',
@@ -51,7 +52,8 @@ export class InicioComponent implements OnInit {
     private modalService: NgbModal,
     private toastr: ToastrService,
     private patrocinadorService: PatrocinadorService,
-    public coresEdicao: CoresEdicaoService
+    public coresEdicao: CoresEdicaoService,
+    private storage: StorageService
   ) {
     this.tema = '';
   }
@@ -89,9 +91,9 @@ export class InicioComponent implements OnInit {
   }
 
   loadDetalhesEdicao() {
-    this.edicaoSemanaService.getDetalhes().subscribe((res) => {
+    this.edicaoSemanaService.getDetalhes().subscribe(async (res) => {
       this.tema = res.tema;
-      this.carregarCarousel(res.id);
+      await this.carregarCarousel(res.id);
       this.carregarPatrocinadores(res.id);
     });
   }
@@ -161,7 +163,7 @@ export class InicioComponent implements OnInit {
       );
   }
 
-  carregarCarousel(edicaoId: number) {
+  async carregarCarousel(edicaoId: number) {
     this.edicaoSemanaService.getCarouselEdicao(edicaoId).subscribe((car) => {
       this.images = car;
       this.images.map((x) => {

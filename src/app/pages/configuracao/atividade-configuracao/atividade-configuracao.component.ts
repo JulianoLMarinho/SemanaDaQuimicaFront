@@ -188,6 +188,17 @@ export class AtividadeConfiguracaoComponent
         fieldShowOnTable: false,
         fieldVisible: this.showAceitaInscricoes,
       },
+      {
+        fieldName: 'Valor (R$)',
+        fieldInitialValue: edicaoAtividade?.valor,
+        fieldProperty: 'valor',
+        fieldType: 'number',
+        fieldPlaceholder: 'Defina o valor da atividade',
+        fieldErrorMessage: 'É necessário informar o valor da atividade',
+        fieldValidators: [Validators.required],
+        fieldShowOnTable: false,
+        fieldVisible: this.showAceitaInscricoes,
+      },
     ];
   }
 
@@ -237,6 +248,7 @@ export class AtividadeConfiguracaoComponent
       ativa: true,
       horarios: [],
       turno_atividade: formValues.turno_atividade,
+      valor: formValues.valor,
     };
     if (!atividadeSave.turno_atividade) {
       atividadeSave.horarios = formValues.dia.diasSelecionado.map((x: any) => {

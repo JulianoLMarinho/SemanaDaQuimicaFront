@@ -24,7 +24,8 @@ export class AtividadesService {
     tipo: string
   ): Observable<AtividadeLista[]> {
     return this.http.get<AtividadeLista[]>(
-      'atividades/' + idEdicao + '/' + tipo
+      'atividades/' + idEdicao + '/' + tipo,
+      true
     );
   }
 
@@ -41,7 +42,8 @@ export class AtividadesService {
     tipo: string
   ): Observable<AtividadeTurno[]> {
     return this.http.get<AtividadeTurno[]>(
-      'atividades/turno/' + idEdicao + '/' + tipo
+      'atividades/turno/' + idEdicao + '/' + tipo,
+      true
     );
   }
 

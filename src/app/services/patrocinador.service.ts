@@ -19,7 +19,10 @@ export class PatrocinadorService {
   obterPatrocinadoresEdicao(
     edicao_semana_id: number
   ): Observable<Patrocinador[]> {
-    return this.http.get<Patrocinador[]>(`patrocinador/${edicao_semana_id}`);
+    return this.http.get<Patrocinador[]>(
+      `patrocinador/${edicao_semana_id}`,
+      true
+    );
   }
 
   atualizarPatrocinador(patrocinador: Patrocinador): Observable<void> {

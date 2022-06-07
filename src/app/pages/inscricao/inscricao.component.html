@@ -1,23 +1,58 @@
 <div class="main-container">
-  <app-page-top-bar titulo="Inscrição"></app-page-top-bar>
+  <app-page-top-bar
+    titulo="Inscrição"
+    [salvarAction]="salvarInscricao.bind(this)"
+    [cancelarAction]="cancelar.bind(this)"
+    [loadingSave]="salvando"
+    [loading]="salvando"
+    [editando]="true"
+  ></app-page-top-bar>
   <div *ngIf="false" class="loader-spinner">
     <mat-spinner class="progress-spinner"></mat-spinner>
   </div>
   <div class="calendario-wraper">
     <div class="selecao-atividades">
-      <div>Adicione atividades ao seu plano</div>
+      <div>Adicione atividades ao seu plano. Valor total: {{ valor }}</div>
       <div class="atividade-lista">
         <div
           class="atividade-card"
           *ngFor="let atividade of atividades"
           (click)="adicionarEvento(atividade)"
           [ngClass]="{ selecionado: atividade.selecionada }"
+          [ngStyle]="{
+            'border-color': atividade.selecionada
+              ? coresEdicao.coresAtivas.cor2
+              : coresEdicao.coresAtivas.cor1,
+            'background-color': atividade.selecionada
+              ? atividade.ja_salvo
+                ? coresEdicao.coresAtivas.cor2 + '36'
+                : coresEdicao.coresAtivas.cor1 + '36'
+              : !(atividade.vagas! - atividade.total_inscritos! > 0)
+              ? '#ababab'
+              : '#fff'
+          }"
         >
-          <div class="atividade-card-titulo">{{ atividade.titulo }}</div>
+          <div
+            class="atividade-card-titulo"
+            [ngStyle]="{
+              color: coresEdicao.coresAtivas.cor2,
+              'border-bottom-color': atividade.selecionada
+                ? coresEdicao.coresAtivas.cor2
+                : coresEdicao.coresAtivas.cor1
+            }"
+          >
+            {{ atividade.titulo }}
+          </div>
           <div class="atividade-card-detalhes">
             <div>Tipo: {{ atividade.nome_tipo }}</div>
             <div>Local: Sala 9 - IQ</div>
-            <div>Vagas Restantes: 40</div>
+            <div *ngIf="atividade.vagas! - atividade.total_inscritos! > 0">
+              Vagas Restantes:
+              {{ atividade.vagas! - atividade.total_inscritos! }}
+            </div>
+            <div *ngIf="!(atividade.vagas! - atividade.total_inscritos! > 0)">
+              <i>Não há mais vagas para esta atividade</i>
+            </div>
           </div>
         </div>
       </div>

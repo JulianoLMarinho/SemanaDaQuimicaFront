@@ -35,6 +35,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ResponsavelCardComponent } from './components/responsavel-card/responsavel-card.component';
 import { ModalConfirmacaoComponent } from './components/modal-confirmacao/modal-confirmacao.component';
+import { MatSortModule } from '@angular/material/sort';
 
 registerLocaleData(localePT);
 
@@ -60,6 +61,7 @@ registerLocaleData(localePT);
     }),
     MatPaginatorModule,
     ImageCropperModule,
+    MatSortModule,
   ],
   declarations: [
     CardPatrocinadorComponent,
