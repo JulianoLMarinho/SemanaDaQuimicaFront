@@ -7,7 +7,7 @@ import { Usuario } from '../shared/models/usuario';
   providedIn: 'root',
 })
 export class HttpService {
-  API_URL = 'http://localhost:8000/';
+  API_URL = 'https://semana-da-quimica-back.azurewebsites.net/';
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
   });
