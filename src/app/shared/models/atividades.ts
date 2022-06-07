@@ -10,6 +10,8 @@ export interface Atividade {
   descricao_atividade: string;
   responsavel_atividade?: null;
   vagas: number;
+  valor?: number;
+  titulo: string;
 }
 
 export interface AtividadeLista {
@@ -27,6 +29,9 @@ export interface AtividadeLista {
   horarios?: DiaHoraAtividade[];
   aceita_inscricao: boolean;
   selecionada?: boolean;
+  valor?: number;
+  total_inscritos?: number;
+  ja_salvo?: boolean;
 }
 
 export interface OpcaoSelect {

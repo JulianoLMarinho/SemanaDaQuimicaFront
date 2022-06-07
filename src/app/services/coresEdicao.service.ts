@@ -33,6 +33,6 @@ export class CoresEdicaoService {
   }
 
   obterCoresEdicao(edicaoId: number): Observable<CoresEdicao> {
-    return this.http.get<CoresEdicao>('cores-edicao/' + edicaoId);
+    return this.http.get<CoresEdicao>('cores-edicao/' + edicaoId, true);
   }
 }

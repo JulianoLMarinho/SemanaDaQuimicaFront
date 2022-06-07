@@ -1,0 +1,68 @@
+:host {
+  width: 100%;
+
+  mat-expansion-panel {
+    margin-bottom: 10px;
+  }
+
+  .meus-cursos-container {
+    padding: 15px;
+  }
+
+  .status-inscricao {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    border: 2px solid #747474;
+    border-radius: 10px;
+    background-color: #8d8d8d;
+    font-weight: 500;
+    color: white;
+    font-size: smaller;
+    padding: 0 5px;
+  }
+
+  .atividade-item-lista {
+    padding: 3px;
+    border: 1px solid;
+    border-radius: 5px;
+    margin-bottom: 3px;
+  }
+
+  .middle-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .vertical-options {
+    width: 40px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .PAGAMENTO_INFORMADO {
+    background-color: #000ed7;
+  }
+
+  .CANCELADA {
+    background-color: #ff4545;
+  }
+
+  .loader-spinner {
+    height: 50px;
+  }
+}
+
+.modal-body-pagamento {
+  width: 100%;
+  padding: 15px;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .confirmar-botao {
+    margin-top: 20px;
+    text-align: end;
+  }
+}

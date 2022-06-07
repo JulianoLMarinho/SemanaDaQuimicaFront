@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { EdicaoSemanaService } from './services/edicaoSemana.service';
 import { CoresEdicaoService } from './services/coresEdicao.service';
 import * as $ from 'jquery';
+import { InscricaoService } from './services/inscricao.service';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   images: any[] = [];
+  inscricoesAtivas = 0;
 
   isMenuCollapsed = true;
 
@@ -29,7 +31,8 @@ export class AppComponent implements OnInit {
     public authService: AuthenticationService,
     public edicaoSemanaService: EdicaoSemanaService,
     private modalService: NgbModal,
-    public router: Router
+    public router: Router,
+    private inscricaoService: InscricaoService
   ) {}
 
   ngAfterViewInit() {
@@ -58,6 +61,14 @@ export class AppComponent implements OnInit {
     this.coresEdicao.coresCarregadas.asObservable().subscribe((_) => {
       this.appendCustomCss();
     });
+
+    if (this.authService.userIsAdmin()) {
+      this.inscricaoService
+        .totalInscricoesPagamentoInformado()
+        .subscribe((total) => {
+          this.inscricoesAtivas = total;
+        });
+    }
   }
 
   login() {

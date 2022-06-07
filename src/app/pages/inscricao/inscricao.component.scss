@@ -7,7 +7,7 @@
 
 .calendario-wraper {
   display: flex;
-  height: calc(100% - 45px);
+  height: calc(100% - 65px);
 
   .selecao-atividades {
     width: 25%;
@@ -20,21 +20,16 @@
 
       .atividade-card {
         width: 97%;
-        height: 100px;
+        height: 120px;
         margin: 5px 0;
         overflow: hidden;
         border-radius: 15px;
-        border: 2px solid #d900ff;
+        border: 2px solid;
         cursor: pointer;
-
-        &.selecionado {
-          background-color: #d900ff36;
-        }
 
         .atividade-card-titulo {
           text-align: center;
-          border-bottom: 2px solid #d900ff;
-          color: #d900ff;
+          border-bottom: 2px solid;
         }
 
         .atividade-card-detalhes {

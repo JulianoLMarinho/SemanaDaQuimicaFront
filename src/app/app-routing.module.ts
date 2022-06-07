@@ -15,6 +15,8 @@ import { AuthGuard } from './_helpers/auth.guard';
 import { GerenciarSiteComponent } from './pages/configuracao/gerenciar-site/gerenciar-site.component';
 import { QuemSomosComponent } from './pages/quem-somos/quem-somos.component';
 import { InscricaoComponent } from './pages/inscricao/inscricao.component';
+import { MeusCursosComponent } from './pages/meus-cursos/meus-cursos.component';
+import { ConfirmarInscricoesComponent } from './pages/configuracao/confirmar-inscricoes/confirmar-inscricoes.component';
 
 const routes: Routes = [
   { path: '', component: InicioComponent },
@@ -67,7 +69,21 @@ const routes: Routes = [
     component: VisitasTecnicasComponent,
   },
   { path: 'quem-somos', component: QuemSomosComponent },
-  { path: 'inscricao', component: InscricaoComponent },
+  {
+    path: 'inscricao',
+    component: InscricaoComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'meus-cursos',
+    component: MeusCursosComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'configuracao/confirmar-inscricoes',
+    component: ConfirmarInscricoesComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

@@ -31,7 +31,7 @@ export class EdicaoSemanaService {
   }
 
   getDetalhes(): Observable<EdicaoSemana> {
-    return this.http.get<EdicaoSemana>('edicaoSemana');
+    return this.http.get<EdicaoSemana>('edicaoSemana', true);
   }
 
   updateTemaEdicaoAtiva(tema: any) {
@@ -39,7 +39,7 @@ export class EdicaoSemanaService {
   }
 
   getEdicoes(): Observable<EdicaoSemana[]> {
-    return this.http.get<EdicaoSemana[]>('edicaoSemana/edicoes').pipe(
+    return this.http.get<EdicaoSemana[]>('edicaoSemana/edicoes', true).pipe(
       tap((res) => {
         return res.map((ed) => {
           ed.parsed_data_fim = new Date(ed.data_fim + 'T00:00:00-0300');
@@ -60,7 +60,8 @@ export class EdicaoSemanaService {
 
   getCarouselEdicao(edicaoId: number): Observable<CarouselImage[]> {
     return this.http.get<CarouselImage[]>(
-      'edicaoSemana/carousel-edicao/' + edicaoId
+      'edicaoSemana/carousel-edicao/' + edicaoId,
+      true
     );
   }
 

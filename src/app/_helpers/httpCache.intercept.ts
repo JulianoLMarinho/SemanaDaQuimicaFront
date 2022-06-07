@@ -8,10 +8,11 @@ import {
 } from '@angular/common/http';
 import { Observable, of, scheduled } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { StorageService } from '../services/storage.service';
 
 @Injectable()
 export class HttpCacheIntercept implements HttpInterceptor {
-  constructor() {}
+  constructor(private storage: StorageService) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -21,7 +22,9 @@ export class HttpCacheIntercept implements HttpInterceptor {
       map((event) => {
         if (event instanceof HttpResponse) {
           if (event.body) {
-            //localStorage.setItem(request.url, JSON.stringify(event.body));
+            if (request.headers.has('cache_data')) {
+              this.storage.setValue(request.url, event.body);
+            }
           }
         }
         return event;

@@ -1,0 +1,86 @@
+<div class="main-container">
+  <app-page-top-bar titulo="Confirmar Inscrições"></app-page-top-bar>
+  <div *ngIf="false" class="loader-spinner">
+    <mat-spinner class="progress-spinner"></mat-spinner>
+  </div>
+  <div class="meus-cursos-container">
+    <div *ngIf="inscricoes.length <= 0">
+      Não existem inscrições pendentes de confirmação
+    </div>
+    <mat-expansion-panel
+      hideToggle
+      *ngFor="let inscricao of inscricoes"
+      (opened)="abrirInscricao(inscricao)"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title class="middle-item">
+          Inscrição: {{ inscricao.id }}
+        </mat-panel-title>
+        <mat-panel-description class="middle-item">
+          Edição: 2022
+        </mat-panel-description>
+        <mat-panel-description class="middle-item">
+          Valor: R${{ inscricao.valor }}</mat-panel-description
+        >
+        <mat-panel-description class="middle-item">
+          Comprovante de Pagamento:
+          {{ inscricao.numero_comprovante }}</mat-panel-description
+        >
+        <div class="middle-item">
+          <div class="status-inscricao" [ngClass]="inscricao.status">
+            {{ inscricao.status_nome }}
+          </div>
+        </div>
+      </mat-expansion-panel-header>
+      <div *ngIf="inscricao.carregandoAtividades" class="loader-spinner">
+        <mat-spinner diameter="50" class="progress-spinner"></mat-spinner>
+      </div>
+      <div *ngIf="!inscricao.carregandoAtividades">
+        <h1>Cursos</h1>
+        <div
+          *ngFor="let atividade of inscricao.atividades"
+          class="atividade-item-lista"
+          [ngStyle]="{ 'border-color': coresEdicao.coresAtivas.cor2 }"
+        >
+          {{ atividade.titulo }}
+        </div>
+      </div>
+      <mat-action-row>
+        <div>
+          <button
+            mat-button
+            color="primary"
+            (click)="openModal(pagamentoModal, inscricao)"
+          >
+            Confirmar Pagamento
+          </button>
+          <button
+            mat-button
+            color="warn"
+            (click)="cancelarInscricao(inscricao)"
+          >
+            Cancelar Inscrição
+          </button>
+        </div>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </div>
+</div>
+<ng-template #pagamentoModal let-modal>
+  <app-page-top-bar
+    titulo="Confirmar Pagamento"
+    [loadingSave]="loadingSalvar"
+    [loading]="loadingSalvar"
+  ></app-page-top-bar>
+  <div class="modal-body-pagamento" style="align-self: center">
+    <div>
+      Deseja confirmar a inscrição com comprovante
+      {{ inscricaoPagamento.numero_comprovante }}?
+    </div>
+    <div class="confirmar-botao">
+      <button mat-button color="primary" (click)="confirmarInscricao(modal)">
+        Confirmar
+      </button>
+    </div>
+  </div>
+</ng-template>
