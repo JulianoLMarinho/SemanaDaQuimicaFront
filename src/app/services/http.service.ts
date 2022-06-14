@@ -9,7 +9,7 @@ import { StorageService } from './storage.service';
   providedIn: 'root',
 })
 export class HttpService {
-  API_URL = 'https://semana-da-quimica-back.azurewebsites.net/';
+  API_URL = 'http://localhost:8000/';
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
   });

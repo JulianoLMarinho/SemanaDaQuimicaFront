@@ -29,8 +29,9 @@ export class AuthenticationService {
     let usuario = this.localStorage.get<Usuario>('user');
     if (usuario) this.usuarioLogado = usuario;
     this.socialAuthService.authState.subscribe((user) => {
-      if (user) this.apiAuth(user.idToken, user.provider);
-      else this.loading = false;
+      if (user) {
+        this.apiAuth(user.idToken, user.provider);
+      } else this.loading = false;
     });
   }
 
@@ -93,5 +94,11 @@ export class AuthenticationService {
   userIsAdmin(): boolean {
     if (this.usuarioLogado?.perfil === 'adm') return true;
     return false;
+  }
+
+  refreshToken() {
+    return this.socialAuthService.refreshAuthToken(
+      GoogleLoginProvider.PROVIDER_ID
+    );
   }
 }

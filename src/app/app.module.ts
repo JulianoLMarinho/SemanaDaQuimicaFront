@@ -45,6 +45,8 @@ import { InscricaoModule } from './pages/inscricao/inscricao.module';
 import { MeusCursosModule } from './pages/meus-cursos/meus-cursos.module';
 import { ConfirmarInscricoesModule } from './pages/configuracao/confirmar-inscricoes/confirmar-inscricoes.module';
 import { MatBadgeModule } from '@angular/material/badge';
+import { PresencaModule } from './pages/configuracao/presenca/presenca.module';
+import { MeusCertificadosModule } from './pages/meus-certificados/meus-certificados.module';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -93,6 +95,8 @@ export function momentAdapterFactory() {
     MeusCursosModule,
     ConfirmarInscricoesModule,
     MatBadgeModule,
+    PresencaModule,
+    MeusCertificadosModule,
   ],
   providers: [
     {

@@ -39,7 +39,7 @@ export abstract class BaseConfiguracaoComponent implements OnInit {
   }
 
   selectEdicao() {
-    this.edicaoService.semanaSelecionada = this.edicaoSelecionada;
+    this.edicaoService.selecionaSemana(this.edicaoSelecionada!);
   }
 
   getIdField(entidade?: BaseModel): ModalFieldConfiguration {

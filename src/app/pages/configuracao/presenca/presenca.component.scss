@@ -1,0 +1,70 @@
+:host {
+  width: 100%;
+}
+
+:host ::ng-deep {
+  .dias-presenca {
+    .mat-button-wrapper {
+      line-height: 0px;
+    }
+  }
+}
+
+.content {
+  padding: 15px;
+}
+
+.opcoes-presenca {
+  display: flex;
+  justify-content: space-between;
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.alunos-lista {
+  width: 100%;
+  padding: 15px;
+
+  .header {
+    display: flex;
+    padding: 8px;
+  }
+
+  .aluno-item {
+    display: flex;
+    margin-bottom: 10px;
+    /*height: 40px;
+    border: 2px solid #e100ff;
+    border-radius: 10px;
+    margin-bottom: 5px;*/
+
+    div {
+      display: flex;
+      align-items: center;
+    }
+
+    .meia {
+      background: linear-gradient(0deg, #ff4081 50%, #ffffff 50%);
+    }
+    .inteira {
+      background: #ff4081;
+    }
+  }
+
+  .dias-presenca {
+    display: flex;
+    justify-content: space-around;
+
+    button {
+      width: 30px;
+      height: 30px;
+      line-height: 0;
+    }
+  }
+
+  mat-card {
+    padding: 8px;
+  }
+}

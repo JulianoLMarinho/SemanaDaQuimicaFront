@@ -17,6 +17,9 @@ import { QuemSomosComponent } from './pages/quem-somos/quem-somos.component';
 import { InscricaoComponent } from './pages/inscricao/inscricao.component';
 import { MeusCursosComponent } from './pages/meus-cursos/meus-cursos.component';
 import { ConfirmarInscricoesComponent } from './pages/configuracao/confirmar-inscricoes/confirmar-inscricoes.component';
+import { PresencaComponent } from './pages/configuracao/presenca/presenca.component';
+import { MeusCertificadosModule } from './pages/meus-certificados/meus-certificados.module';
+import { MeusCertificadosComponent } from './pages/meus-certificados/meus-certificados.component';
 
 const routes: Routes = [
   { path: '', component: InicioComponent },
@@ -80,8 +83,18 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'meus-certificados',
+    component: MeusCertificadosComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'configuracao/confirmar-inscricoes',
     component: ConfirmarInscricoesComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'configuracao/presenca',
+    component: PresencaComponent,
     canActivate: [AuthGuard],
   },
 ];

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import {
@@ -16,6 +17,43 @@ export class EdicaoSemanaService {
   semanaSelecionada!: EdicaoSemana | null;
   semanaAtiva!: EdicaoSemana;
   loadingSemanaAtiva = true;
+  diasSemana = [
+    {
+      sigla: 'S',
+      weekDay: 1,
+      date: new Date(),
+      parsedDate: '',
+      parsedShortDate: '',
+    },
+    {
+      sigla: 'T',
+      weekDay: 2,
+      date: new Date(),
+      parsedDate: '',
+      parsedShortDate: '',
+    },
+    {
+      sigla: 'Q',
+      weekDay: 3,
+      date: new Date(),
+      parsedDate: '',
+      parsedShortDate: '',
+    },
+    {
+      sigla: 'Q',
+      weekDay: 4,
+      date: new Date(),
+      parsedDate: '',
+      parsedShortDate: '',
+    },
+    {
+      sigla: 'S',
+      weekDay: 5,
+      date: new Date(),
+      parsedDate: '',
+      parsedShortDate: '',
+    },
+  ];
 
   constructor(
     private http: HttpService,
@@ -28,6 +66,22 @@ export class EdicaoSemanaService {
         this.loadingSemanaAtiva = false;
       });
     });
+  }
+
+  selecionaSemana(semana: EdicaoSemana) {
+    this.semanaSelecionada = semana;
+    let diaInicioReferencia = <Date>semana.parsed_data_inicio;
+    for (let i of this.diasSemana) {
+      const day = diaInicioReferencia.getDay();
+      const diaSemana = this.diasSemana.find((x) => x.weekDay === day);
+      if (diaSemana) {
+        diaSemana.date = new Date(diaInicioReferencia);
+        diaSemana.parsedDate = moment(diaSemana.date).format('DD/MM/yyyy');
+        // moment.locale('pt-br');
+        diaSemana.parsedShortDate = moment(diaSemana.date).format('DD/MM');
+      }
+      diaInicioReferencia.setDate(diaInicioReferencia.getDate() + 1);
+    }
   }
 
   getDetalhes(): Observable<EdicaoSemana> {
