@@ -45,6 +45,15 @@ export class GerenciarEdicaoComponent extends BaseConfiguracaoComponent {
         fieldValidators: [Validators.required],
       },
       {
+        fieldName: 'Número da Edição',
+        fieldInitialValue: edicaoAtividade?.numero_edicao,
+        fieldProperty: 'numero_edicao',
+        fieldType: 'number',
+        fieldPlaceholder: 'Insira o número da edição',
+        fieldErrorMessage: 'É necessário inserir um número maior do que 0',
+        fieldValidators: [Validators.required, Validators.min(1)],
+      },
+      {
         fieldName: 'Início',
         fieldInitialValue: edicaoAtividade?.data_inicio,
         fieldProperty: 'data_inicio',

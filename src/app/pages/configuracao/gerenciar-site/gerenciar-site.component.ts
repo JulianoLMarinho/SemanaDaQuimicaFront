@@ -50,7 +50,11 @@ export class GerenciarSiteComponent extends BaseConfiguracaoComponent {
   carregarPaleta(edicaoId: number) {
     this.loadingCores = true;
     this.coresEdicaoService.obterCoresEdicao(edicaoId).subscribe((cores) => {
-      this.cores = cores;
+      if (cores) {
+        this.cores = cores;
+      } else {
+        this.cores.edicao_semana_id = edicaoId;
+      }
       this.loadingCores = false;
     });
   }

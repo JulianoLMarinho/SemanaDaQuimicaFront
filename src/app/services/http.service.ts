@@ -21,6 +21,7 @@ export class HttpService {
   }
 
   get<T>(url: string, cacheData: boolean = false) {
+    cacheData = false;
     if (cacheData) {
       let getHeaders = this.headers.set('cache_data', 'cache_data');
       this.storage;

@@ -27,4 +27,8 @@ export class ResponsavelService {
       'edicaoSemana/quem-somos/' + edicaoSemanaId
     );
   }
+
+  getResponsaveisByAtividade(atividadeId: number): Observable<string[]> {
+    return this.http.get<string[]>('responsavel/atividade/' + atividadeId);
+  }
 }

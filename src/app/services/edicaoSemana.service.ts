@@ -62,7 +62,9 @@ export class EdicaoSemanaService {
     this.getDetalhes().subscribe((edicao) => {
       this.semanaAtiva = edicao;
       this.coresEdicaoService.obterCoresEdicao(edicao.id).subscribe((cores) => {
-        this.coresEdicaoService.carregarCores(cores);
+        if (cores) {
+          this.coresEdicaoService.carregarCores(cores);
+        }
         this.loadingSemanaAtiva = false;
       });
     });
