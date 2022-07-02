@@ -47,6 +47,8 @@ import { ConfirmarInscricoesModule } from './pages/configuracao/confirmar-inscri
 import { MatBadgeModule } from '@angular/material/badge';
 import { PresencaModule } from './pages/configuracao/presenca/presenca.module';
 import { MeusCertificadosModule } from './pages/meus-certificados/meus-certificados.module';
+import { GerarCertificadoModule } from './pages/configuracao/gerar-certificado/gerar-certificado.module';
+import { GerenciarEdicaoAtivaModule } from './pages/configuracao/gerenciar-edicao-ativa/gerenciar-edicao-ativa.module';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -97,6 +99,8 @@ export function momentAdapterFactory() {
     MatBadgeModule,
     PresencaModule,
     MeusCertificadosModule,
+    GerarCertificadoModule,
+    GerenciarEdicaoAtivaModule,
   ],
   providers: [
     {
@@ -107,7 +111,7 @@ export function momentAdapterFactory() {
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '66537848784-0b8g1ra6u7o1otbua56ujei1ri8a797q.apps.googleusercontent.com'
+              '66537848784-s4se8b7ufgteil6an085kdvbef2k87nc.apps.googleusercontent.com'
             ),
           },
         ],

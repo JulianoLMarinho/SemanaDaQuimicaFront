@@ -13,4 +13,8 @@ export interface EdicaoSemana {
   quem_somos?: string;
   comissao_edicao?: Responsavel[];
   certificado_liberado: boolean;
+  logo_completa?: string;
+  logo?: string;
+  aceita_inscricao_atividade: boolean;
+  site_em_construcao: boolean;
 }

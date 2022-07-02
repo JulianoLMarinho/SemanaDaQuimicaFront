@@ -1,0 +1,104 @@
+<div class="main-container">
+  <app-page-top-bar [titulo]="tituloTela"></app-page-top-bar>
+  <div class="conteudo">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >Configurações</mat-card-title
+        >
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content class="content-configuracoes">
+        <mat-slide-toggle
+          [(ngModel)]="edicaoSemanaAtiva.aceita_inscricao_atividade"
+          (change)="aceitarInscricoesAtividades()"
+          >Aceitar inscrições em cursos</mat-slide-toggle
+        >
+        <mat-slide-toggle
+          [(ngModel)]="edicaoSemanaAtiva.certificado_liberado"
+          (change)="liberarCertificados()"
+          >Liberar certificados</mat-slide-toggle
+        >
+        <mat-slide-toggle
+          [(ngModel)]="edicaoSemanaAtiva.site_em_construcao"
+          (change)="ativarSiteEmConstrucao()"
+          >Ativar tela de construção do site</mat-slide-toggle
+        >
+      </mat-card-content>
+      <mat-card-footer>
+        <mat-progress-bar
+          mode="indeterminate"
+          *ngIf="salvandoConfiguracoes"
+        ></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >Logo</mat-card-title
+        >
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <img
+          class="imagem-principal-logo"
+          *ngIf="edicaoSemanaAtiva.logo"
+          [src]="edicaoSemanaAtiva.logo"
+        />
+        <mat-icon
+          [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          (click)="alterarLogo()"
+          *ngIf="!edicaoSemanaAtiva.logo"
+          >add_photo_alternate</mat-icon
+        >
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button
+          *ngIf="edicaoSemanaAtiva.logo"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="alterarLogo()"
+        >
+          Alterar
+        </button>
+      </mat-card-actions>
+      <mat-card-footer> </mat-card-footer>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >Logo Completa</mat-card-title
+        >
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <img
+          *ngIf="edicaoSemanaAtiva.logo_completa"
+          class="imagem-principal-foto"
+          [src]="edicaoSemanaAtiva.logo_completa"
+        />
+        <mat-icon
+          (click)="alterarLogoCompleta()"
+          *ngIf="!edicaoSemanaAtiva.logo_completa"
+          [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >add_photo_alternate</mat-icon
+        >
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button
+          *ngIf="edicaoSemanaAtiva.logo_completa"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="alterarLogoCompleta()"
+        >
+          Alterar
+        </button>
+      </mat-card-actions>
+      <mat-card-footer> </mat-card-footer>
+    </mat-card>
+  </div>
+</div>

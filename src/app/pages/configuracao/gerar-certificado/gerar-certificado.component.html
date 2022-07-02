@@ -1,0 +1,59 @@
+<div class="main-container">
+  <app-page-top-bar titulo="Gerar Certificado"></app-page-top-bar>
+  <div class="content">
+    <div class="opcoes-atividades">
+      <div class="atividades-opcoes col-md-3">
+        <mat-form-field appearance="legacy">
+          <mat-label>Edição</mat-label>
+          <mat-select
+            [(value)]="edicaoSelecionada"
+            (selectionChange)="selectEdicao()"
+          >
+            <mat-option *ngFor="let edicao of edicoes" [value]="edicao">
+              {{
+                edicao.parsed_data_inicio.getFullYear() + " - " + edicao.tema
+              }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="selecao-atividade col-md-9">
+        <mat-form-field appearance="legacy">
+          <mat-label>Atividade</mat-label>
+          <mat-select
+            [(value)]="atividadeSelecionada"
+            (selectionChange)="selectAtividade()"
+          >
+            <mat-option
+              *ngFor="let atividade of atividades"
+              [value]="atividade"
+            >
+              {{ atividade.titulo }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="dados-certificado">
+      <div>
+        <mat-form-field appearance="legacy">
+          <mat-label>Nome</mat-label>
+          <input
+            matInput
+            [(ngModel)]="nomeAluno"
+            placeholder="Digite o nome do aluno"
+          />
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-button (click)="downloadCertificado()">
+          Gerar Certificado
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-certificado-export
+  [dadosCertificado]="dadosCertificado"
+></app-certificado-export>

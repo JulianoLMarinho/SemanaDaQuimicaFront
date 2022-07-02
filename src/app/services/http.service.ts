@@ -46,7 +46,7 @@ export class HttpService {
     });
   }
 
-  put<T, U>(url: string, body: U) {
+  put<T, U>(url: string, body?: U) {
     return this.http.put<T>(this.API_URL + url, body, {
       headers: this.headers,
     });

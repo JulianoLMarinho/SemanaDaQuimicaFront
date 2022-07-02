@@ -264,8 +264,17 @@
               (click)="sidenav.opened = false"
               mat-button
               [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+              routerLink="configuracao/gerenciar-edicao-ativa"
+              >Gerenciar Edição Ativa</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              (click)="sidenav.opened = false"
+              mat-button
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
               routerLink="/gerenciar_edicao"
-              >Gerenciar Edição</a
+              >Edições</a
             >
           </li>
           <li class="nav-item">
@@ -327,6 +336,15 @@
               [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
               routerLink="/configuracao/presenca"
               >Presença</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              (click)="sidenav.opened = false"
+              mat-button
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+              routerLink="/configuracao/gerar-certificado"
+              >Gerar Certificado</a
             >
           </li>
         </ul>

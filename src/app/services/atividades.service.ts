@@ -38,6 +38,14 @@ export class AtividadesService {
     );
   }
 
+  getAtividadesCertificadosByEdicaoInscricao(
+    idEdicao: number
+  ): Observable<AtividadeLista[]> {
+    return this.http.get<AtividadeLista[]>(
+      'atividades/atividades-certificado?idEdicao=' + idEdicao
+    );
+  }
+
   getAtividadesByEdicaoTurnoAndTipo(
     idEdicao: number,
     tipo: string

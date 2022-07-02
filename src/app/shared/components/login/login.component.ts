@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { EdicaoSemanaService } from 'src/app/services/edicaoSemana.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { UsuarioService } from '../../../services/usuario.service';
+import { EdicaoSemana } from '../../models/edicao-semana';
 import { SocialButton } from '../../models/social-button.interface';
 import { Usuario } from '../../models/usuario';
 import { getSocialButtons, SOCIAL_LOGINS } from './social-buttons.option';
@@ -22,12 +24,16 @@ export class LoginComponent implements OnInit {
     nome: '',
     email: '',
   };
+  semanaAtiva: EdicaoSemana;
 
   constructor(
     private authService: AuthenticationService,
     private activeModal: NgbActiveModal,
-    private usuarioService: UsuarioService
-  ) {}
+    private usuarioService: UsuarioService,
+    private edicaoSemanaService: EdicaoSemanaService
+  ) {
+    this.semanaAtiva = this.edicaoSemanaService.semanaAtiva;
+  }
 
   ngOnInit() {
     this.authService.loginError.asObservable().subscribe((errorCode) => {

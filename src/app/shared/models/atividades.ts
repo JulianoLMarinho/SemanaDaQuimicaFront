@@ -23,6 +23,7 @@ export interface AtividadeLista {
   nome_tipo?: string;
   tipo_atividade?: number;
   nome_turno?: string;
+  cod_tipo?: string;
   turno_id?: number;
   responsaveis?: Responsavel[];
   responsaveisMap?: string[];
@@ -32,6 +33,7 @@ export interface AtividadeLista {
   valor?: number;
   total_inscritos?: number;
   ja_salvo?: boolean;
+  duracao?: number;
 }
 
 export interface OpcaoSelect {

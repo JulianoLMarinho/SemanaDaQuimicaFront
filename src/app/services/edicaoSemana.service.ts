@@ -128,4 +128,43 @@ export class EdicaoSemanaService {
   editarEdicaoSemana(edicaoSemana: EdicaoSemana): Observable<boolean> {
     return this.http.put('edicaoSemana', edicaoSemana);
   }
+
+  liberarCertificado(
+    edicaoSemanaId: number,
+    liberar: boolean
+  ): Observable<void> {
+    return this.http.put(
+      `edicaoSemana/liberar-certificado/${edicaoSemanaId}/${liberar}`
+    );
+  }
+
+  aceitarInscricoesAtividades(
+    edicaoSemanaId: number,
+    aceitarInscricoes: boolean
+  ): Observable<void> {
+    return this.http.put(
+      `edicaoSemana/aceitar-inscricao-atividade/${edicaoSemanaId}/${aceitarInscricoes}`
+    );
+  }
+
+  salvarLogo(
+    edicaoSemanaId: number,
+    logo: string,
+    logo_tipo: string
+  ): Observable<void> {
+    return this.http.post('edicaoSemana/salvar-logo', {
+      edicao_semana_id: edicaoSemanaId,
+      logo: logo,
+      tipo_logo: logo_tipo,
+    });
+  }
+
+  siteEmConstrucao(
+    edicaoSemanaId: number,
+    siteEmConstrucao: boolean
+  ): Observable<void> {
+    return this.http.put(
+      `edicaoSemana/site-em-construcao/${edicaoSemanaId}/${siteEmConstrucao}`
+    );
+  }
 }

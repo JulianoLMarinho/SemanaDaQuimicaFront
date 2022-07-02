@@ -10,6 +10,7 @@ import { InscricaoService } from '../../services/inscricao.service';
 import { AtividadeInscricao } from '../../shared/models/inscricao';
 import { ToastrService } from 'ngx-toastr';
 import { CoresEdicaoService } from '../../services/coresEdicao.service';
+import { EdicaoSemana } from 'src/app/shared/models/edicao-semana';
 
 @Component({
   selector: 'app-inscricao',
@@ -24,6 +25,7 @@ export class InscricaoComponent implements OnInit {
   atividadesInscritas: AtividadeInscricao[] = [];
   valor: number = 0;
   salvando = false;
+  semanaAtiva: EdicaoSemana;
 
   constructor(
     private atividadeService: AtividadesService,
@@ -34,6 +36,7 @@ export class InscricaoComponent implements OnInit {
     public coresEdicao: CoresEdicaoService
   ) {
     this.viewDate = new Date(this.semanaEdicaoService.semanaAtiva.data_inicio);
+    this.semanaAtiva = this.semanaEdicaoService.semanaAtiva;
   }
 
   ngOnInit() {
@@ -50,6 +53,13 @@ export class InscricaoComponent implements OnInit {
   }
 
   adicionarEvento(atividade: AtividadeLista, deletavel = true) {
+    if (
+      !this.semanaEdicaoService.semanaAtiva.aceita_inscricao_atividade &&
+      deletavel
+    ) {
+      this.toast.info('A edição não está aceitando inscrições no momento');
+      return;
+    }
     if (atividade.vagas! - atividade.total_inscritos! < 1) {
       this.toast.info(
         'Esta atividade atingiu o número máximo de inscritos e não pode aceitar mais inscrições'

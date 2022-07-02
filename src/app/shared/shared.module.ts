@@ -36,6 +36,9 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { ResponsavelCardComponent } from './components/responsavel-card/responsavel-card.component';
 import { ModalConfirmacaoComponent } from './components/modal-confirmacao/modal-confirmacao.component';
 import { MatSortModule } from '@angular/material/sort';
+import { CertificadoExportComponent } from './components/certificado-export/certificado-export.component';
+import { ImageUploadComponent } from './components/image-upload/image-upload.component';
+import { EmConstrucaoComponent } from './components/em-construcao/em-construcao.component';
 
 registerLocaleData(localePT);
 
@@ -77,6 +80,9 @@ registerLocaleData(localePT);
     ModalAdicionarEditarComponent,
     ResponsavelCardComponent,
     ModalConfirmacaoComponent,
+    CertificadoExportComponent,
+    ImageUploadComponent,
+    EmConstrucaoComponent,
   ],
   exports: [
     CardPatrocinadorComponent,
@@ -92,6 +98,9 @@ registerLocaleData(localePT);
     ModalAdicionarEditarComponent,
     ResponsavelCardComponent,
     ModalConfirmacaoComponent,
+    CertificadoExportComponent,
+    ImageUploadComponent,
+    EmConstrucaoComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

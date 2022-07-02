@@ -20,11 +20,18 @@ import { ConfirmarInscricoesComponent } from './pages/configuracao/confirmar-ins
 import { PresencaComponent } from './pages/configuracao/presenca/presenca.component';
 import { MeusCertificadosModule } from './pages/meus-certificados/meus-certificados.module';
 import { MeusCertificadosComponent } from './pages/meus-certificados/meus-certificados.component';
+import { GerarCertificadoComponent } from './pages/configuracao/gerar-certificado/gerar-certificado.component';
+import { GerenciarEdicaoAtivaComponent } from './pages/configuracao/gerenciar-edicao-ativa/gerenciar-edicao-ativa.component';
+import { EmConstrucaoGuard } from './_helpers/emConstrucao.guard';
 
 const routes: Routes = [
   { path: '', component: InicioComponent },
   { path: 'inicio', component: InicioComponent },
-  { path: 'atividades', component: AtividadesComponent },
+  {
+    path: 'atividades',
+    component: AtividadesComponent,
+    canActivate: [EmConstrucaoGuard],
+  },
   {
     path: 'meus_dados',
     component: MeusDadosComponent,
@@ -58,24 +65,32 @@ const routes: Routes = [
   {
     path: 'cursos',
     component: CursosComponent,
+    canActivate: [EmConstrucaoGuard],
   },
   {
     path: 'palestras',
     component: PalestrasComponent,
+    canActivate: [EmConstrucaoGuard],
   },
   {
     path: 'workshops',
     component: WorkshopsComponent,
+    canActivate: [EmConstrucaoGuard],
   },
   {
     path: 'visitas-tecnicas',
     component: VisitasTecnicasComponent,
+    canActivate: [EmConstrucaoGuard],
   },
-  { path: 'quem-somos', component: QuemSomosComponent },
+  {
+    path: 'quem-somos',
+    component: QuemSomosComponent,
+    canActivate: [EmConstrucaoGuard],
+  },
   {
     path: 'inscricao',
     component: InscricaoComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, EmConstrucaoGuard],
   },
   {
     path: 'meus-cursos',
@@ -95,6 +110,16 @@ const routes: Routes = [
   {
     path: 'configuracao/presenca',
     component: PresencaComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'configuracao/gerar-certificado',
+    component: GerarCertificadoComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'configuracao/gerenciar-edicao-ativa',
+    component: GerenciarEdicaoAtivaComponent,
     canActivate: [AuthGuard],
   },
 ];

@@ -12,3 +12,15 @@ export interface DadosCertificados {
   carregando?: boolean;
   cod_tipo: TipoAtividadeCod;
 }
+
+export interface CertificadoExportacao {
+  nome_aluno: string;
+  texto_data: string;
+  titulo_atividade: string;
+  duracao_atividade: string;
+  numero_edicao: number;
+  data_atual: string;
+  responsaveis: string;
+  tipo: string;
+  logo_semana: string;
+}
