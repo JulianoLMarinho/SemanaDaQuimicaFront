@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@abacritt/angularx-social-login": "^1.0.2",
+    "@abacritt/angularx-social-login": "^1.1.0",
     "@angular/animations": "~13.3.9",
     "@angular/cdk": "^12.2.5",
     "@angular/common": "~13.3.9",
