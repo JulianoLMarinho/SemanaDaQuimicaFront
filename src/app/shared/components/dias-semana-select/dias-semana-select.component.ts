@@ -2,8 +2,8 @@ import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
@@ -46,9 +46,9 @@ export class DiasSemanaSelectComponent
   @Input() diasHora: DiaHora = {};
   @Input() diaInicioReferencia: Date = new Date();
 
-  groupControl = new FormGroup({
-    horInicio: new FormControl(null, [Validators.required]),
-    horFim: new FormControl(null, [Validators.required]),
+  groupControl = new UntypedFormGroup({
+    horInicio: new UntypedFormControl(null, [Validators.required]),
+    horFim: new UntypedFormControl(null, [Validators.required]),
   });
 
   onChange = (_quantity: any) => {};

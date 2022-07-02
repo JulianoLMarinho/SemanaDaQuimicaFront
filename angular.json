@@ -113,5 +113,7 @@
       }
     }
   },
-  "defaultProject": "SemanaDaQuimica"
+  "cli": {
+    "analytics": false
+  }
 }

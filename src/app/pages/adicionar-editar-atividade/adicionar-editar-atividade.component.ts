@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { AtividadesService } from '../../services/atividades.service';
@@ -35,19 +35,19 @@ export class AdicionarEditarAtividadeComponent implements OnInit {
   responsaveis: Responsavel[] = [];
   responsaveisFiltrados: Responsavel[] = [];
   edicaoSemana!: EdicaoSemana;
-  groupControl = new FormGroup({
-    titulo: new FormControl(this.atividade.titulo, [Validators.required]),
-    descricao: new FormControl(this.atividade.descricao_atividade, [
+  groupControl = new UntypedFormGroup({
+    titulo: new UntypedFormControl(this.atividade.titulo, [Validators.required]),
+    descricao: new UntypedFormControl(this.atividade.descricao_atividade, [
       Validators.required,
     ]),
-    tipoAtividade: new FormControl(this.atividade.tipo_atividade, [
+    tipoAtividade: new UntypedFormControl(this.atividade.tipo_atividade, [
       Validators.required,
     ]),
-    responsavelAtividade: new FormControl(
+    responsavelAtividade: new UntypedFormControl(
       this.atividade.responsavel_atividade,
       [Validators.required]
     ),
-    vagas: new FormControl(this.atividade.vagas, [
+    vagas: new UntypedFormControl(this.atividade.vagas, [
       Validators.required,
       Validators.min(1),
     ]),
@@ -153,18 +153,18 @@ export class AdicionarEditarAtividadeComponent implements OnInit {
       this.mostrarHorarios = false;
       this.groupControl.addControl(
         'turnoAtividade',
-        new FormControl(this.atividade.turno_atividade, [Validators.required])
+        new UntypedFormControl(this.atividade.turno_atividade, [Validators.required])
       );
       this.groupControl.removeControl('horInicio');
       this.groupControl.removeControl('horFim');
     } else {
       this.groupControl.addControl(
         'horInicio',
-        new FormControl(this.atividade.hora_inicio, [Validators.required])
+        new UntypedFormControl(this.atividade.hora_inicio, [Validators.required])
       );
       this.groupControl.addControl(
         'horFim',
-        new FormControl(this.atividade.hora_fim, [Validators.required])
+        new UntypedFormControl(this.atividade.hora_fim, [Validators.required])
       );
       this.groupControl.removeControl('turnoAtividade');
       this.atividade.dias_semana = [];
