@@ -1,111 +1,117 @@
 :host {
-  width: 100%;
-}
-
-.main-container {
   height: 100%;
-}
+  width: 100%;
+  margin: 10px 0 !important;
 
-.selecionar-cores {
-  display: flex;
-  flex-direction: column;
+  .selecionar-cores {
+    display: flex;
+    height: 100%;
 
-  .demonstracao {
-    width: 100%;
-    padding: 25px;
-
-    .main-site {
-      overflow: hidden;
-      height: 400px;
-      border: 1px solid #dddddd;
-      border-radius: 15px;
-
-      .top-bar-main-site {
-        height: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        div {
-          margin-left: 5px;
-          margin-right: 5px;
-          font-weight: bold;
-        }
-      }
-    }
-
-    .main-site-conteudo {
+    .demonstracao {
       width: 100%;
-      height: calc(100% - 50px);
-      display: flex;
 
-      .site-menu-lateral {
-        width: 30%;
-        margin: 10px;
-        border-radius: 10px;
-        box-shadow: 1px 2px 7px -1px rgb(0 0 0 / 10%);
+      .main-site {
+        overflow: hidden;
+        height: 100%;
+        border: 1px solid #dddddd;
+        border-radius: 15px;
+        font-size: 10px;
 
-        .menu-teste {
-          height: 100%;
+        .top-bar-main-site {
+          height: 30px;
           display: flex;
-          flex-direction: column;
+          justify-content: center;
+          align-items: center;
 
           div {
-            margin-bottom: 5px;
-          }
-
-          .menu-item {
+            margin-left: 5px;
+            margin-right: 5px;
             font-weight: bold;
-            margin-left: 10px;
-          }
-
-          .foto {
-            height: 70px;
-            width: 70px;
-            background-color: white;
-            border-radius: 35px;
-            margin-top: 15px;
-            margin-left: calc(50% - 35px);
           }
         }
       }
 
-      .conteudo-principal {
-        width: 70%;
-        border-radius: 15px;
-        box-shadow: 1px 2px 7px -1px rgb(0 0 0 / 10%);
-        margin: 10px;
+      .main-site-conteudo {
+        width: 100%;
+        height: calc(100% - 30px);
+        display: flex;
 
-        .top-principal {
-          height: 30px;
-          border-bottom: 3px solid;
-          display: flex;
-          padding-left: 10px;
-          align-items: center;
-          font-weight: bold;
+        .site-menu-lateral {
+          width: 30%;
+          margin: 10px;
+          border-radius: 10px;
+          box-shadow: 1px 2px 7px -1px rgb(0 0 0 / 10%);
+
+          .menu-teste {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+
+            div {
+              margin-bottom: 5px;
+            }
+
+            .menu-item {
+              font-weight: bold;
+              margin-left: 10px;
+            }
+
+            .foto {
+              height: 70px;
+              width: 70px;
+              background-color: white;
+              border-radius: 35px;
+              margin-top: 15px;
+              margin-left: calc(50% - 35px);
+            }
+          }
+        }
+
+        .conteudo-principal {
+          width: 70%;
+          border-radius: 15px;
+          box-shadow: 1px 2px 7px -1px rgb(0 0 0 / 10%);
+          margin: 10px;
+
+          .top-principal {
+            height: 30px;
+            border-bottom: 3px solid;
+            display: flex;
+            padding-left: 10px;
+            align-items: center;
+            font-weight: bold;
+          }
         }
       }
     }
   }
-}
 
-.color-selector {
-  display: flex;
-  justify-content: space-around;
-
-  input {
-    width: 50px;
-    height: 50px;
-  }
-
-  .color-selector-field {
+  .color-selector {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 5px;
-  }
-}
+    justify-content: space-around;
 
-.atividades-opcoes {
-  margin: 20px;
+    input {
+      width: 25px;
+      height: 25px;
+    }
+
+    .color-selector-field {
+      display: flex;
+      align-items: center;
+      margin: 5px;
+    }
+  }
+
+  .atividades-opcoes {
+    margin: 20px;
+  }
+
+  .main-container {
+    height: 100%;
+
+    .content {
+      height: 100%;
+    }
+  }
 }

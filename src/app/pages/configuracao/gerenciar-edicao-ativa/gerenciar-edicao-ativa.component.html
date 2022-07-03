@@ -100,5 +100,87 @@
       </mat-card-actions>
       <mat-card-footer> </mat-card-footer>
     </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >Presidente da Comissão</mat-card-title
+        >
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <img
+          *ngIf="edicaoSemanaAtiva.logo_completa"
+          class="imagem-principal-foto"
+          [src]="edicaoSemanaAtiva.logo_completa"
+        />
+        <mat-icon
+          (click)="alterarLogoCompleta()"
+          *ngIf="!edicaoSemanaAtiva.logo_completa"
+          [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >add_photo_alternate</mat-icon
+        >
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button
+          *ngIf="edicaoSemanaAtiva.logo_completa"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="alterarLogoCompleta()"
+        >
+          Alterar
+        </button>
+      </mat-card-actions>
+      <mat-card-footer> </mat-card-footer>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >Cores da Semana</mat-card-title
+        >
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <app-gerenciar-site
+          [(editar)]="editarCores"
+          (salvandoChange)="salvandoCores = $event"
+        ></app-gerenciar-site>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button
+          *ngIf="!editarCores"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="editarCores = true"
+        >
+          Alterar
+        </button>
+        <button
+          *ngIf="editarCores"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="gerenciarSiteComponent.salvarPaleta()"
+        >
+          Salvar
+        </button>
+        <button
+          *ngIf="editarCores"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="gerenciarSiteComponent.cancelarEdicao()"
+        >
+          Cancelar
+        </button>
+      </mat-card-actions>
+      <mat-card-footer
+        ><mat-progress-bar
+          mode="indeterminate"
+          *ngIf="salvandoCores"
+        ></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
   </div>
 </div>

@@ -10,6 +10,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { GerenciarSiteModule } from '../gerenciar-site/gerenciar-site.module';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     FormsModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    GerenciarSiteModule,
   ],
   declarations: [GerenciarEdicaoAtivaComponent],
 })

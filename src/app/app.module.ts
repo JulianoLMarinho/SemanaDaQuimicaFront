@@ -111,7 +111,8 @@ export function momentAdapterFactory() {
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '66537848784-s4se8b7ufgteil6an085kdvbef2k87nc.apps.googleusercontent.com'
+              '66537848784-s4se8b7ufgteil6an085kdvbef2k87nc.apps.googleusercontent.com',
+              { oneTapEnabled: true }
             ),
           },
         ],

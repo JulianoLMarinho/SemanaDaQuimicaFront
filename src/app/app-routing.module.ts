@@ -58,11 +58,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'configuracao/site',
-    component: GerenciarSiteComponent,
-    canActivate: [AuthGuard],
-  },
-  {
     path: 'cursos',
     component: CursosComponent,
     canActivate: [EmConstrucaoGuard],

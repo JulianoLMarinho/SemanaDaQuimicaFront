@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs/operators';
 import { CoresEdicaoService } from '../../../services/coresEdicao.service';
@@ -25,8 +32,12 @@ export class GerenciarSiteComponent extends BaseConfiguracaoComponent {
   };
   salvando = false;
   loadingCores = false;
+  edicao_semana_id: number;
 
-  editar = false;
+  @Input() editar = false;
+  @Output() editarChange = new EventEmitter<boolean>();
+  @Output() salvandoChange = new EventEmitter<boolean>();
+
   loadEntidade(): void {
     throw new Error('Method not implemented.');
   }
@@ -40,11 +51,11 @@ export class GerenciarSiteComponent extends BaseConfiguracaoComponent {
     private coresEdicaoService: CoresEdicaoService
   ) {
     super(edicaoService, toastService);
-    const edicao_semana_id = edicaoService.semanaSelecionada
+    this.edicao_semana_id = edicaoService.semanaSelecionada
       ? edicaoService.semanaSelecionada.id
       : edicaoService.semanaAtiva.id;
 
-    this.carregarPaleta(edicao_semana_id);
+    this.carregarPaleta(this.edicao_semana_id);
   }
 
   carregarPaleta(edicaoId: number) {
@@ -61,36 +72,36 @@ export class GerenciarSiteComponent extends BaseConfiguracaoComponent {
 
   salvarPaleta() {
     this.salvando = true;
-    this.coresEdicaoService
-      .salvarCores(this.cores)
-      .pipe(
-        finalize(() => {
-          this.salvando = false;
-        })
-      )
-      .subscribe(
-        (_) => {
-          this.toastService.success('Paleta de cores atualizada com sucesso!');
+    this.salvandoChange.emit(this.salvando);
+    this.coresEdicaoService.salvarCores(this.cores).subscribe({
+      next: (_) => {
+        this.toastService.success('Paleta de cores atualizada com sucesso!');
 
-          if (
-            this.edicaoService.semanaAtiva.id === this.edicaoSelecionada?.id
-          ) {
-            window.location.reload();
-          }
-          this.editar = false;
-        },
-        (_) => {
-          this.toastService.error('Houve algum erro. Tente novamente!');
+        if (this.edicaoService.semanaAtiva.id === this.edicaoSelecionada?.id) {
+          window.location.reload();
         }
-      );
+        this.editar = false;
+        this.editarChange.emit(this.editar);
+      },
+      error: (_) => {
+        this.toastService.error('Houve algum erro. Tente novamente!');
+      },
+      complete: () => {
+        this.salvando = false;
+        this.salvandoChange.emit(this.salvando);
+      },
+    });
   }
 
   editarCores() {
     this.editar = true;
+    this.editarChange.emit(this.editar);
   }
 
   cancelarEdicao() {
+    this.carregarPaleta(this.edicao_semana_id);
     this.editar = false;
+    this.editarChange.emit(this.editar);
   }
 
   selectEdicao() {

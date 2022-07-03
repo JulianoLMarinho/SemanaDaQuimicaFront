@@ -1,5 +1,6 @@
 <div class="main-container">
   <app-page-top-bar
+    *ngIf="false"
     titulo="Gerenciar Site"
     [loading]="salvando || loadingCores"
     [loadingSave]="salvando"
@@ -9,7 +10,7 @@
     [cancelarAction]="cancelarEdicao.bind(this)"
   ></app-page-top-bar>
   <div class="content">
-    <div class="atividades-opcoes">
+    <div class="atividades-opcoes" *ngIf="false">
       <mat-form-field appearance="legacy">
         <mat-label>Edição</mat-label>
         <mat-select

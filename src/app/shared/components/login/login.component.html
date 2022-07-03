@@ -6,6 +6,7 @@
   <mat-spinner class="progress-spinner" *ngIf="loading"></mat-spinner>
   <hr />
   <div *ngIf="!loading && !cadastroUsuario" class="social-login-buttons">
+    <asl-google-signin-button></asl-google-signin-button>
     <div
       class="social-button"
       *ngFor="let button of socialButtons"
