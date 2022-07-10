@@ -8,6 +8,17 @@
     width: 180px;
   }
 
+  .login-email-senha {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+
+    mat-form-field {
+      width: 80%;
+    }
+  }
+
   .social-login-buttons {
     display: flex;
     width: 100%;

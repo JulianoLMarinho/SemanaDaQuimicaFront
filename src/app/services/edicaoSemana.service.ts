@@ -167,4 +167,21 @@ export class EdicaoSemanaService {
       `edicaoSemana/site-em-construcao/${edicaoSemanaId}/${siteEmConstrucao}`
     );
   }
+
+  salvarAssinatura(assinatura: any, edicaoSemanaId: number) {
+    const obj = {
+      edicao_semana_id: edicaoSemanaId,
+      tipo_assinatura: assinatura.tipo,
+      assinatura: assinatura.assinatura,
+      nome: assinatura.nome,
+    };
+    return this.http.post('edicaoSemana/salvar-assinatura', obj);
+  }
+
+  streamValuesTest() {
+    const ret = new EventSource(
+      'http://localhost:8000/edicaoSemana/stream-results'
+    );
+    return ret;
+  }
 }

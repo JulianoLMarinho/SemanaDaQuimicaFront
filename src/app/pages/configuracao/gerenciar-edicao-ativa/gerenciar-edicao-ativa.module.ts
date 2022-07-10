@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { GerenciarSiteModule } from '../gerenciar-site/gerenciar-site.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   imports: [
@@ -25,6 +27,8 @@ import { GerenciarSiteModule } from '../gerenciar-site/gerenciar-site.module';
     MatIconModule,
     MatProgressSpinnerModule,
     GerenciarSiteModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   declarations: [GerenciarEdicaoAtivaComponent],
 })

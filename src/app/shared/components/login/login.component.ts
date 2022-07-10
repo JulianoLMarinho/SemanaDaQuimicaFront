@@ -25,6 +25,11 @@ export class LoginComponent implements OnInit {
     email: '',
   };
   semanaAtiva: EdicaoSemana;
+  loginEmailSenha: {
+    email?: string;
+    senha?: string;
+  } = {};
+  mostrarEmailESenhaLogin = false;
 
   constructor(
     private authService: AuthenticationService,
@@ -65,6 +70,16 @@ export class LoginComponent implements OnInit {
 
   loginWithFacebook() {
     alert('Ainda não foi implementado');
+  }
+
+  async loginWithEmailSenha() {
+    if (this.loginEmailSenha.email && this.loginEmailSenha.senha) {
+      const t = await this.authService.cadastrar(
+        this.loginEmailSenha.email,
+        this.loginEmailSenha.senha
+      );
+      console.log(t);
+    }
   }
 
   genericLogin(source: SOCIAL_LOGINS) {

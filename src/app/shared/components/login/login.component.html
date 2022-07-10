@@ -5,8 +5,10 @@
   </h1>
   <mat-spinner class="progress-spinner" *ngIf="loading"></mat-spinner>
   <hr />
-  <div *ngIf="!loading && !cadastroUsuario" class="social-login-buttons">
-    <asl-google-signin-button></asl-google-signin-button>
+  <div
+    *ngIf="!loading && !cadastroUsuario && !mostrarEmailESenhaLogin"
+    class="social-login-buttons"
+  >
     <div
       class="social-button"
       *ngFor="let button of socialButtons"
@@ -17,6 +19,43 @@
       <img [src]="button.icone" />
       <span>{{ button.texto }}</span>
     </div>
+  </div>
+  <div *ngIf="!loading && !cadastroUsuario && !mostrarEmailESenhaLogin">
+    <a href="#" (click)="mostrarEmailESenhaLogin = !mostrarEmailESenhaLogin"
+      >ou acesse utilizando seu email e senha</a
+    >
+  </div>
+  <div
+    class="login-email-senha"
+    *ngIf="!loading && !cadastroUsuario && mostrarEmailESenhaLogin"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        [(ngModel)]="loginEmailSenha.email"
+        placeholder="Insira seu Email"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Senha</mat-label>
+      <input
+        matInput
+        type="password"
+        [(ngModel)]="loginEmailSenha.senha"
+        placeholder="Insira sua senha"
+      />
+    </mat-form-field>
+    <div>
+      <button mat-raised-button color="primary" (click)="loginWithEmailSenha()">
+        Login
+      </button>
+    </div>
+  </div>
+  <div *ngIf="!loading && !cadastroUsuario && mostrarEmailESenhaLogin">
+    <a href="#" (click)="mostrarEmailESenhaLogin = !mostrarEmailESenhaLogin"
+      >ou acesse utilizando suas redes sociais</a
+    >
   </div>
   <div *ngIf="!loading && cadastroUsuario" class="completar-cadastro">
     <p>

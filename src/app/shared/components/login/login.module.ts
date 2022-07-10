@@ -18,7 +18,6 @@ import { SocialLoginModule } from '@abacritt/angularx-social-login';
     MatIconModule,
     MatButtonModule,
     FormsModule,
-    SocialLoginModule,
   ],
   declarations: [LoginComponent],
 })

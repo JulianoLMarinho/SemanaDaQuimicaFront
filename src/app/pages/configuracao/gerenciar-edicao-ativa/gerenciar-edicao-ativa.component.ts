@@ -18,6 +18,21 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
   salvandoConfiguracoes = false;
   editarCores = false;
   salvandoCores = false;
+  salvandoAssinaturaDirecao = false;
+  salvandoAssinaturaPresidente = false;
+  presidenteEdicao!: {
+    nome?: string;
+    assinatura?: string;
+    tipo: string;
+    editando: boolean;
+  };
+
+  direcaoInstituto!: {
+    nome?: string;
+    assinatura?: string;
+    tipo: string;
+    editando: boolean;
+  };
 
   @ViewChild(GerenciarSiteComponent)
   gerenciarSiteComponent!: GerenciarSiteComponent;
@@ -29,6 +44,7 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
     private modalService: NgbModal
   ) {
     this.edicaoSemanaAtiva = this.edicaoService.semanaAtiva;
+    this.carregarAssinaturas();
     this.tituloTela = `Gerenciar ${this.edicaoSemanaAtiva.numero_edicao}ª Edição`;
   }
 
@@ -47,6 +63,63 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
         error: () => this.toastService.error('Erro ao salvar configuração!'),
         complete: () => (this.salvandoConfiguracoes = false),
       });
+  }
+
+  carregarAssinaturas() {
+    this.carregarAssinaturaPresidente();
+    this.carregarAssinaturaDirecao();
+  }
+
+  carregarAssinaturaPresidente() {
+    this.presidenteEdicao = {
+      nome: this.edicaoSemanaAtiva.presidente_edicao,
+      assinatura: this.edicaoSemanaAtiva.assinatura_presidente_edicao,
+      tipo: 'presidente',
+      editando: false,
+    };
+  }
+
+  carregarAssinaturaDirecao() {
+    this.direcaoInstituto = {
+      nome: this.edicaoSemanaAtiva.direcao_instituto,
+      assinatura: this.edicaoSemanaAtiva.assinatura_direcao_instituto,
+      tipo: 'direcao',
+      editando: false,
+    };
+  }
+
+  salvarAssinatura(assinatura: any) {
+    if (assinatura.tipo === 'presidente') {
+      this.salvandoAssinaturaPresidente = true;
+    } else {
+      this.salvandoAssinaturaDirecao = true;
+    }
+    this.edicaoService
+      .salvarAssinatura(assinatura, this.edicaoSemanaAtiva.id)
+      .subscribe({
+        next: (_) => {
+          assinatura.editando = false;
+          this.toastService.success('Assinatura salva com sucesso!');
+        },
+        error: (_) => {
+          this.toastService.error('Erro ao salvar assinatura!');
+        },
+        complete: () => {
+          if (assinatura.tipo === 'presidente') {
+            this.salvandoAssinaturaPresidente = false;
+          } else {
+            this.salvandoAssinaturaDirecao = false;
+          }
+        },
+      });
+  }
+
+  cancelarAssinaturaEdicao(assinatura: any) {
+    if (assinatura.tipo === 'presidente') {
+      this.salvandoAssinaturaPresidente = true;
+    } else {
+      this.salvandoAssinaturaDirecao = true;
+    }
   }
 
   aceitarInscricoesAtividades() {
@@ -106,6 +179,23 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
       modal,
       'logo_completa'
     );
+    componentInstance.cancelar = () => {
+      modal.dismiss();
+    };
+  }
+
+  alterarAssinatura(assinatura: any) {
+    const modal = this.modalService.open(ImageUploadComponent);
+    const componentInstance = <ImageUploadComponent>modal.componentInstance;
+    componentInstance.setTamanhos(1000, 240);
+    componentInstance.salvarAction = () => {
+      if (assinatura.tipo === 'presidente') {
+        this.presidenteEdicao.assinatura = componentInstance.croppedImage;
+      } else {
+        this.direcaoInstituto.assinatura = componentInstance.croppedImage;
+      }
+      modal.dismiss();
+    };
     componentInstance.cancelar = () => {
       modal.dismiss();
     };

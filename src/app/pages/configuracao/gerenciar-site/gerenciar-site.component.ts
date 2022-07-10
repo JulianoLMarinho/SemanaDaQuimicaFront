@@ -39,10 +39,11 @@ export class GerenciarSiteComponent extends BaseConfiguracaoComponent {
   @Output() salvandoChange = new EventEmitter<boolean>();
 
   loadEntidade(): void {
-    throw new Error('Method not implemented.');
+    //throw new Error('Method not implemented.');
   }
   obterModelo(entidadeEdicao?: BaseModel): ModalFieldConfiguration[] {
-    throw new Error('Method not implemented.');
+    //throw new Error('Method not implemented.');
+    return [];
   }
 
   constructor(

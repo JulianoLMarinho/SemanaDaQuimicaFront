@@ -17,4 +17,8 @@ export interface EdicaoSemana {
   logo?: string;
   aceita_inscricao_atividade: boolean;
   site_em_construcao: boolean;
+  presidente_edicao?: string;
+  assinatura_presidente_edicao?: string;
+  direcao_instituto?: string;
+  assinatura_direcao_instituto?: string;
 }

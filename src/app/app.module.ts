@@ -49,6 +49,12 @@ import { PresencaModule } from './pages/configuracao/presenca/presenca.module';
 import { MeusCertificadosModule } from './pages/meus-certificados/meus-certificados.module';
 import { GerarCertificadoModule } from './pages/configuracao/gerar-certificado/gerar-certificado.module';
 import { GerenciarEdicaoAtivaModule } from './pages/configuracao/gerenciar-edicao-ativa/gerenciar-edicao-ativa.module';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { environment } from 'environment';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -101,23 +107,13 @@ export function momentAdapterFactory() {
     MeusCertificadosModule,
     GerarCertificadoModule,
     GerenciarEdicaoAtivaModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireDatabaseModule,
   ],
   providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: true,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '66537848784-s4se8b7ufgteil6an085kdvbef2k87nc.apps.googleusercontent.com',
-              { oneTapEnabled: true }
-            ),
-          },
-        ],
-      },
-    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

@@ -39,16 +39,16 @@
       Rio de Janeiro, {{ dadosCertificado.data_atual }}
     </div>
     <div class="assinatura-certificado">
-      <div><img [src]="assinatura" /></div>
-      <div><img [src]="assinatura" /></div>
+      <div><img [src]="semanaAtiva.assinatura_direcao_instituto" /></div>
+      <div><img [src]="semanaAtiva.assinatura_presidente_edicao" /></div>
     </div>
     <div class="assinatura-certificado-nomes">
       <div>
-        <p>Juliano de Lima Marinho</p>
+        <p>{{ semanaAtiva.direcao_instituto }}</p>
         <p>Diretor do Institulo de Química</p>
       </div>
       <div>
-        <p>Juliano de Lima Marinho</p>
+        <p>{{ semanaAtiva.presidente_edicao }}</p>
         <p>
           Presidente da Comissão Organizadora da
           {{ dadosCertificado.numero_edicao }}ª Semana da Química

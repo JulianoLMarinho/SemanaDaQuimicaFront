@@ -5,7 +5,7 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { firstValueFrom, from, lastValueFrom, Observable } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable()
@@ -16,15 +16,16 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const access_token = this.authenticationService.getAccessToken();
-    if (access_token && access_token) {
-      request = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
-    }
+    return from(this.handle(request, next));
+  }
 
-    return next.handle(request);
+  async handle(req: HttpRequest<any>, next: HttpHandler) {
+    const token = await this.authenticationService.getAccessTokenAsync();
+    const authReq = req.clone({
+      setHeaders: {
+        Authorization: 'Bearer ' + token,
+      },
+    });
+    return lastValueFrom(next.handle(authReq));
   }
 }
