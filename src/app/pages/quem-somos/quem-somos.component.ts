@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CoresEdicaoService } from 'src/app/services/coresEdicao.service';
 import { EdicaoSemanaService } from '../../services/edicaoSemana.service';
 import { ResponsavelService } from '../../services/responsavel.service';
 import { Responsavel } from '../../shared/models/responsavel';
@@ -16,7 +17,8 @@ export class QuemSomosComponent implements OnInit {
   quemSomosTexto: string = '';
   constructor(
     private edicaoSemanaService: EdicaoSemanaService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public coresEdicao: CoresEdicaoService
   ) {}
 
   ngOnInit() {
@@ -26,6 +28,9 @@ export class QuemSomosComponent implements OnInit {
   loadComissao() {
     this.quemSomosTexto = this.edicaoSemanaService.semanaAtiva.quem_somos || '';
     this.comissao = this.edicaoSemanaService.semanaAtiva.comissao_edicao || [];
+    this.comissao.push(...this.comissao);
+    this.comissao.push(...this.comissao);
+
     this.comissao.map((x) => {
       x.fotoEnc = x.foto
         ? AppUtils.imageSanitizer(x.foto, this.sanitizer)

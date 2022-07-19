@@ -74,8 +74,8 @@ export class AuthenticationService {
         token: token,
         source: provider,
       })
-      .subscribe(
-        (res) => {
+      .subscribe({
+        next: (res) => {
           if (res.responseType === 'OK') {
             this.isAuthenticated = true;
             this.usuarioLogado = res.usuario;
@@ -91,7 +91,7 @@ export class AuthenticationService {
           }
           this.authResponse.next(res);
         },
-        (error) => {
+        error: (error) => {
           switch (error.status) {
             case 403:
               if (error?.error?.detail === 'GOOGLE_NAO_ASSOCIADO') {
@@ -104,8 +104,8 @@ export class AuthenticationService {
               }
               break;
           }
-        }
-      );
+        },
+      });
   }
 
   async apiAuthAsync(token: string, provider: string) {

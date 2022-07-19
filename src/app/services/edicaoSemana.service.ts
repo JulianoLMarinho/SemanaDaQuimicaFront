@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import {
   CarouselImage,
@@ -17,6 +17,7 @@ export class EdicaoSemanaService {
   semanaSelecionada!: EdicaoSemana | null;
   semanaAtiva!: EdicaoSemana;
   loadingSemanaAtiva = true;
+  loadingSemanaAtivaSubject = new Subject<EdicaoSemana>();
   diasSemana = [
     {
       sigla: 'S',
@@ -61,6 +62,8 @@ export class EdicaoSemanaService {
   ) {
     this.getDetalhes().subscribe((edicao) => {
       this.semanaAtiva = edicao;
+      this.semanaSelecionada = edicao;
+      this.loadingSemanaAtivaSubject.next(edicao);
       this.coresEdicaoService.obterCoresEdicao(edicao.id).subscribe((cores) => {
         if (cores) {
           this.coresEdicaoService.carregarCores(cores);

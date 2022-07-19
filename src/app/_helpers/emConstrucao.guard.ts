@@ -17,16 +17,30 @@ export class EmConstrucaoGuard implements CanActivate {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const usuarioLogadoAdmin = this.authenticationService.userIsAdmin();
-    console.log(usuarioLogadoAdmin);
-    if (
-      this.edicaoSemanaService.semanaAtiva.site_em_construcao &&
-      !usuarioLogadoAdmin
-    ) {
-      this.router.navigate(['/']);
-      return false;
-    } else {
-      return true;
-    }
+    return new Promise<boolean>((resolve, reject) => {
+      this.edicaoSemanaService.loadingSemanaAtivaSubject
+        .asObservable()
+        .subscribe((edicao) => {
+          const usuarioLogadoAdmin = this.authenticationService.userIsAdmin();
+          if (edicao.site_em_construcao && !usuarioLogadoAdmin) {
+            this.router.navigate(['/']);
+            reject(false);
+          } else {
+            resolve(true);
+          }
+        });
+      if (this.edicaoSemanaService.semanaAtiva) {
+        const usuarioLogadoAdmin = this.authenticationService.userIsAdmin();
+        if (
+          this.edicaoSemanaService.semanaAtiva.site_em_construcao &&
+          !usuarioLogadoAdmin
+        ) {
+          this.router.navigate(['/']);
+          reject(false);
+        } else {
+          resolve(true);
+        }
+      }
+    });
   }
 }

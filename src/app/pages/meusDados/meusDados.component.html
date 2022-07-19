@@ -5,7 +5,7 @@
   <div class="meus_dados_container" *ngIf="usuario">
     <app-page-top-bar
       titulo="Meus Dados"
-      [loading]="loading"
+      [loading]="loading || loadingSave"
       [loadingSave]="loadingSave"
       [editando]="editando"
       [salvarAction]="salvarUsuario.bind(this)"
@@ -46,46 +46,91 @@
         </p>
         <p>
           <mat-form-field appearance="legacy">
-            <mat-label>Universidade</mat-label>
+            <mat-label>Nível</mat-label>
             <input
-              matInput
+              type="text"
               [disabled]="!editando"
-              [(ngModel)]="usuario.universidade"
-              placeholder="Insira seu Nome"
+              placeholder="Selecione ou escreva o nível"
+              matInput
+              [matAutocomplete]="autoNivel"
+              [(ngModel)]="usuario.nivel"
             />
+            <mat-autocomplete #autoNivel="matAutocomplete">
+              <mat-option *ngFor="let option of nivelOpcao" [value]="option">
+                {{ option }}
+              </mat-option>
+            </mat-autocomplete>
           </mat-form-field>
         </p>
-        <p>
+        <p
+          *ngIf="
+            usuario.nivel === 'Graduação' || usuario.nivel === 'Ensino Técnico'
+          "
+        >
           <mat-form-field appearance="legacy">
             <mat-label>Curso</mat-label>
             <input
-              matInput
+              type="text"
               [disabled]="!editando"
+              placeholder="Selecione ou escreva o seu curso"
+              matInput
+              [matAutocomplete]="autoCurso"
               [(ngModel)]="usuario.curso"
-              placeholder="Insira seu Nome"
             />
+            <mat-autocomplete #autoCurso="matAutocomplete">
+              <mat-option
+                *ngFor="
+                  let option of cursosOpcoes[
+                    usuario.nivel === 'Graduação' ? 'graduacao' : 'tecnico'
+                  ]
+                "
+                [value]="option"
+              >
+                {{ option }}
+              </mat-option>
+            </mat-autocomplete>
           </mat-form-field>
         </p>
-        <p>
+        <p
+          *ngIf="
+            usuario.nivel === 'Graduação' || usuario.nivel === 'Ensino Técnico'
+          "
+        >
           <mat-form-field appearance="legacy">
-            <mat-label>Nível</mat-label>
+            <mat-label>Instituto</mat-label>
             <input
-              matInput
+              type="text"
               [disabled]="!editando"
-              [(ngModel)]="usuario.nivel"
-              placeholder="Insira seu Nome"
+              placeholder="Selecione ou escreva o seu instituto"
+              matInput
+              [matAutocomplete]="autoInst"
+              [(ngModel)]="usuario.universidade"
             />
+            <mat-autocomplete #autoInst="matAutocomplete">
+              <mat-option
+                *ngFor="
+                  let option of instituicoes[
+                    usuario.nivel === 'Graduação' ? 'graduacao' : 'tecnico'
+                  ]
+                "
+                [value]="option"
+              >
+                {{ option }}
+              </mat-option>
+            </mat-autocomplete>
           </mat-form-field>
         </p>
         <p>
           <mat-form-field appearance="legacy">
             <mat-label>Tamanho Da Camisa</mat-label>
-            <input
-              matInput
+            <mat-select
               [disabled]="!editando"
-              [(ngModel)]="usuario.tamanho_camisa"
-              placeholder="Insira seu Nome"
-            />
+              [(value)]="usuario.tamanho_camisa"
+            >
+              <mat-option *ngFor="let tamanho of tamanhos" [value]="tamanho">
+                {{ tamanho }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
         </p>
         <p>

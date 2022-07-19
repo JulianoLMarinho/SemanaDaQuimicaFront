@@ -53,60 +53,6 @@
   </div>
 </div>
 
-<div style="height: 0; overflow: hidden">
-  <div
-    id="pdfTable"
-    #pdfTable
-    [ngStyle]="{ display: exportando ? 'flex' : 'flex' }"
-  >
-    <div
-      style="
-        height: fit-content;
-        width: 100%;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      "
-    >
-      <div class="header-cert"></div>
-      <div><img [src]="img" style="width: 230px" /></div>
-      <div class="header-cert"></div>
-    </div>
-    <div class="certificado-titulo">
-      <u><b>C E R T I F I C A D O</b></u>
-    </div>
-    <div class="texto-certificado">
-      <p>
-        Certificamos que
-        {{ authService.usuarioLogado?.nome?.toLocaleUpperCase() }} participou
-        {{ dadosCertificado.tipo }} “{{ dadosCertificado.tituloAtividade }}”,
-        ministrado por {{ dadosCertificado.responsaveis }} durante a
-        {{ dadosCertificado.numero_edicao }}ª Semana da Química do Instituto de
-        Química da Universidade Federal do Rio de Janeiro,
-        {{ dadosCertificado.textoData }}, com carga horária de
-        {{ dadosCertificado.duracaoAtividade.toLocaleString() }} horas.
-      </p>
-    </div>
-    <div class="data-certificado">
-      Rio de Janeiro, {{ dadosCertificado.data_atual }}
-    </div>
-    <div class="assinatura-certificado">
-      <div><img [src]="assinatura" /></div>
-      <div><img [src]="assinatura" /></div>
-    </div>
-    <div class="assinatura-certificado-nomes">
-      <div>
-        <p>Juliano de Lima Marinho</p>
-        <p>Diretor do Institulo de Química</p>
-      </div>
-      <div>
-        <p>Juliano de Lima Marinho</p>
-        <p>
-          Presidente da Comissão Organizadora da
-          {{ dadosCertificado.numero_edicao }}ª Semana da Química
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
+<app-certificado-export
+  [dadosCertificado]="dadosCertificado"
+></app-certificado-export>

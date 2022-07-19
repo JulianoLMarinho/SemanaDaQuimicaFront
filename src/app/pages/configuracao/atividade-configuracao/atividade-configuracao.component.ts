@@ -127,6 +127,42 @@ export class AtividadeConfiguracaoComponent
         fieldLoadOptionsService: this.loadTipoAtividades.bind(this),
       },
       {
+        fieldName: 'Atividade Presencial',
+        fieldInitialValue: edicaoAtividade?.atividade_presencial,
+        fieldProperty: 'atividade_presencial',
+        fieldType: 'select',
+        fieldPlaceholder: 'Selecione se a atividade é presencial ou não',
+        fieldErrorMessage: 'É necessário informar se a atividade é presencial',
+        fieldValidators: [Validators.required],
+        fieldOptions: [
+          { name: 'Sim', value: true },
+          { name: 'Não', value: false },
+        ],
+        fieldShowOnTable: false,
+      },
+      {
+        fieldName: 'Local da atividade',
+        fieldInitialValue: edicaoAtividade?.local,
+        fieldProperty: 'local',
+        fieldType: 'text',
+        fieldPlaceholder: 'Insira o local',
+        fieldErrorMessage: '',
+        fieldValidators: [],
+        fieldShowOnTable: false,
+        fieldVisible: this.showLocal,
+      },
+      {
+        fieldName: 'Link da atividade',
+        fieldInitialValue: edicaoAtividade?.link,
+        fieldProperty: 'link',
+        fieldType: 'text',
+        fieldPlaceholder: 'Insira o link da atividade',
+        fieldErrorMessage: '',
+        fieldValidators: [],
+        fieldShowOnTable: false,
+        fieldVisible: this.showLink,
+      },
+      {
         fieldName: 'Responsáveis',
         fieldInitialValue: edicaoAtividade?.responsaveis?.map((x) => x.id),
         fieldProperty: 'responsaveis',
@@ -231,6 +267,14 @@ export class AtividadeConfiguracaoComponent
     return tipoAtividade && tipoAtividade !== 1;
   }
 
+  showLocal(fieldList: any) {
+    return fieldList['atividade_presencial'];
+  }
+
+  showLink(fieldList: any) {
+    return !fieldList['atividade_presencial'];
+  }
+
   showAceitaInscricoes(fieldList: any) {
     const tipoAtividade = fieldList['tipo_atividade'];
     return tipoAtividade && tipoAtividade !== 2;
@@ -249,6 +293,9 @@ export class AtividadeConfiguracaoComponent
       horarios: [],
       turno_atividade: formValues.turno_atividade,
       valor: formValues.valor,
+      atividade_presencial: formValues.atividade_presencial,
+      local: formValues.local,
+      link: formValues.link,
     };
     if (!atividadeSave.turno_atividade) {
       atividadeSave.horarios = formValues.dia.diasSelecionado.map((x: any) => {

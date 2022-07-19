@@ -1,5 +1,14 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import jsPDF from 'jspdf';
+import { CoresEdicaoService } from 'src/app/services/coresEdicao.service';
 import { EdicaoSemanaService } from 'src/app/services/edicaoSemana.service';
 import { CertificadoExportacao } from '../../models/dados-certificados';
 import { EdicaoSemana } from '../../models/edicao-semana';
@@ -26,27 +35,40 @@ export class CertificadoExportComponent implements OnInit {
   };
 
   semanaAtiva: EdicaoSemana;
-  constructor(private edicaoSemanaService: EdicaoSemanaService) {
+
+  @Output() exportandoChange = new EventEmitter<boolean>();
+  constructor(
+    private edicaoSemanaService: EdicaoSemanaService,
+    public coresSemana: CoresEdicaoService
+  ) {
     this.semanaAtiva = this.edicaoSemanaService.semanaAtiva;
   }
 
   ngOnInit() {}
 
-  public downloadAsPDF() {
-    var doc = new jsPDF('landscape', 'px', [1096, 795]);
-    this.exportando = true;
-
-    setTimeout(() => {
-      doc.html(this.pdfTable.nativeElement, {
-        callback: this.saveDoc.bind(this, doc),
-        x: 0,
-        y: 0,
-      });
-    }, 500);
+  public async downloadAsPDF() {
+    return new Promise((resolve, reject) => {
+      try {
+        var doc = new jsPDF('landscape', 'px', [1096, 795]);
+        this.exportando = true;
+        this.exportandoChange.emit(true);
+        setTimeout(() => {
+          doc.html(this.pdfTable.nativeElement, {
+            callback: this.saveDoc.bind(this, doc, resolve),
+            x: 0,
+            y: 0,
+          });
+        }, 500);
+      } catch {
+        reject();
+      }
+    });
   }
 
-  saveDoc(doc: jsPDF) {
+  saveDoc(doc: jsPDF, resolve: any) {
     doc.save('test');
     this.exportando = false;
+    this.exportandoChange.emit(false);
+    resolve();
   }
 }

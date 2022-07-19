@@ -11,4 +11,6 @@ export interface Responsavel extends BaseModel {
   twitter?: string;
   instagram?: string;
   facebook?: string;
+  tipo: string;
+  funcao_semana?: string;
 }

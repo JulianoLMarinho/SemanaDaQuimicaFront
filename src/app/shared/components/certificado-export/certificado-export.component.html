@@ -4,21 +4,18 @@
     #pdfTable
     [ngStyle]="{ display: exportando ? 'flex' : 'flex' }"
   >
-    <div
-      style="
-        height: fit-content;
-        width: 100%;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      "
-    >
-      <div class="header-cert"></div>
+    <div class="certificado-container">
+      <div
+        class="header-cert"
+        [ngStyle]="{ 'background-color': coresSemana.coresAtivas.cor1 }"
+      ></div>
       <div>
         <img [src]="dadosCertificado.logo_semana" style="width: 230px" />
       </div>
-      <div class="header-cert"></div>
+      <div
+        class="header-cert"
+        [ngStyle]="{ 'background-color': coresSemana.coresAtivas.cor1 }"
+      ></div>
     </div>
     <div class="certificado-titulo">
       <u><b>C E R T I F I C A D O</b></u>

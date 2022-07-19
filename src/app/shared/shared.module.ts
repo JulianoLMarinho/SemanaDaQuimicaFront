@@ -39,6 +39,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { CertificadoExportComponent } from './components/certificado-export/certificado-export.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { EmConstrucaoComponent } from './components/em-construcao/em-construcao.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 
 registerLocaleData(localePT);
 
@@ -65,6 +67,8 @@ registerLocaleData(localePT);
     MatPaginatorModule,
     ImageCropperModule,
     MatSortModule,
+    MatCardModule,
+    MatDividerModule,
   ],
   declarations: [
     CardPatrocinadorComponent,

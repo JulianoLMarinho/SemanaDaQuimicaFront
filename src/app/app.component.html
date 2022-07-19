@@ -193,10 +193,10 @@
     </p>
     <button
       (click)="authService.logout(true)"
-      mat-raised-button
+      mat-button
       class="google-login-btn"
     >
-      Log Out
+      Sair
     </button>
 
     <mat-divider
@@ -293,6 +293,15 @@
               [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
               mat-button
               >Responsáveis</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              (click)="sidenav.opened = false"
+              routerLink="/configuracao/comissao"
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+              mat-button
+              >Comissão</a
             >
           </li>
           <li class="nav-item">

@@ -17,7 +17,7 @@ import { BaseConfiguracaoComponent } from '../base-configuracao/base-configuraca
 })
 export class GerenciarEdicaoComponent extends BaseConfiguracaoComponent {
   loadEntidade(): void {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
   }
   edicoesLista: EdicaoSemana[] = [];
   loadingEdicoes: boolean = false;
@@ -85,20 +85,6 @@ export class GerenciarEdicaoComponent extends BaseConfiguracaoComponent {
         fieldValidators: [],
         fieldShowOnTable: false,
       },
-      {
-        fieldName: 'Comissão',
-        fieldInitialValue: edicaoAtividade?.comissao_edicao?.map((x) => x.id),
-        fieldProperty: 'comissao_edicao',
-        fieldType: 'selectFilter',
-        fieldPlaceholder: 'Selecione o integrante da comissão',
-        fieldErrorMessage: '',
-        fieldValidators: [],
-        fieldOptions: [],
-        fieldOptionsFiltered: [],
-        fieldShowOnTable: false,
-        fieldDisplayFormatter: this.comissaoFormatter,
-        fieldLoadOptionsService: this.loadComissao.bind(this),
-      },
     ];
   }
 
@@ -114,6 +100,6 @@ export class GerenciarEdicaoComponent extends BaseConfiguracaoComponent {
   }
 
   loadComissao(): Observable<OpcaoSelect[]> {
-    return this.responsavelService.getReponsaveis();
+    return this.responsavelService.getReponsaveis('comissao');
   }
 }

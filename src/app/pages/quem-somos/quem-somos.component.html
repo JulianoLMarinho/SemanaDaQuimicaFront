@@ -4,17 +4,73 @@
     <mat-spinner class="progress-spinner"></mat-spinner>
   </div>
   <ng-template #mainContent>
-    <div class="main-atividades row">
-      <div class="col-md-12 quem-somos-texto">{{ quemSomosTexto }}</div>
-      <div class="col-md-12">
-        <div class="conheca-comissao">Comissão da Semana da Química</div>
+    <div class="quem-somos-container">
+      <div class="quem-somos-texto">
+        <p>
+          A Semana da Química da UFRJ Professora Cássia Curan Turci éum evento
+          organizado exclusivamente pelos alunos do Instituto de Química da UFRJ
+          e possui total apoio do direção e corop docente. Nosso evento não
+          possui fins lucrativos e cresce a cada ano.
+        </p>
+        <p>
+          A Semana da Química foi criada em 1993 e já se encontra na sua 28ª
+          edição. Nosso evento foi criado com o objetivo de divulgação
+          científica e ampliação do conhecimento dos alunos nas mais diversas
+          áreas da Química, além de mostrar novas tecnologias, tendências,
+          preparando-os melhor para o mercado de trabalho.
+        </p>
+        <p>
+          Ela ocorre anualmente e possui atividades divididas em palestras,
+          cursos, workshops e visitas técnicas que abrangem todas as áreas da
+          química. A Semana da Química é um evento que está incorporado ao
+          calendário oficial do Instituto de Química da Universidade Federal do
+          Rio de Janeiro. O evento é aberto a todos os estudantes, professores e
+          profissionais da Química de várias instituições do estado do Rio de
+          Janeiro.
+        </p>
       </div>
-      <div>
-        <div *ngFor="let c of comissao" class="comissao-foto">
-          <img [src]="c.fotoEnc" />
-          <div class="comissao-det">
-            <div>{{ c.nome_responsavel }}</div>
-            <div>Diretor</div>
+      <div class="comissao">
+        <h1 [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }">
+          Conheça a comissão organizadora da 28° Edição da Semana da Química
+        </h1>
+        <div class="comissao-fotos">
+          <div *ngFor="let c of comissao" class="comissao-foto">
+            <img class="foto-perfil" *ngIf="c.fotoEnc" [src]="c.fotoEnc" />
+            <mat-icon class="foto-perfil" *ngIf="!c.fotoEnc">person</mat-icon>
+            <div class="comissao-det">
+              <div class="social">
+                <a *ngIf="c.facebook" [href]="c.facebook" target="_blank">
+                  <img
+                    matTooltip="Facebook"
+                    src="../../../assets/imgs/facebook-white.png"
+                  />
+                </a>
+                <a *ngIf="c.twitter" [href]="c.twitter" target="_blank">
+                  <img
+                    *ngIf="c.twitter"
+                    matTooltip="Twitter"
+                    src="../../../assets/imgs/twitter-icon-white.jpg"
+                /></a>
+                <a *ngIf="c.instagram" [href]="c.instagram" target="_blank">
+                  <img
+                    *ngIf="c.instagram"
+                    matTooltip="Instagram"
+                    src="../../../assets/imgs/instagram-white.png"
+                /></a>
+                <a
+                  *ngIf="c.id_lattes"
+                  [href]="'http://lattes.cnpq.br/' + c.id_lattes"
+                  target="_blank"
+                >
+                  <img
+                    *ngIf="c.id_lattes"
+                    matTooltip="Lattes"
+                    src="../../../assets/imgs/lattes.png"
+                /></a>
+              </div>
+              <div>{{ c.nome_responsavel }}</div>
+              <div>{{ c.funcao_semana }}</div>
+            </div>
           </div>
         </div>
       </div>

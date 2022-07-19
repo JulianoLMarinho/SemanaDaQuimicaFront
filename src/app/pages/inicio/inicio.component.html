@@ -87,7 +87,6 @@
 <div
   *ngIf="!(edicaoSemana.site_em_construcao && !authService.userIsAdmin())"
   class="barra-tema"
-  [appEditContent]="editDirective"
   [ngStyle]="{
     'background-color': coresEdicao.coresAtivas.cor2,
     color: coresEdicao.coresAtivas.cor5

@@ -23,6 +23,7 @@ import { MeusCertificadosComponent } from './pages/meus-certificados/meus-certif
 import { GerarCertificadoComponent } from './pages/configuracao/gerar-certificado/gerar-certificado.component';
 import { GerenciarEdicaoAtivaComponent } from './pages/configuracao/gerenciar-edicao-ativa/gerenciar-edicao-ativa.component';
 import { EmConstrucaoGuard } from './_helpers/emConstrucao.guard';
+import { ComissaoComponent } from './pages/configuracao/comissao/comissao.component';
 
 const routes: Routes = [
   { path: '', component: InicioComponent },
@@ -55,6 +56,11 @@ const routes: Routes = [
   {
     path: 'configuracao/responsavel',
     component: ResponsavelConfiguracaoComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'configuracao/comissao',
+    component: ComissaoComponent,
     canActivate: [AuthGuard],
   },
   {

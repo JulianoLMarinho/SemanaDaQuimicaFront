@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CoresEdicaoService } from 'src/app/services/coresEdicao.service';
 import { EdicaoSemanaService } from 'src/app/services/edicaoSemana.service';
 import { ImageUploadComponent } from 'src/app/shared/components/image-upload/image-upload.component';
+import { Assinatura } from 'src/app/shared/models/assinatura';
 import { EdicaoSemana } from 'src/app/shared/models/edicao-semana';
 import { GerenciarSiteComponent } from '../gerenciar-site/gerenciar-site.component';
 
@@ -20,19 +21,9 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
   salvandoCores = false;
   salvandoAssinaturaDirecao = false;
   salvandoAssinaturaPresidente = false;
-  presidenteEdicao!: {
-    nome?: string;
-    assinatura?: string;
-    tipo: string;
-    editando: boolean;
-  };
+  presidenteEdicao!: Assinatura;
 
-  direcaoInstituto!: {
-    nome?: string;
-    assinatura?: string;
-    tipo: string;
-    editando: boolean;
-  };
+  direcaoInstituto!: Assinatura;
 
   @ViewChild(GerenciarSiteComponent)
   gerenciarSiteComponent!: GerenciarSiteComponent;
@@ -88,7 +79,7 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
     };
   }
 
-  salvarAssinatura(assinatura: any) {
+  salvarAssinatura(assinatura: Assinatura) {
     if (assinatura.tipo === 'presidente') {
       this.salvandoAssinaturaPresidente = true;
     } else {
@@ -99,6 +90,17 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
       .subscribe({
         next: (_) => {
           assinatura.editando = false;
+          if (assinatura.tipo === 'presidente') {
+            this.edicaoSemanaAtiva.assinatura_presidente_edicao =
+              this.presidenteEdicao.assinatura;
+            this.edicaoSemanaAtiva.presidente_edicao =
+              this.presidenteEdicao.nome;
+          } else {
+            this.edicaoSemanaAtiva.assinatura_direcao_instituto =
+              this.direcaoInstituto.assinatura;
+            this.edicaoSemanaAtiva.direcao_instituto =
+              this.direcaoInstituto.nome;
+          }
           this.toastService.success('Assinatura salva com sucesso!');
         },
         error: (_) => {
@@ -114,7 +116,7 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
       });
   }
 
-  cancelarAssinaturaEdicao(assinatura: any) {
+  cancelarAssinaturaEdicao(assinatura: Assinatura) {
     if (assinatura.tipo === 'presidente') {
       this.salvandoAssinaturaPresidente = true;
     } else {
@@ -184,7 +186,7 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
     };
   }
 
-  alterarAssinatura(assinatura: any) {
+  alterarAssinatura(assinatura: Assinatura) {
     const modal = this.modalService.open(ImageUploadComponent);
     const componentInstance = <ImageUploadComponent>modal.componentInstance;
     componentInstance.setTamanhos(1000, 240);

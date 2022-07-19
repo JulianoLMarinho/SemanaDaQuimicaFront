@@ -23,6 +23,7 @@ export class GerarCertificadoComponent extends BaseConfiguracaoComponent {
   atividades: AtividadeLista[] = [];
   atividadeSelecionada!: AtividadeLista;
   nomeAluno: string = '';
+  exportando = false;
   dadosCertificado: CertificadoExportacao = {
     nome_aluno: '',
     texto_data: '',
@@ -53,8 +54,8 @@ export class GerarCertificadoComponent extends BaseConfiguracaoComponent {
       .getAtividadesCertificadosByEdicaoInscricao(
         this.edicaoService.semanaSelecionada!.id
       )
-      .subscribe(
-        (atividades) => {
+      .subscribe({
+        next: (atividades) => {
           this.atividades = atividades;
           this.atividades.map((x) => {
             let duration = 0;
@@ -72,21 +73,20 @@ export class GerarCertificadoComponent extends BaseConfiguracaoComponent {
             x.duracao = duration;
             return x;
           });
-          console.log(this.atividades);
         },
-        (_) => {
+        error: (_) => {
           this.toastService.error('Erro ao carregar presença');
         },
-        () => {
+        complete: () => {
           // this.carregandoPresenca = false;
-        }
-      );
+        },
+      });
   }
 
   obterModelo(
     entidadeEdicao?: BaseModel | undefined
   ): ModalFieldConfiguration[] {
-    throw new Error('Method not implemented.');
+    return [];
   }
 
   ngOnInit() {
@@ -115,7 +115,8 @@ export class GerarCertificadoComponent extends BaseConfiguracaoComponent {
     );
     this.dadosCertificado.responsaveis = this.atividadeSelecionada
       .responsaveis!.map((x) => x.nome_responsavel)
-      .join(', ');
+      .join(', ')
+      .replace(/, ([^,]*)$/, ' e $1');
 
     switch (this.atividadeSelecionada.cod_tipo) {
       case 'CURSO':
@@ -134,8 +135,10 @@ export class GerarCertificadoComponent extends BaseConfiguracaoComponent {
     this.dadosCertificado.logo_semana = this.edicaoSelecionada?.logo_completa!;
   }
 
-  downloadCertificado() {
+  async downloadCertificado() {
+    this.exportando = true;
     this.dadosCertificado.nome_aluno = this.nomeAluno;
-    this.certificadoExportComponent.downloadAsPDF();
+    await this.certificadoExportComponent.downloadAsPDF();
+    this.exportando = false;
   }
 }

@@ -34,6 +34,9 @@ export interface AtividadeLista {
   total_inscritos?: number;
   ja_salvo?: boolean;
   duracao?: number;
+  atividade_presencial: boolean;
+  local?: string;
+  link?: string;
 }
 
 export interface OpcaoSelect {

@@ -3,11 +3,30 @@
     (click)="openModal(contentPicture)"
     *ngIf="patrocinador.add"
     src="../../../../assets/imgs/add_170x220.png"
+    matTooltip="Adicionar novo patrocinador"
+    matTooltipPosition="above"
   />
-  <a [href]="patrocinador.link" target="_blank" class="patrocinador-img">
+  <img
+    *ngIf="!patrocinador.add && !patrocinador.link"
+    [src]="patrocinador.sanitizedImagem"
+    class="patrocinador-img"
+  />
+  <a
+    [href]="patrocinador.link"
+    *ngIf="!patrocinador.add && patrocinador.link"
+    target="_blank"
+    class="patrocinador-img"
+    matTooltip="Ir para o site do patrocinador"
+    matTooltipPosition="above"
+  >
     <img *ngIf="!patrocinador.add" [src]="patrocinador.sanitizedImagem" />
   </a>
-  <div class="patrocinador-nome">{{ patrocinador.nome }}</div>
+  <div
+    class="patrocinador-nome"
+    [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+  >
+    {{ patrocinador.nome }}
+  </div>
   <button
     *ngIf="!patrocinador.add && authService.userIsAdmin()"
     mat-mini-fab
@@ -42,8 +61,8 @@
 <ng-template #contentPicture let-modal>
   <app-page-top-bar
     titulo="Editar Imagem"
-    [loadingSave]="false"
-    [loading]="false"
+    [loadingSave]="salvandoPatrocinador"
+    [loading]="salvandoPatrocinador"
     [cancelarAction]="modal.dismiss"
     [editando]="true"
     [salvarAction]="salvarPatrociador.bind(this)"

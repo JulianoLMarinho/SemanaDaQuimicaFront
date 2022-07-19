@@ -15,6 +15,7 @@ export interface Usuario {
   perfil_usuario?: number;
   permissoes?: string[];
   accessToken?: string;
+  instituto?: string;
 }
 
 export type PerfilUsuario = 'adm' | 'aluno';
