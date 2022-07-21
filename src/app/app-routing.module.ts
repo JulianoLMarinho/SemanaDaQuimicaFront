@@ -24,6 +24,7 @@ import { GerarCertificadoComponent } from './pages/configuracao/gerar-certificad
 import { GerenciarEdicaoAtivaComponent } from './pages/configuracao/gerenciar-edicao-ativa/gerenciar-edicao-ativa.component';
 import { EmConstrucaoGuard } from './_helpers/emConstrucao.guard';
 import { ComissaoComponent } from './pages/configuracao/comissao/comissao.component';
+import { CadastroIncompletoGuard } from './_helpers/cadastro_incompleto.guard';
 
 const routes: Routes = [
   { path: '', component: InicioComponent },
@@ -41,27 +42,27 @@ const routes: Routes = [
   {
     path: 'gerenciar_edicao',
     component: GerenciarEdicaoComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
   {
     path: 'configuracao/atividade',
     component: AtividadeConfiguracaoComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
   {
     path: 'configuracao/turno',
     component: TurnoConfiguracaoComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
   {
     path: 'configuracao/responsavel',
     component: ResponsavelConfiguracaoComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
   {
     path: 'configuracao/comissao',
     component: ComissaoComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
   {
     path: 'cursos',
@@ -91,37 +92,37 @@ const routes: Routes = [
   {
     path: 'inscricao',
     component: InscricaoComponent,
-    canActivate: [AuthGuard, EmConstrucaoGuard],
+    canActivate: [AuthGuard, EmConstrucaoGuard, CadastroIncompletoGuard],
   },
   {
     path: 'meus-cursos',
     component: MeusCursosComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
   {
     path: 'meus-certificados',
     component: MeusCertificadosComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
   {
     path: 'configuracao/confirmar-inscricoes',
     component: ConfirmarInscricoesComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
   {
     path: 'configuracao/presenca',
     component: PresencaComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
   {
     path: 'configuracao/gerar-certificado',
     component: GerarCertificadoComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
   {
     path: 'configuracao/gerenciar-edicao-ativa',
     component: GerenciarEdicaoAtivaComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
 ];
 

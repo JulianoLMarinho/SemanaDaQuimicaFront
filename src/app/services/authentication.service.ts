@@ -22,16 +22,26 @@ export class AuthenticationService {
   usuarioLogado?: Usuario;
   isAuthenticated: boolean = false;
   loading: boolean = true;
+  faltamDados = false;
 
   constructor(
     public afAuth: AngularFireAuth,
     private http: HttpService,
     private localStorage: LocalStorageService
   ) {
-    this.afAuth.idToken.subscribe((res) => {
+    /* this.afAuth.idToken.subscribe((res) => {
       if (res) {
         this.localStorage.set('id_token', res);
         this.apiAuth(res, 'GOOGLE');
+      } else {
+        this.loading = false;
+      }
+    }); */
+    this.afAuth.user.subscribe(async (user) => {
+      if (user?.emailVerified) {
+        const token = await user.getIdToken();
+        this.localStorage.set('id_token', token);
+        this.apiAuth(token, 'GOOGLE');
       } else {
         this.loading = false;
       }
@@ -45,7 +55,7 @@ export class AuthenticationService {
       userEmail,
       userPassword
     );
-    console.log(user);
+    return user;
   }
 
   loginWithGoogle() {
@@ -54,8 +64,9 @@ export class AuthenticationService {
       .then((result) => {});
   }
 
-  cadastrar(email: string, senha: string) {
-    return this.afAuth.createUserWithEmailAndPassword(email, senha);
+  async cadastrar(email: string, senha: string) {
+    await this.afAuth.createUserWithEmailAndPassword(email, senha);
+    await this.enviarEmailConfirmacao();
   }
 
   logout(reloadPage = true) {
@@ -79,6 +90,16 @@ export class AuthenticationService {
           if (res.responseType === 'OK') {
             this.isAuthenticated = true;
             this.usuarioLogado = res.usuario;
+            this.faltamDados =
+              !this.usuarioLogado?.email ||
+              !this.usuarioLogado?.nome ||
+              !this.usuarioLogado?.cidade ||
+              !this.usuarioLogado?.curso ||
+              !this.usuarioLogado?.estado ||
+              !this.usuarioLogado?.genero ||
+              !this.usuarioLogado?.universidade ||
+              !this.usuarioLogado?.nivel;
+
             if (this.usuarioLogado) {
               this.usuarioLogado.accessToken = res.access_token;
               this.localStorage.set('access_token', res.access_token);
@@ -152,6 +173,18 @@ export class AuthenticationService {
   userIsAdmin(): boolean {
     if (this.usuarioLogado?.perfil === 'adm') return true;
     return false;
+  }
+
+  async enviarEmailConfirmacao() {
+    const user = await this.afAuth.currentUser;
+    if (user) {
+      await user.sendEmailVerification();
+      await this.afAuth.signOut();
+    }
+  }
+
+  async resetarSenha(email: string) {
+    await this.afAuth.sendPasswordResetEmail(email);
   }
 
   refreshToken() {

@@ -135,22 +135,23 @@ export class MeusDadosComponent implements OnInit {
   salvarUsuario() {
     if (this.usuario) {
       this.loadingSave = true;
-      this.userService.atualizarUsuario(this.usuario).subscribe(
-        (res) => {
+      this.userService.atualizarUsuario(this.usuario).subscribe({
+        next: (res) => {
           if (!res) {
             this.toastr.error('Não é possível salvar o usuario');
           } else {
             this.toastr.success('Usuário atualizado com sucesso');
+            window.location.reload();
           }
         },
-        (error) => {
+        error: (error) => {
           this.toastr.error('Não é possível salvar o usuario');
         },
-        () => {
+        complete: () => {
           this.loadingSave = false;
           this.editando = false;
-        }
-      );
+        },
+      });
     } else this.toastr.error('Não é possível salvar o usuario');
   }
 

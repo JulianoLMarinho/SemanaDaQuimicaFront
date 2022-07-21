@@ -187,4 +187,11 @@ export class EdicaoSemanaService {
     );
     return ret;
   }
+
+  salvarQuemSomos(quemSomos: string, edicaoSemanaId: number): Observable<void> {
+    return this.http.put('edicaoSemana/quem-somos', {
+      quem_somos: quemSomos,
+      edicao_semana_id: edicaoSemanaId,
+    });
+  }
 }

@@ -13,6 +13,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { GerenciarSiteModule } from '../gerenciar-site/gerenciar-site.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   imports: [
@@ -29,6 +30,16 @@ import { MatInputModule } from '@angular/material/input';
     GerenciarSiteModule,
     MatFormFieldModule,
     MatInputModule,
+    QuillModule.forRoot({
+      modules: {
+        toolbar: [
+          [{ align: [] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'bullet' }],
+          [{ color: [] }],
+        ],
+      },
+    }),
   ],
   declarations: [GerenciarEdicaoAtivaComponent],
 })

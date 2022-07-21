@@ -29,7 +29,6 @@
               disabled
               placeholder="Insira seu Email"
             />
-            <mat-hint>Email obtido do Google</mat-hint>
           </mat-form-field>
         </p>
         <p>
@@ -38,7 +37,7 @@
             <input
               matInput
               [(ngModel)]="usuario.nome"
-              disabled
+              [disabled]="!editando"
               placeholder="Insira seu Nome"
             />
             <mat-hint>Nome obtido do Google</mat-hint>

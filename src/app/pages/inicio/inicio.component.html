@@ -98,7 +98,7 @@
   *ngIf="!(edicaoSemana.site_em_construcao && !authService.userIsAdmin())"
   style="padding: 20px"
 >
-  <h1>Patrocinadores</h1>
+  <h1 [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }">Patrocinadores</h1>
 </div>
 <div
   *ngIf="!(edicaoSemana.site_em_construcao && !authService.userIsAdmin())"

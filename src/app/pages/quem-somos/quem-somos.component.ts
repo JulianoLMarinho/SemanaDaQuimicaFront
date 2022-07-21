@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CoresEdicaoService } from 'src/app/services/coresEdicao.service';
 import { EdicaoSemanaService } from '../../services/edicaoSemana.service';
@@ -10,6 +10,7 @@ import { AppUtils } from '../../shared/utils';
   selector: 'app-quem-somos',
   templateUrl: './quem-somos.component.html',
   styleUrls: ['./quem-somos.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class QuemSomosComponent implements OnInit {
   loading = false;
@@ -28,13 +29,15 @@ export class QuemSomosComponent implements OnInit {
   loadComissao() {
     this.quemSomosTexto = this.edicaoSemanaService.semanaAtiva.quem_somos || '';
     this.comissao = this.edicaoSemanaService.semanaAtiva.comissao_edicao || [];
-    this.comissao.push(...this.comissao);
-    this.comissao.push(...this.comissao);
 
     this.comissao.map((x) => {
       x.fotoEnc = x.foto
         ? AppUtils.imageSanitizer(x.foto, this.sanitizer)
         : undefined;
     });
+  }
+
+  transformQuemSomos() {
+    return this.sanitizer.bypassSecurityTrustHtml(this.quemSomosTexto);
   }
 }

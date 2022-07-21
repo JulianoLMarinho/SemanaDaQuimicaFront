@@ -25,6 +25,11 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
 
   direcaoInstituto!: Assinatura;
 
+  quemSomos?: string;
+  editandoQuemSomos = false;
+  carregandoQuemSomos = false;
+  quemSomosExpanded = false;
+
   @ViewChild(GerenciarSiteComponent)
   gerenciarSiteComponent!: GerenciarSiteComponent;
 
@@ -35,6 +40,7 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
     private modalService: NgbModal
   ) {
     this.edicaoSemanaAtiva = this.edicaoService.semanaAtiva;
+    this.quemSomos = this.edicaoSemanaAtiva.quem_somos;
     this.carregarAssinaturas();
     this.tituloTela = `Gerenciar ${this.edicaoSemanaAtiva.numero_edicao}ª Edição`;
   }
@@ -77,6 +83,11 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
       tipo: 'direcao',
       editando: false,
     };
+  }
+
+  carregarQuemSomos() {
+    this.quemSomos = this.edicaoSemanaAtiva.quem_somos;
+    this.editandoQuemSomos = false;
   }
 
   salvarAssinatura(assinatura: Assinatura) {
@@ -219,6 +230,25 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
         },
         complete: () => {
           this.salvandoConfiguracoes = false;
+        },
+      });
+  }
+
+  salvarQuemSomos() {
+    this.carregandoQuemSomos = true;
+    this.edicaoService
+      .salvarQuemSomos(this.quemSomos!, this.edicaoSemanaAtiva.id)
+      .subscribe({
+        next: (_) => {
+          this.toastService.success('Configuração salva com sucesso!');
+          this.editandoQuemSomos = false;
+          this.edicaoSemanaAtiva.quem_somos = this.quemSomos;
+        },
+        error: (_) => {
+          this.toastService.error('Erro ao salvar configuração!');
+        },
+        complete: () => {
+          this.carregandoQuemSomos = false;
         },
       });
   }

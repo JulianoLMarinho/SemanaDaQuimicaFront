@@ -5,30 +5,7 @@
   </div>
   <ng-template #mainContent>
     <div class="quem-somos-container">
-      <div class="quem-somos-texto">
-        <p>
-          A Semana da Química da UFRJ Professora Cássia Curan Turci éum evento
-          organizado exclusivamente pelos alunos do Instituto de Química da UFRJ
-          e possui total apoio do direção e corop docente. Nosso evento não
-          possui fins lucrativos e cresce a cada ano.
-        </p>
-        <p>
-          A Semana da Química foi criada em 1993 e já se encontra na sua 28ª
-          edição. Nosso evento foi criado com o objetivo de divulgação
-          científica e ampliação do conhecimento dos alunos nas mais diversas
-          áreas da Química, além de mostrar novas tecnologias, tendências,
-          preparando-os melhor para o mercado de trabalho.
-        </p>
-        <p>
-          Ela ocorre anualmente e possui atividades divididas em palestras,
-          cursos, workshops e visitas técnicas que abrangem todas as áreas da
-          química. A Semana da Química é um evento que está incorporado ao
-          calendário oficial do Instituto de Química da Universidade Federal do
-          Rio de Janeiro. O evento é aberto a todos os estudantes, professores e
-          profissionais da Química de várias instituições do estado do Rio de
-          Janeiro.
-        </p>
-      </div>
+      <div class="quem-somos-texto" [innerHtml]="transformQuemSomos()"></div>
       <div class="comissao">
         <h1 [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }">
           Conheça a comissão organizadora da 28° Edição da Semana da Química

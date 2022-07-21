@@ -21,14 +21,33 @@
     </div>
   </div>
   <div *ngIf="!loading && !cadastroUsuario && !mostrarEmailESenhaLogin">
-    <a href="#" (click)="mostrarEmailESenhaLogin = !mostrarEmailESenhaLogin"
-      >ou acesse utilizando seu email e senha</a
+    <div
+      [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }"
+      (click)="mostrarEmailESenhaLogin = !mostrarEmailESenhaLogin"
+      class="email-senha"
     >
+      ou acesse utilizando seu email e senha
+    </div>
   </div>
   <div
     class="login-email-senha"
     *ngIf="!loading && !cadastroUsuario && mostrarEmailESenhaLogin"
   >
+    <div *ngIf="aguardandoValidacao" class="verifique-email">
+      Email ainda não confimado. Verifique o link de confirmação no email
+      cadastrado. Ou
+      <a
+        class="clique-aqui"
+        [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }"
+        (click)="confirmarEmail()"
+        >clique aqui</a
+      >
+      para reenviar o link de confirmação. Cheque a sua caixa de spam caso não
+      encontre o email.
+    </div>
+    <div *ngIf="erroLogin && !aguardandoValidacao" class="verifique-email">
+      {{ erroLoginMessage }}
+    </div>
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
       <input
@@ -37,7 +56,7 @@
         placeholder="Insira seu Email"
       />
     </mat-form-field>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" *ngIf="!esqueceuSenha">
       <mat-label>Senha</mat-label>
       <input
         matInput
@@ -46,16 +65,78 @@
         placeholder="Insira sua senha"
       />
     </mat-form-field>
-    <div>
-      <button mat-raised-button color="primary" (click)="loginWithEmailSenha()">
+    <div
+      class="esqueceu-senha-texto"
+      *ngIf="!esqueceuSenha"
+      [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }"
+      (click)="esqueceuSenha = true"
+    >
+      Esqueceu sua senha?
+    </div>
+    <mat-form-field appearance="outline" *ngIf="cadastroEmailSenha">
+      <mat-label>Confirmação de Senha</mat-label>
+      <input
+        matInput
+        type="password"
+        [(ngModel)]="loginEmailSenha.confirmacaoSenha"
+        placeholder="Insira sua senha"
+      />
+    </mat-form-field>
+    <div class="email-senha-botoes">
+      <button
+        *ngIf="!cadastroEmailSenha && !esqueceuSenha"
+        mat-raised-button
+        [ngStyle]="{
+          'background-color': coresEdicao.coresAtivas.cor2,
+          color: coresEdicao.coresAtivas.cor5
+        }"
+        (click)="loginWithEmailSenha()"
+      >
         Login
+      </button>
+      <button
+        *ngIf="!cadastroEmailSenha && !esqueceuSenha"
+        mat-raised-button
+        [ngStyle]="{
+          'background-color': coresEdicao.coresAtivas.cor2,
+          color: coresEdicao.coresAtivas.cor5
+        }"
+        (click)="cadastroEmailSenha = !cadastroEmailSenha"
+      >
+        Novo Usuario
+      </button>
+      <button
+        *ngIf="cadastroEmailSenha && !esqueceuSenha"
+        mat-raised-button
+        [ngStyle]="{
+          'background-color': coresEdicao.coresAtivas.cor2,
+          color: coresEdicao.coresAtivas.cor5
+        }"
+        (click)="cadastrarUsuario()"
+      >
+        Cadastrar
+      </button>
+      <button
+        *ngIf="esqueceuSenha"
+        mat-raised-button
+        [ngStyle]="{
+          'background-color': coresEdicao.coresAtivas.cor2,
+          color: coresEdicao.coresAtivas.cor5
+        }"
+        (click)="recuperarSenha()"
+      >
+        Recuperar senha
       </button>
     </div>
   </div>
   <div *ngIf="!loading && !cadastroUsuario && mostrarEmailESenhaLogin">
-    <a href="#" (click)="mostrarEmailESenhaLogin = !mostrarEmailESenhaLogin"
-      >ou acesse utilizando suas redes sociais</a
+    <div
+      [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }"
+      class="email-senha"
+      (click)="mostrarEmailESenhaLogin = !mostrarEmailESenhaLogin"
     >
+      ou acesse utilizando suas redes sociais
+    </div>
   </div>
   <div *ngIf="!loading && cadastroUsuario" class="completar-cadastro">
     <p>

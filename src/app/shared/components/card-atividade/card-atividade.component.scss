@@ -1,0 +1,20 @@
+:host {
+  .atividade-container {
+    border: 5px solid;
+    border-radius: 15px;
+    margin: 2px;
+    padding: 3px;
+    height: 100%;
+    width: 250px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    cursor: pointer;
+    text-align: justify;
+    flex-direction: column;
+
+    img {
+      height: 147px;
+    }
+  }
+}

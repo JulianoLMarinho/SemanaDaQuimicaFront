@@ -75,16 +75,6 @@ export class GerenciarEdicaoComponent extends BaseConfiguracaoComponent {
         fieldDisplayFormatter: (args: EdicaoSemana) =>
           moment(args.data_fim).format('DD/MM/yyyy'),
       },
-      {
-        fieldName: 'Quem Somos',
-        fieldInitialValue: edicaoAtividade?.quem_somos,
-        fieldProperty: 'quem_somos',
-        fieldType: 'textArea',
-        fieldPlaceholder: "Insira o texto para a tela 'Quem Somos'",
-        fieldErrorMessage: 'É necessário inserir o texto',
-        fieldValidators: [],
-        fieldShowOnTable: false,
-      },
     ];
   }
 
