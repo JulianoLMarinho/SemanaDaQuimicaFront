@@ -17,6 +17,7 @@ import { StyleService } from '../../../services/style.service';
 import { BaseModel } from '../../models/baseModel';
 import { ModalAdicionarEditarComponent } from '../modal-adicionar-editar/modal-adicionar-editar.component';
 import { ModalFieldConfiguration } from '../modal-adicionar-editar/modal-field-configuration';
+import { ModalConfirmacaoComponent } from '../modal-confirmacao/modal-confirmacao.component';
 import { TabelaHeaders } from './tabela-headers';
 
 @Component({
@@ -31,6 +32,8 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
   @Input() modalConfig: (entidadeEdit?: any) => ModalFieldConfiguration[] =
     () => [];
   @Input() salvarAction: (entity: any) => Observable<boolean> = ({}) =>
+    of(false);
+  @Input() deletarAction: (entity: any) => Observable<boolean> = ({}) =>
     of(false);
   @Input() nomeEntidade = '';
 
@@ -89,5 +92,23 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
     activeModal.componentInstance.saved.subscribe(() => {
       this.saved.emit();
     });
+  }
+
+  deleteAction(entidade: any) {
+    const modal = this.modalService.open(ModalConfirmacaoComponent, {
+      ariaLabelledBy: 'modal-basic-title',
+    });
+
+    modal.componentInstance.titulo = 'Confirmar deleção';
+    modal.componentInstance.mensagem = 'Deseja deletar este item?';
+
+    modal.componentInstance.salvar = () => {
+      this.deletarAction(entidade).subscribe((res) => {
+        if (res) {
+          this.saved.emit();
+          modal.dismiss();
+        }
+      });
+    };
   }
 }

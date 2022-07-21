@@ -7,7 +7,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
@@ -28,7 +28,7 @@ export class ModalAdicionarEditarComponent implements OnInit {
   @Input() saveDataAction!: (entidade: any) => Observable<boolean>;
 
   @Output() saved = new EventEmitter();
-  groupControl: FormGroup = new FormGroup({});
+  groupControl: UntypedFormGroup = new UntypedFormGroup({});
 
   @ViewChild(DiasSemanaSelectComponent)
   dayField!: DiasSemanaSelectComponent;
@@ -43,7 +43,7 @@ export class ModalAdicionarEditarComponent implements OnInit {
     for (let field of this.modalFields) {
       this.groupControl.addControl(
         field.fieldProperty,
-        new FormControl(field.fieldInitialValue, field.fieldValidators)
+        new UntypedFormControl(field.fieldInitialValue, field.fieldValidators)
       );
 
       if (field.fieldLoadOptionsService) {

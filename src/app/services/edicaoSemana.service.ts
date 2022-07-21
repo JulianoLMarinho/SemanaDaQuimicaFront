@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import * as moment from 'moment';
+import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import {
   CarouselImage,
@@ -16,6 +17,44 @@ export class EdicaoSemanaService {
   semanaSelecionada!: EdicaoSemana | null;
   semanaAtiva!: EdicaoSemana;
   loadingSemanaAtiva = true;
+  loadingSemanaAtivaSubject = new Subject<EdicaoSemana>();
+  diasSemana = [
+    {
+      sigla: 'S',
+      weekDay: 1,
+      date: new Date(),
+      parsedDate: '',
+      parsedShortDate: '',
+    },
+    {
+      sigla: 'T',
+      weekDay: 2,
+      date: new Date(),
+      parsedDate: '',
+      parsedShortDate: '',
+    },
+    {
+      sigla: 'Q',
+      weekDay: 3,
+      date: new Date(),
+      parsedDate: '',
+      parsedShortDate: '',
+    },
+    {
+      sigla: 'Q',
+      weekDay: 4,
+      date: new Date(),
+      parsedDate: '',
+      parsedShortDate: '',
+    },
+    {
+      sigla: 'S',
+      weekDay: 5,
+      date: new Date(),
+      parsedDate: '',
+      parsedShortDate: '',
+    },
+  ];
 
   constructor(
     private http: HttpService,
@@ -23,11 +62,31 @@ export class EdicaoSemanaService {
   ) {
     this.getDetalhes().subscribe((edicao) => {
       this.semanaAtiva = edicao;
+      this.semanaSelecionada = edicao;
+      this.loadingSemanaAtivaSubject.next(edicao);
       this.coresEdicaoService.obterCoresEdicao(edicao.id).subscribe((cores) => {
-        this.coresEdicaoService.carregarCores(cores);
+        if (cores) {
+          this.coresEdicaoService.carregarCores(cores);
+        }
         this.loadingSemanaAtiva = false;
       });
     });
+  }
+
+  selecionaSemana(semana: EdicaoSemana) {
+    this.semanaSelecionada = semana;
+    let diaInicioReferencia = <Date>semana.parsed_data_inicio;
+    for (let i of this.diasSemana) {
+      const day = diaInicioReferencia.getDay();
+      const diaSemana = this.diasSemana.find((x) => x.weekDay === day);
+      if (diaSemana) {
+        diaSemana.date = new Date(diaInicioReferencia);
+        diaSemana.parsedDate = moment(diaSemana.date).format('DD/MM/yyyy');
+        // moment.locale('pt-br');
+        diaSemana.parsedShortDate = moment(diaSemana.date).format('DD/MM');
+      }
+      diaInicioReferencia.setDate(diaInicioReferencia.getDate() + 1);
+    }
   }
 
   getDetalhes(): Observable<EdicaoSemana> {
@@ -71,5 +130,68 @@ export class EdicaoSemanaService {
 
   editarEdicaoSemana(edicaoSemana: EdicaoSemana): Observable<boolean> {
     return this.http.put('edicaoSemana', edicaoSemana);
+  }
+
+  liberarCertificado(
+    edicaoSemanaId: number,
+    liberar: boolean
+  ): Observable<void> {
+    return this.http.put(
+      `edicaoSemana/liberar-certificado/${edicaoSemanaId}/${liberar}`
+    );
+  }
+
+  aceitarInscricoesAtividades(
+    edicaoSemanaId: number,
+    aceitarInscricoes: boolean
+  ): Observable<void> {
+    return this.http.put(
+      `edicaoSemana/aceitar-inscricao-atividade/${edicaoSemanaId}/${aceitarInscricoes}`
+    );
+  }
+
+  salvarLogo(
+    edicaoSemanaId: number,
+    logo: string,
+    logo_tipo: string
+  ): Observable<void> {
+    return this.http.post('edicaoSemana/salvar-logo', {
+      edicao_semana_id: edicaoSemanaId,
+      logo: logo,
+      tipo_logo: logo_tipo,
+    });
+  }
+
+  siteEmConstrucao(
+    edicaoSemanaId: number,
+    siteEmConstrucao: boolean
+  ): Observable<void> {
+    return this.http.put(
+      `edicaoSemana/site-em-construcao/${edicaoSemanaId}/${siteEmConstrucao}`
+    );
+  }
+
+  salvarAssinatura(assinatura: any, edicaoSemanaId: number) {
+    const obj = {
+      edicao_semana_id: edicaoSemanaId,
+      tipo_assinatura: assinatura.tipo,
+      assinatura: assinatura.assinatura,
+      nome: assinatura.nome,
+    };
+    return this.http.post('edicaoSemana/salvar-assinatura', obj);
+  }
+
+  streamValuesTest() {
+    const ret = new EventSource(
+      'http://localhost:8000/edicaoSemana/stream-results'
+    );
+    return ret;
+  }
+
+  salvarQuemSomos(quemSomos: string, edicaoSemanaId: number): Observable<void> {
+    return this.http.put('edicaoSemana/quem-somos', {
+      quem_somos: quemSomos,
+      edicao_semana_id: edicaoSemanaId,
+    });
   }
 }

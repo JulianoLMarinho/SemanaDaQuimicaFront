@@ -9,7 +9,7 @@ import { StorageService } from './storage.service';
   providedIn: 'root',
 })
 export class HttpService {
-  API_URL = 'https://semana-da-quimica-back.azurewebsites.net/';
+  API_URL = 'http://localhost:8000/';
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
   });
@@ -21,6 +21,7 @@ export class HttpService {
   }
 
   get<T>(url: string, cacheData: boolean = false) {
+    // cacheData = false;
     if (cacheData) {
       let getHeaders = this.headers.set('cache_data', 'cache_data');
       this.storage;
@@ -45,7 +46,7 @@ export class HttpService {
     });
   }
 
-  put<T, U>(url: string, body: U) {
+  put<T, U>(url: string, body?: U) {
     return this.http.put<T>(this.API_URL + url, body, {
       headers: this.headers,
     });

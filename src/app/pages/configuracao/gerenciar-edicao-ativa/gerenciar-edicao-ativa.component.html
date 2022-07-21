@@ -1,0 +1,416 @@
+<div class="main-container">
+  <app-page-top-bar [titulo]="tituloTela"></app-page-top-bar>
+  <div class="conteudo">
+    <mat-card *ngIf="false">
+      <mat-card-content>
+        <table style="width: 600px">
+          <tbody>
+            <tr align="center">
+              <td style="width: 40%">
+                <div
+                  style="
+                    height: 10px;
+                    border-radius: 3px;
+                    background-color: #f0f;
+                  "
+                ></div>
+              </td>
+              <td style="width: 20%">
+                <img
+                  style="width: 100%"
+                  [src]="edicaoSemanaAtiva.logo_completa"
+                />
+              </td>
+              <td style="width: 40%">
+                <div
+                  style="
+                    height: 10px;
+                    border-radius: 3px;
+                    background-color: #f0f;
+                  "
+                ></div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3"><div style="margin: 20px 0">content</div></td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <div
+                  style="
+                    height: 10px;
+                    border-radius: 3px;
+                    background-color: #f0f;
+                  "
+                ></div>
+              </td>
+            </tr>
+            <tr align="center">
+              <td colspan="3" style="font-size: 11px">
+                Comissão organizadora da 28ª Edição da Semana Da Química
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >Configurações</mat-card-title
+        >
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content class="content-configuracoes">
+        <mat-slide-toggle
+          [(ngModel)]="edicaoSemanaAtiva.aceita_inscricao_atividade"
+          (change)="aceitarInscricoesAtividades()"
+          >Aceitar inscrições em cursos</mat-slide-toggle
+        >
+        <mat-slide-toggle
+          [(ngModel)]="edicaoSemanaAtiva.certificado_liberado"
+          (change)="liberarCertificados()"
+          >Liberar certificados</mat-slide-toggle
+        >
+        <mat-slide-toggle
+          [(ngModel)]="edicaoSemanaAtiva.site_em_construcao"
+          (change)="ativarSiteEmConstrucao()"
+          >Ativar tela de construção do site</mat-slide-toggle
+        >
+      </mat-card-content>
+      <mat-card-footer>
+        <mat-progress-bar
+          mode="indeterminate"
+          *ngIf="salvandoConfiguracoes"
+        ></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >Logo</mat-card-title
+        >
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <img
+          class="imagem-principal-logo"
+          *ngIf="edicaoSemanaAtiva.logo"
+          [src]="edicaoSemanaAtiva.logo"
+        />
+        <mat-icon
+          [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          (click)="alterarLogo()"
+          *ngIf="!edicaoSemanaAtiva.logo"
+          >add_photo_alternate</mat-icon
+        >
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button
+          *ngIf="edicaoSemanaAtiva.logo"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="alterarLogo()"
+        >
+          Alterar
+        </button>
+      </mat-card-actions>
+      <mat-card-footer> </mat-card-footer>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >Logo Completa</mat-card-title
+        >
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <img
+          *ngIf="edicaoSemanaAtiva.logo_completa"
+          class="imagem-principal-foto"
+          [src]="edicaoSemanaAtiva.logo_completa"
+        />
+        <mat-icon
+          (click)="alterarLogoCompleta()"
+          *ngIf="!edicaoSemanaAtiva.logo_completa"
+          [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >add_photo_alternate</mat-icon
+        >
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button
+          *ngIf="edicaoSemanaAtiva.logo_completa"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="alterarLogoCompleta()"
+        >
+          Alterar
+        </button>
+      </mat-card-actions>
+      <mat-card-footer> </mat-card-footer>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >Cores da Semana</mat-card-title
+        >
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <app-gerenciar-site
+          [(editar)]="editarCores"
+          (salvandoChange)="salvandoCores = $event"
+        ></app-gerenciar-site>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button
+          *ngIf="!editarCores"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="editarCores = true"
+        >
+          Alterar
+        </button>
+        <button
+          *ngIf="editarCores"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="gerenciarSiteComponent.salvarPaleta()"
+        >
+          Salvar
+        </button>
+        <button
+          *ngIf="editarCores"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="gerenciarSiteComponent.cancelarEdicao()"
+        >
+          Cancelar
+        </button>
+      </mat-card-actions>
+      <mat-card-footer
+        ><mat-progress-bar
+          mode="indeterminate"
+          *ngIf="salvandoCores"
+        ></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >Presidente da Edição</mat-card-title
+        >
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <mat-form-field appearance="legacy">
+          <mat-label>Nome</mat-label>
+          <input
+            matInput
+            [disabled]="!presidenteEdicao.editando"
+            [(ngModel)]="presidenteEdicao.nome"
+            placeholder="Presidente da edição"
+          />
+        </mat-form-field>
+        <img
+          *ngIf="presidenteEdicao.assinatura"
+          class="assinatura"
+          [src]="presidenteEdicao.assinatura"
+          (click)="
+            presidenteEdicao.editando && alterarAssinatura(presidenteEdicao)
+          "
+        />
+        <mat-icon
+          (click)="
+            presidenteEdicao.editando && alterarAssinatura(presidenteEdicao)
+          "
+          *ngIf="!presidenteEdicao.assinatura"
+          [ngStyle]="{
+            color: coresEdicao.coresAtivas.cor2,
+            cursor: presidenteEdicao.editando ? 'pointer' : 'default'
+          }"
+          >add_photo_alternate</mat-icon
+        >
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button
+          *ngIf="!presidenteEdicao.editando"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="presidenteEdicao.editando = true"
+        >
+          Alterar
+        </button>
+        <button
+          *ngIf="presidenteEdicao.editando"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="salvarAssinatura(presidenteEdicao)"
+        >
+          Salvar
+        </button>
+        <button
+          *ngIf="presidenteEdicao.editando"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="carregarAssinaturaPresidente()"
+        >
+          Cancelar
+        </button>
+      </mat-card-actions>
+      <mat-card-footer>
+        <mat-progress-bar
+          mode="indeterminate"
+          *ngIf="salvandoAssinaturaPresidente"
+        ></mat-progress-bar
+      ></mat-card-footer>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >Direção do Instituto</mat-card-title
+        >
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <mat-form-field appearance="legacy">
+          <mat-label>Nome</mat-label>
+          <input
+            matInput
+            [disabled]="!direcaoInstituto.editando"
+            [(ngModel)]="direcaoInstituto.nome"
+            placeholder="Direção do Instituto de Química"
+          />
+        </mat-form-field>
+        <img
+          *ngIf="direcaoInstituto.assinatura"
+          class="assinatura"
+          [src]="direcaoInstituto.assinatura"
+          (click)="
+            direcaoInstituto.editando && alterarAssinatura(direcaoInstituto)
+          "
+        />
+        <mat-icon
+          (click)="
+            direcaoInstituto.editando && alterarAssinatura(direcaoInstituto)
+          "
+          *ngIf="!direcaoInstituto.assinatura"
+          [ngStyle]="{
+            color: coresEdicao.coresAtivas.cor2,
+            cursor: direcaoInstituto.editando ? 'pointer' : 'default'
+          }"
+          >add_photo_alternate</mat-icon
+        >
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button
+          *ngIf="!direcaoInstituto.editando"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="direcaoInstituto.editando = true"
+        >
+          Alterar
+        </button>
+        <button
+          *ngIf="direcaoInstituto.editando"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="salvarAssinatura(direcaoInstituto)"
+        >
+          Salvar
+        </button>
+        <button
+          *ngIf="direcaoInstituto.editando"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="carregarAssinaturaDirecao()"
+        >
+          Cancelar
+        </button>
+      </mat-card-actions>
+      <mat-card-footer
+        ><mat-progress-bar
+          mode="indeterminate"
+          *ngIf="salvandoAssinaturaDirecao"
+        ></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
+
+    <mat-card [ngClass]="{ expanded: quemSomosExpanded }">
+      <mat-card-header class="quem-somos">
+        <mat-card-title [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >Quem Somos</mat-card-title
+        >
+        <div>
+          <button
+            (click)="quemSomosExpanded = !quemSomosExpanded"
+            mat-icon-button
+          >
+            <mat-icon
+              *ngIf="!quemSomosExpanded"
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+              >open_in_full</mat-icon
+            >
+            <mat-icon
+              *ngIf="quemSomosExpanded"
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+              >close_fullscreen</mat-icon
+            >
+          </button>
+        </div>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content class="quem-somos">
+        <quill-editor
+          [(ngModel)]="quemSomos"
+          defaultEmptyValue=""
+          [disabled]="!editandoQuemSomos"
+          placeholder="Escreva o texto 'Quem Somos'"
+        ></quill-editor>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button
+          *ngIf="!editandoQuemSomos"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="editandoQuemSomos = true"
+        >
+          Alterar
+        </button>
+        <button
+          *ngIf="editandoQuemSomos"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="salvarQuemSomos()"
+        >
+          Salvar
+        </button>
+        <button
+          *ngIf="editandoQuemSomos"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="carregarQuemSomos()"
+        >
+          Cancelar
+        </button>
+      </mat-card-actions>
+      <mat-card-footer
+        ><mat-progress-bar
+          mode="indeterminate"
+          *ngIf="carregandoQuemSomos"
+        ></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</div>

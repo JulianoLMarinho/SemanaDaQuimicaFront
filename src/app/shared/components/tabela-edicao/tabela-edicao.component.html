@@ -1,6 +1,6 @@
 <div class="table-wrapper">
   <div class="table-container">
-    <mat-table [dataSource]="dataSource" matSort>
+    <mat-table [dataSource]="dataSource" matSort [sti]>
       <ng-container
         *ngFor="let header of headers"
         [matColumnDef]="header.property"
@@ -32,6 +32,7 @@
             [ngStyle]="{ color: corEdicao.coresAtivas.cor6 }"
           >
             <button
+              (click)="deleteAction(element)"
               mat-icon-button
               matTooltipPosition="above"
               [matTooltip]="'Excluir ' + nomeEntidade"
@@ -74,7 +75,8 @@
       </button>
     </div>
     <mat-paginator
-      [pageSizeOptions]="[5, 10, 20]"
+      [pageSize]="50"
+      [pageSizeOptions]="[-1, 20, 50, 100]"
       showFirstLastButtons
       aria-label="Select page of periodic elements"
     >

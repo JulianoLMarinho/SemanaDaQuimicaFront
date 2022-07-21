@@ -32,6 +32,8 @@ export class CardPatrocinadorComponent implements OnInit {
     imagem: '',
   };
 
+  salvandoPatrocinador = false;
+
   activeModal!: NgbModalRef;
 
   @Output() reloadPatrocinadores = new EventEmitter();
@@ -89,33 +91,35 @@ export class CardPatrocinadorComponent implements OnInit {
   }
 
   salvarPatrociador() {
+    this.salvandoPatrocinador = true;
     this.addEditPatr.edicao_semana_id = this.edicaoSemanaService.semanaAtiva.id;
 
     if (this.addEditPatr.id) {
       this.patrocinadorService
         .atualizarPatrocinador(this.addEditPatr)
-        .subscribe(
-          (_) => {
+        .subscribe({
+          next: (_) => {
             this.toastr.success('Patrocinador Salvo com Sucesso');
             this.activeModal.close();
             this.reloadPatrocinadores.emit();
+            this.salvandoPatrocinador = false;
           },
-          (_) => {
+          error: (_) => {
             this.toastr.error('Houve algum erro!');
-          }
-        );
+          },
+        });
     } else {
-      this.patrocinadorService.salvarPatrocinador(this.addEditPatr).subscribe(
-        (_) => {
+      this.patrocinadorService.salvarPatrocinador(this.addEditPatr).subscribe({
+        next: (_) => {
           this.toastr.success('Patrocinador Salvo com Sucesso');
           this.activeModal.close();
-
           this.reloadPatrocinadores.emit();
+          this.salvandoPatrocinador = false;
         },
-        (_) => {
+        error: (_) => {
           this.toastr.error('Houve algum erro!');
-        }
-      );
+        },
+      });
     }
   }
 

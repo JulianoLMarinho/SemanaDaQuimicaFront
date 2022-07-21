@@ -1,0 +1,27 @@
+<app-page-top-bar
+  titulo="Selecionar Foto"
+  [loadingSave]="saving"
+  [loading]="saving"
+  [salvarAction]="salvarAction"
+  [cancelarAction]="cancelar"
+  [editando]="true"
+></app-page-top-bar>
+<div class="modal-body" style="align-self: center">
+  <button mat-stroked-button color="primary" (click)="fileInput.click()">
+    Escolher Arquivo
+  </button>
+  <input #fileInput type="file" hidden (change)="fileChangeEvent($event)" />
+  <image-cropper
+    [imageChangedEvent]="imageChangedEvent"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="proporcao"
+    [roundCropper]="true"
+    [resizeToWidth]="tamanhoFotoH"
+    [resizeToHeight]="tamanhoFotoV"
+    [imageQuality]="100"
+    format="png"
+    (imageCropped)="imageCropped($event)"
+    (cropperReady)="cropperReady()"
+    (loadImageFailed)="loadImageFailed()"
+  ></image-cropper>
+</div>

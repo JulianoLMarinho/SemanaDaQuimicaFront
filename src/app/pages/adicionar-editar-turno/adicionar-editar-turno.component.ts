@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { AtividadesService } from '../../services/atividades.service';
@@ -25,10 +25,10 @@ export class AdicionarEditarTurnoComponent implements OnInit {
     horarios: [],
   };
   edicaoSemana!: EdicaoSemana;
-  groupControl = new FormGroup({
-    horInicio: new FormControl(this.turno.hora_inicio, [Validators.required]),
-    horFim: new FormControl(this.turno.hora_fim, [Validators.required]),
-    nome_turno: new FormControl(this.turno.nome_turno, [Validators.required]),
+  groupControl = new UntypedFormGroup({
+    horInicio: new UntypedFormControl(this.turno.hora_inicio, [Validators.required]),
+    horFim: new UntypedFormControl(this.turno.hora_fim, [Validators.required]),
+    nome_turno: new UntypedFormControl(this.turno.nome_turno, [Validators.required]),
   });
   saving = false;
 

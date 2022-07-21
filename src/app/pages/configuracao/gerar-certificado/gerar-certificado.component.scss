@@ -1,0 +1,23 @@
+:host {
+  width: 100%;
+
+  .opcoes-atividades {
+    display: flex;
+    justify-content: space-between;
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .content {
+    padding: 15px;
+  }
+
+  .dados-certificado {
+    padding: 15px;
+    mat-form-field {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+<div class="main-container">
+  <app-page-top-bar
+    titulo="Comissão"
+    [loading]="loadingEntidade"
+    [loadingSave]="loadingEntidade"
+  ></app-page-top-bar>
+  <div class="content">
+    <div class="atividades-opcoes">
+      <mat-form-field appearance="legacy">
+        <mat-label>Edição</mat-label>
+        <mat-select
+          [(value)]="edicaoSelecionada"
+          (selectionChange)="loadResponsaveis()"
+        >
+          <mat-option *ngFor="let edicao of edicoes" [value]="edicao">
+            {{ edicao.parsed_data_inicio.getFullYear() + " - " + edicao.tema }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <app-tabela-edicao
+      [data]="responsaveis"
+      [modalConfig]="obterModelo.bind(this)"
+      [loading]="loadingEntidade"
+      (saved)="loadResponsaveis()"
+      [salvarAction]="salvarResponsavel.bind(this)"
+      [deletarAction]="deletarComissao.bind(this)"
+    ></app-tabela-edicao>
+  </div>
+</div>

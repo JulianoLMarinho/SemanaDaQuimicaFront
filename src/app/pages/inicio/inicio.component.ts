@@ -14,6 +14,7 @@ import { ModalConfirmacaoComponent } from '../../shared/components/modal-confirm
 import { EditButtonDirective } from '../../shared/models/edit-button-directive';
 import { AppUtils } from '../../shared/utils';
 import { StorageService } from '../../services/storage.service';
+import { EdicaoSemana } from 'src/app/shared/models/edicao-semana';
 
 @Component({
   selector: 'app-inicio',
@@ -43,6 +44,7 @@ export class InicioComponent implements OnInit {
     editAction: this.alterarTema.bind(this),
     showEditButton: true,
   };
+  edicaoSemana: EdicaoSemana;
 
   constructor(
     private contentService: ContentService,
@@ -56,6 +58,7 @@ export class InicioComponent implements OnInit {
     private storage: StorageService
   ) {
     this.tema = '';
+    this.edicaoSemana = this.edicaoSemanaService.semanaAtiva;
   }
 
   ngOnInit() {

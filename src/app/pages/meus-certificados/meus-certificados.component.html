@@ -1,0 +1,58 @@
+<div class="main-container">
+  <app-page-top-bar titulo="Meus Certificados"></app-page-top-bar>
+  <div *ngIf="false" class="loader-spinner">
+    <mat-spinner class="progress-spinner"></mat-spinner>
+  </div>
+  <div class="meus-cursos-container">
+    <div class="container">
+      <mat-card class="edicao-titulo">
+        <mat-card-content>
+          <div class="edicao-numero">Edição</div>
+          <div class="edicao-titulo">Atividade</div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card *ngFor="let atividade of atividades">
+        <mat-card-content>
+          <div class="edicao-numero">{{ atividade.numero_edicao }}</div>
+          <div class="edicao-titulo">{{ atividade.titulo }}</div>
+          <div>
+            <button
+              *ngIf="atividade.percentual_presenca >= 0.75"
+              mat-icon-button
+              aria-label="Baixar certificado"
+              (click)="prepararDadosCertificado(atividade)"
+            >
+              <mat-icon
+                [ngStyle]="{ color: coresService.coresAtivas.cor2 }"
+                matTooltip="Baixar certificado"
+                >download</mat-icon
+              >
+            </button>
+            <button
+              *ngIf="atividade.percentual_presenca < 0.75"
+              mat-icon-button
+              aria-label="Baixar certificado"
+              class="certificado-bloqueado"
+            >
+              <mat-icon
+                matTooltip="O usuário não teve presença suficiente para obter este certificado"
+                >block</mat-icon
+              >
+            </button>
+          </div>
+        </mat-card-content>
+
+        <mat-card-footer>
+          <mat-progress-bar
+            *ngIf="atividade.carregando"
+            mode="indeterminate"
+          ></mat-progress-bar>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<app-certificado-export
+  [dadosCertificado]="dadosCertificado"
+></app-certificado-export>

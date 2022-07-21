@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { finalize, map, startWith } from 'rxjs/operators';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { LocalizacaoService } from '../../services/localizacao.service';
 import { StyleService } from '../../services/style.service';
 import { UsuarioService } from '../../services/usuario.service';
@@ -25,16 +26,57 @@ export class MeusDadosComponent implements OnInit {
   loadingCidade = false;
   loadingSave = false;
   editando = false;
+  nivelOpcao = ['Ensino Técnico', 'Graduação'];
+  cursosOpcoes = {
+    tecnico: [
+      'Química',
+      'Controle Ambiental',
+      'Biotecnologia',
+      'Farmácia',
+      'Polímeros',
+      'Petróleo e Gás',
+    ],
+    graduacao: [
+      'QAT',
+      'Licenciatura em Química',
+      'Química',
+      'Química Industrial',
+      'Engenharia Química',
+      'Engenharua de Alimentos',
+      'Farmácia',
+      'Física',
+      'Astronomia',
+      'Biologia',
+    ],
+  };
+
+  instituicoes = {
+    tecnico: [
+      'IFRJ - Maracanã',
+      'IFRJ - Paracambi',
+      'IFRJ - Nilópolis',
+      'FAETEC',
+    ],
+    graduacao: ['UFRJ', 'UFF', 'UFRRJ', 'UERJ', 'PUC', 'Unirio', 'Estácio'],
+  };
+
+  tamanhos = ['P', 'M', 'G', 'GG', 'EXG'];
 
   constructor(
     private userService: UsuarioService,
     private toastr: ToastrService,
     public styleService: StyleService,
-    private localizacaoService: LocalizacaoService
+    private localizacaoService: LocalizacaoService,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit() {
-    this.userService.obterUsuarioLogado().subscribe(
+    this.usuario = this.authService.usuarioLogado;
+    if (this.usuario?.estado!) {
+      this.carregarMunicipios();
+    }
+    this.loading = false;
+    /* this.userService.obterUsuarioLogado().subscribe(
       (usuario) => {
         if (usuario) {
           this.usuario = usuario;
@@ -48,7 +90,7 @@ export class MeusDadosComponent implements OnInit {
         this.toastr.error(error.message);
         this.loading = true;
       }
-    );
+    ); */
 
     this.carregarEstados();
   }
@@ -93,22 +135,23 @@ export class MeusDadosComponent implements OnInit {
   salvarUsuario() {
     if (this.usuario) {
       this.loadingSave = true;
-      this.userService.atualizarUsuario(this.usuario).subscribe(
-        (res) => {
+      this.userService.atualizarUsuario(this.usuario).subscribe({
+        next: (res) => {
           if (!res) {
             this.toastr.error('Não é possível salvar o usuario');
           } else {
             this.toastr.success('Usuário atualizado com sucesso');
+            window.location.reload();
           }
         },
-        (error) => {
+        error: (error) => {
           this.toastr.error('Não é possível salvar o usuario');
         },
-        () => {
+        complete: () => {
           this.loadingSave = false;
           this.editando = false;
-        }
-      );
+        },
+      });
     } else this.toastr.error('Não é possível salvar o usuario');
   }
 

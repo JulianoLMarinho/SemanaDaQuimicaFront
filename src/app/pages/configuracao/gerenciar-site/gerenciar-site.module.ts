@@ -18,5 +18,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
   ],
   declarations: [GerenciarSiteComponent],
+  exports: [GerenciarSiteComponent],
 })
 export class GerenciarSiteModule {}

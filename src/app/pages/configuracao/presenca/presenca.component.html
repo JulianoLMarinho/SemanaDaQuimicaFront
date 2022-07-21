@@ -1,0 +1,83 @@
+<div class="main-container">
+  <app-page-top-bar titulo="Presença"></app-page-top-bar>
+  <div class="content">
+    <div class="opcoes-presenca">
+      <div class="atividades-opcoes col-md-3">
+        <mat-form-field appearance="legacy">
+          <mat-label>Edição</mat-label>
+          <mat-select
+            [(value)]="edicaoSelecionada"
+            (selectionChange)="selectEdicao()"
+          >
+            <mat-option *ngFor="let edicao of edicoes" [value]="edicao">
+              {{
+                edicao.parsed_data_inicio.getFullYear() + " - " + edicao.tema
+              }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="selecao-atividade col-md-9">
+        <mat-form-field appearance="legacy">
+          <mat-label>Atividade</mat-label>
+          <mat-select
+            [(value)]="atividadeSelecionada"
+            (selectionChange)="selectAtividade()"
+          >
+            <mat-option
+              *ngFor="let atividade of atividades"
+              [value]="atividade"
+            >
+              {{ atividade.titulo }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="alunos-lista">
+      <div *ngIf="carregandoPresenca" class="loader-spinner">
+        <mat-spinner class="progress-spinner"></mat-spinner>
+      </div>
+      <div *ngIf="!carregandoPresenca && alunosPresenca.length === 0">
+        Não há dados a serem exibidos
+      </div>
+      <div *ngIf="!carregandoPresenca && alunosPresenca.length > 0">
+        <div class="header">
+          <div class="col-3">Nome</div>
+          <div class="col-9 dias-presenca">
+            <div *ngFor="let dias of headerDias">{{ dias.parsedDia }}</div>
+          </div>
+        </div>
+        <mat-card *ngFor="let presenca of alunosPresenca" class="aluno-item">
+          <div class="col-3">{{ presenca.nome }}</div>
+          <div class="dias-presenca col-9">
+            <div *ngFor="let pre of presenca.presencas">
+              <div>
+                <button
+                  mat-mini-fab
+                  [ngStyle]="{
+                    background:
+                      pre.meia || pre.inteira
+                        ? pre.meia
+                          ? 'linear-gradient(0deg, ' +
+                            coresEdicao.coresAtivas.cor1 +
+                            ' 50%, ' +
+                            coresEdicao.coresAtivas.cor4 +
+                            ' 50%)'
+                          : coresEdicao.coresAtivas.cor1
+                        : coresEdicao.coresAtivas.cor4,
+                    color: coresEdicao.coresAtivas.cor2,
+                    border: '2px solid ' + coresEdicao.coresAtivas.cor2
+                  }"
+                  (click)="definirPresenca(pre)"
+                >
+                  {{ pre.meia || pre.inteira ? (pre.meia ? "1/2" : "1") : "+" }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,11 @@
-<div (mouseenter)="mouseOver()" (mouseleave)="showEdit = false">
+<div *ngIf="edicaoSemana.site_em_construcao && !authService.userIsAdmin()">
+  <app-em-construcao></app-em-construcao>
+</div>
+<div
+  *ngIf="!(edicaoSemana.site_em_construcao && !authService.userIsAdmin())"
+  (mouseenter)="mouseOver()"
+  (mouseleave)="showEdit = false"
+>
   <div class="fab-container" *ngIf="false">
     <button
       mat-mini-fab
@@ -68,15 +75,18 @@
     </ng-template>
   </ngb-carousel>
 </div>
-<div class="barra-atividades">
+<div
+  class="barra-atividades"
+  *ngIf="!(edicaoSemana.site_em_construcao && !authService.userIsAdmin())"
+>
   <card-atividade tipoAtividade="CURSO"></card-atividade>
   <card-atividade tipoAtividade="PALESTRA"></card-atividade>
   <card-atividade tipoAtividade="WORKSHOP"></card-atividade>
   <card-atividade tipoAtividade="VISITA_TECNICA"></card-atividade>
 </div>
 <div
+  *ngIf="!(edicaoSemana.site_em_construcao && !authService.userIsAdmin())"
   class="barra-tema"
-  [appEditContent]="editDirective"
   [ngStyle]="{
     'background-color': coresEdicao.coresAtivas.cor2,
     color: coresEdicao.coresAtivas.cor5
@@ -84,10 +94,16 @@
 >
   "{{ tema }}"
 </div>
-<div style="padding: 20px">
-  <h1>Patrocinadores</h1>
+<div
+  *ngIf="!(edicaoSemana.site_em_construcao && !authService.userIsAdmin())"
+  style="padding: 20px"
+>
+  <h1 [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }">Patrocinadores</h1>
 </div>
-<div class="carousel-patrocinadores">
+<div
+  *ngIf="!(edicaoSemana.site_em_construcao && !authService.userIsAdmin())"
+  class="carousel-patrocinadores"
+>
   <carousel
     *ngIf="!carregandoPatrocinador"
     [autoplay]="true"

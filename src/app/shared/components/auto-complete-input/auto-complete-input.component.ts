@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormControl, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormControl, ValidatorFn, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -36,7 +36,7 @@ export class AutoCompleteInputComponent implements OnInit, OnChanges {
 
   filteredOptions: Observable<any[]> | undefined;
 
-  inputControl = new FormControl('', [Validators.required, this.requireMatch.bind(this)]);
+  inputControl = new UntypedFormControl('', [Validators.required, this.requireMatch.bind(this)]);
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {

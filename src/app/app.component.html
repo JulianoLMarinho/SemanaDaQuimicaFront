@@ -193,10 +193,10 @@
     </p>
     <button
       (click)="authService.logout(true)"
-      mat-raised-button
+      mat-button
       class="google-login-btn"
     >
-      Log Out
+      Sair
     </button>
 
     <mat-divider
@@ -242,6 +242,7 @@
           <a
             (click)="sidenav.opened = false"
             mat-button
+            routerLink="/meus-certificados"
             [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
             >Meus Certificados</a
           >
@@ -263,8 +264,17 @@
               (click)="sidenav.opened = false"
               mat-button
               [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+              routerLink="configuracao/gerenciar-edicao-ativa"
+              >Gerenciar Edição Ativa</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              (click)="sidenav.opened = false"
+              mat-button
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
               routerLink="/gerenciar_edicao"
-              >Gerenciar Edição</a
+              >Edições</a
             >
           </li>
           <li class="nav-item">
@@ -288,10 +298,10 @@
           <li class="nav-item">
             <a
               (click)="sidenav.opened = false"
-              mat-button
+              routerLink="/configuracao/comissao"
               [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
-              routerLink="/configuracao/atividade"
-              >Atividades</a
+              mat-button
+              >Comissão</a
             >
           </li>
           <li class="nav-item">
@@ -299,8 +309,8 @@
               (click)="sidenav.opened = false"
               mat-button
               [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
-              routerLink="/configuracao/site"
-              >Gerenciamento do Site</a
+              routerLink="/configuracao/atividade"
+              >Atividades</a
             >
           </li>
           <li class="nav-item">
@@ -317,6 +327,24 @@
                 [matBadgeHidden]="inscricoesAtivas < 1"
                 >Confirmar Inscrições</span
               ></a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              (click)="sidenav.opened = false"
+              mat-button
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+              routerLink="/configuracao/presenca"
+              >Presença</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              (click)="sidenav.opened = false"
+              mat-button
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+              routerLink="/configuracao/gerar-certificado"
+              >Gerar Certificado</a
             >
           </li>
         </ul>

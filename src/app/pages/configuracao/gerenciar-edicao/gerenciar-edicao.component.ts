@@ -17,7 +17,7 @@ import { BaseConfiguracaoComponent } from '../base-configuracao/base-configuraca
 })
 export class GerenciarEdicaoComponent extends BaseConfiguracaoComponent {
   loadEntidade(): void {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
   }
   edicoesLista: EdicaoSemana[] = [];
   loadingEdicoes: boolean = false;
@@ -45,6 +45,15 @@ export class GerenciarEdicaoComponent extends BaseConfiguracaoComponent {
         fieldValidators: [Validators.required],
       },
       {
+        fieldName: 'Número da Edição',
+        fieldInitialValue: edicaoAtividade?.numero_edicao,
+        fieldProperty: 'numero_edicao',
+        fieldType: 'number',
+        fieldPlaceholder: 'Insira o número da edição',
+        fieldErrorMessage: 'É necessário inserir um número maior do que 0',
+        fieldValidators: [Validators.required, Validators.min(1)],
+      },
+      {
         fieldName: 'Início',
         fieldInitialValue: edicaoAtividade?.data_inicio,
         fieldProperty: 'data_inicio',
@@ -66,30 +75,6 @@ export class GerenciarEdicaoComponent extends BaseConfiguracaoComponent {
         fieldDisplayFormatter: (args: EdicaoSemana) =>
           moment(args.data_fim).format('DD/MM/yyyy'),
       },
-      {
-        fieldName: 'Quem Somos',
-        fieldInitialValue: edicaoAtividade?.quem_somos,
-        fieldProperty: 'quem_somos',
-        fieldType: 'textArea',
-        fieldPlaceholder: "Insira o texto para a tela 'Quem Somos'",
-        fieldErrorMessage: 'É necessário inserir o texto',
-        fieldValidators: [],
-        fieldShowOnTable: false,
-      },
-      {
-        fieldName: 'Comissão',
-        fieldInitialValue: edicaoAtividade?.comissao_edicao?.map((x) => x.id),
-        fieldProperty: 'comissao_edicao',
-        fieldType: 'selectFilter',
-        fieldPlaceholder: 'Selecione o integrante da comissão',
-        fieldErrorMessage: '',
-        fieldValidators: [],
-        fieldOptions: [],
-        fieldOptionsFiltered: [],
-        fieldShowOnTable: false,
-        fieldDisplayFormatter: this.comissaoFormatter,
-        fieldLoadOptionsService: this.loadComissao.bind(this),
-      },
     ];
   }
 
@@ -105,6 +90,6 @@ export class GerenciarEdicaoComponent extends BaseConfiguracaoComponent {
   }
 
   loadComissao(): Observable<OpcaoSelect[]> {
-    return this.responsavelService.getReponsaveis();
+    return this.responsavelService.getReponsaveis('comissao');
   }
 }

@@ -17,11 +17,23 @@ import { QuemSomosComponent } from './pages/quem-somos/quem-somos.component';
 import { InscricaoComponent } from './pages/inscricao/inscricao.component';
 import { MeusCursosComponent } from './pages/meus-cursos/meus-cursos.component';
 import { ConfirmarInscricoesComponent } from './pages/configuracao/confirmar-inscricoes/confirmar-inscricoes.component';
+import { PresencaComponent } from './pages/configuracao/presenca/presenca.component';
+import { MeusCertificadosModule } from './pages/meus-certificados/meus-certificados.module';
+import { MeusCertificadosComponent } from './pages/meus-certificados/meus-certificados.component';
+import { GerarCertificadoComponent } from './pages/configuracao/gerar-certificado/gerar-certificado.component';
+import { GerenciarEdicaoAtivaComponent } from './pages/configuracao/gerenciar-edicao-ativa/gerenciar-edicao-ativa.component';
+import { EmConstrucaoGuard } from './_helpers/emConstrucao.guard';
+import { ComissaoComponent } from './pages/configuracao/comissao/comissao.component';
+import { CadastroIncompletoGuard } from './_helpers/cadastro_incompleto.guard';
 
 const routes: Routes = [
   { path: '', component: InicioComponent },
   { path: 'inicio', component: InicioComponent },
-  { path: 'atividades', component: AtividadesComponent },
+  {
+    path: 'atividades',
+    component: AtividadesComponent,
+    canActivate: [EmConstrucaoGuard],
+  },
   {
     path: 'meus_dados',
     component: MeusDadosComponent,
@@ -30,59 +42,87 @@ const routes: Routes = [
   {
     path: 'gerenciar_edicao',
     component: GerenciarEdicaoComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
   {
     path: 'configuracao/atividade',
     component: AtividadeConfiguracaoComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
   {
     path: 'configuracao/turno',
     component: TurnoConfiguracaoComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
   {
     path: 'configuracao/responsavel',
     component: ResponsavelConfiguracaoComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
   {
-    path: 'configuracao/site',
-    component: GerenciarSiteComponent,
-    canActivate: [AuthGuard],
+    path: 'configuracao/comissao',
+    component: ComissaoComponent,
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
   {
     path: 'cursos',
     component: CursosComponent,
+    canActivate: [EmConstrucaoGuard],
   },
   {
     path: 'palestras',
     component: PalestrasComponent,
+    canActivate: [EmConstrucaoGuard],
   },
   {
     path: 'workshops',
     component: WorkshopsComponent,
+    canActivate: [EmConstrucaoGuard],
   },
   {
     path: 'visitas-tecnicas',
     component: VisitasTecnicasComponent,
+    canActivate: [EmConstrucaoGuard],
   },
-  { path: 'quem-somos', component: QuemSomosComponent },
+  {
+    path: 'quem-somos',
+    component: QuemSomosComponent,
+    canActivate: [EmConstrucaoGuard],
+  },
   {
     path: 'inscricao',
     component: InscricaoComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, EmConstrucaoGuard, CadastroIncompletoGuard],
   },
   {
     path: 'meus-cursos',
     component: MeusCursosComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
+  },
+  {
+    path: 'meus-certificados',
+    component: MeusCertificadosComponent,
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
   {
     path: 'configuracao/confirmar-inscricoes',
     component: ConfirmarInscricoesComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
+  },
+  {
+    path: 'configuracao/presenca',
+    component: PresencaComponent,
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
+  },
+  {
+    path: 'configuracao/gerar-certificado',
+    component: GerarCertificadoComponent,
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
+  },
+  {
+    path: 'configuracao/gerenciar-edicao-ativa',
+    component: GerenciarEdicaoAtivaComponent,
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
   },
 ];
 

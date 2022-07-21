@@ -1,0 +1,56 @@
+<div style="height: 0; overflow: hidden">
+  <div
+    id="pdfTable"
+    #pdfTable
+    [ngStyle]="{ display: exportando ? 'flex' : 'flex' }"
+  >
+    <div class="certificado-container">
+      <div
+        class="header-cert"
+        [ngStyle]="{ 'background-color': coresSemana.coresAtivas.cor1 }"
+      ></div>
+      <div>
+        <img [src]="dadosCertificado.logo_semana" style="width: 230px" />
+      </div>
+      <div
+        class="header-cert"
+        [ngStyle]="{ 'background-color': coresSemana.coresAtivas.cor1 }"
+      ></div>
+    </div>
+    <div class="certificado-titulo">
+      <u><b>C E R T I F I C A D O</b></u>
+    </div>
+    <div class="texto-certificado">
+      <p>
+        Certificamos que
+        {{ dadosCertificado.nome_aluno }} participou
+        {{ dadosCertificado.tipo }} “{{ dadosCertificado.titulo_atividade }}”,
+        ministrado por {{ dadosCertificado.responsaveis }} durante a
+        {{ dadosCertificado.numero_edicao }}ª Semana da Química do Instituto de
+        Química da Universidade Federal do Rio de Janeiro,
+        {{ dadosCertificado.texto_data }}, com carga horária de
+        {{ dadosCertificado.duracao_atividade }} horas.
+      </p>
+    </div>
+    <div class="data-certificado">
+      Rio de Janeiro, {{ dadosCertificado.data_atual }}
+    </div>
+    <div class="assinatura-certificado">
+      <div><img [src]="semanaAtiva.assinatura_direcao_instituto" /></div>
+      <div><img [src]="semanaAtiva.assinatura_presidente_edicao" /></div>
+    </div>
+    <div class="assinatura-certificado-nomes">
+      <div>
+        <p>{{ semanaAtiva.direcao_instituto }}</p>
+        <p>Diretor do Institulo de Química</p>
+      </div>
+      <div>
+        <p>{{ semanaAtiva.presidente_edicao }}</p>
+        <p>
+          Presidente da Comissão Organizadora da
+          {{ dadosCertificado.numero_edicao }}ª Semana da Química
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

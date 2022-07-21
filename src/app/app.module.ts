@@ -45,6 +45,18 @@ import { InscricaoModule } from './pages/inscricao/inscricao.module';
 import { MeusCursosModule } from './pages/meus-cursos/meus-cursos.module';
 import { ConfirmarInscricoesModule } from './pages/configuracao/confirmar-inscricoes/confirmar-inscricoes.module';
 import { MatBadgeModule } from '@angular/material/badge';
+import { PresencaModule } from './pages/configuracao/presenca/presenca.module';
+import { MeusCertificadosModule } from './pages/meus-certificados/meus-certificados.module';
+import { GerarCertificadoModule } from './pages/configuracao/gerar-certificado/gerar-certificado.module';
+import { GerenciarEdicaoAtivaModule } from './pages/configuracao/gerenciar-edicao-ativa/gerenciar-edicao-ativa.module';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { environment } from 'environment';
+import { ComissaoModule } from './pages/configuracao/comissao/comissao.module';
+import { QuillModule } from 'ngx-quill';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -93,22 +105,18 @@ export function momentAdapterFactory() {
     MeusCursosModule,
     ConfirmarInscricoesModule,
     MatBadgeModule,
+    PresencaModule,
+    MeusCertificadosModule,
+    GerarCertificadoModule,
+    GerenciarEdicaoAtivaModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireDatabaseModule,
+    ComissaoModule,
   ],
   providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: true,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '66537848784-0b8g1ra6u7o1otbua56ujei1ri8a797q.apps.googleusercontent.com'
-            ),
-          },
-        ],
-      },
-    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

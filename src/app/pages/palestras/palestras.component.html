@@ -3,7 +3,7 @@
   <div *ngIf="loading" class="loader-spinner">
     <mat-spinner class="progress-spinner"></mat-spinner>
   </div>
-  <div class="calendario-wraper">
+  <div class="calendario-wraper" *ngIf="!loading">
     <div class="calendario">
       <app-calendar-view
         [events]="events"

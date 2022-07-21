@@ -1,4 +1,4 @@
-<div class="atividade-item">
+<div class="atividade-item" *ngIf="false">
   <h2 [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }">
     {{ atividade.titulo.toLocaleUpperCase() }}
   </h2>
@@ -39,7 +39,7 @@
         >-->
       </div>
     </div>
-    <div *ngIf="!atividade.responsaveis || atividade.responsaveis.length < 1">
+    <div *ngIf="!atividade.responsaveis || atividade.responsaveis!.length < 1">
       <i>Responsável não cadastrado</i>
     </div>
   </div>
@@ -55,3 +55,68 @@
     <hr />
   </div>
 </div>
+
+<mat-card class="atividade-item">
+  <mat-card-title [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }">{{
+    atividade.titulo.toLocaleUpperCase()
+  }}</mat-card-title>
+  <mat-card-subtitle>
+    <div class="responsaveis">
+      <b [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }">Responsáveis: </b>
+      <div class="resp-foto-container">
+        <div
+          [matTooltip]="res.nome_responsavel"
+          matTooltipPosition="above"
+          *ngFor="let res of atividade.responsaveis; let i = index"
+        >
+          <img
+            (click)="abrirDetalhesResponsavel(res)"
+            class="responsavel-foto"
+            [src]="imageSanitizer(res.foto)"
+          />
+          <!--<i>
+          <a (click)="abrirDetalhesResponsavel(res)">
+            {{ res.nome_responsavel }}</a
+          ></i
+        >
+        <span
+          *ngIf="
+            atividade.responsaveis &&
+            atividade.responsaveis.length > 0 &&
+            i < atividade.responsaveis.length - 2
+          "
+          >,</span
+        >
+        <span
+          *ngIf="
+            atividade.responsaveis &&
+            atividade.responsaveis.length > 0 &&
+            i === atividade.responsaveis.length - 2
+          "
+        >
+          e</span
+        >-->
+        </div>
+      </div>
+      <div
+        *ngIf="!atividade.responsaveis || atividade.responsaveis!.length < 1"
+      >
+        <i>Responsável não cadastrado</i>
+      </div>
+    </div>
+  </mat-card-subtitle>
+  <mat-card-content>
+    <p *ngIf="!atividade.atividade_presencial">
+      <b [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }">Link: </b
+      >{{ atividade.link ? atividade.link : "Link não cadastrado" }}
+    </p>
+    <p *ngIf="atividade.atividade_presencial">
+      <b [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }">Local: </b
+      >{{ atividade.local ? atividade.local : "Local não cadastrado" }}
+    </p>
+    <p>
+      <b [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }">Descrição: </b
+      >{{ atividade.descricao_atividade }}
+    </p></mat-card-content
+  >
+</mat-card>

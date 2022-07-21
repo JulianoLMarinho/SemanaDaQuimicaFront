@@ -7,6 +7,7 @@ import {
   OpcaoSelect,
   TipoAtividade,
 } from '../shared/models/atividades';
+import { DadosCertificados } from '../shared/models/dados-certificados';
 import { HttpService } from './http.service';
 
 @Injectable({
@@ -37,6 +38,14 @@ export class AtividadesService {
     );
   }
 
+  getAtividadesCertificadosByEdicaoInscricao(
+    idEdicao: number
+  ): Observable<AtividadeLista[]> {
+    return this.http.get<AtividadeLista[]>(
+      'atividades/atividades-certificado?idEdicao=' + idEdicao
+    );
+  }
+
   getAtividadesByEdicaoTurnoAndTipo(
     idEdicao: number,
     tipo: string
@@ -53,5 +62,11 @@ export class AtividadesService {
 
   criarEditarAtividade(atividade: any): Observable<boolean> {
     return this.http.put<any, boolean>('atividades', atividade);
+  }
+
+  obterListaCertificadoUsuario(
+    usuarioId: number
+  ): Observable<DadosCertificados[]> {
+    return this.http.get<DadosCertificados[]>('atividades/lista-certificados');
   }
 }

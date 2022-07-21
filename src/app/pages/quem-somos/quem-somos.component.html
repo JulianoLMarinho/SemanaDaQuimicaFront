@@ -4,17 +4,50 @@
     <mat-spinner class="progress-spinner"></mat-spinner>
   </div>
   <ng-template #mainContent>
-    <div class="main-atividades row">
-      <div class="col-md-12 quem-somos-texto">{{ quemSomosTexto }}</div>
-      <div class="col-md-12">
-        <div class="conheca-comissao">Comissão da Semana da Química</div>
-      </div>
-      <div>
-        <div *ngFor="let c of comissao" class="comissao-foto">
-          <img [src]="c.fotoEnc" />
-          <div class="comissao-det">
-            <div>{{ c.nome_responsavel }}</div>
-            <div>Diretor</div>
+    <div class="quem-somos-container">
+      <div class="quem-somos-texto" [innerHtml]="transformQuemSomos()"></div>
+      <div class="comissao">
+        <h1 [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }">
+          Conheça a comissão organizadora da 28° Edição da Semana da Química
+        </h1>
+        <div class="comissao-fotos">
+          <div *ngFor="let c of comissao" class="comissao-foto">
+            <img class="foto-perfil" *ngIf="c.fotoEnc" [src]="c.fotoEnc" />
+            <mat-icon class="foto-perfil" *ngIf="!c.fotoEnc">person</mat-icon>
+            <div class="comissao-det">
+              <div class="social">
+                <a *ngIf="c.facebook" [href]="c.facebook" target="_blank">
+                  <img
+                    matTooltip="Facebook"
+                    src="../../../assets/imgs/facebook-white.png"
+                  />
+                </a>
+                <a *ngIf="c.twitter" [href]="c.twitter" target="_blank">
+                  <img
+                    *ngIf="c.twitter"
+                    matTooltip="Twitter"
+                    src="../../../assets/imgs/twitter-icon-white.jpg"
+                /></a>
+                <a *ngIf="c.instagram" [href]="c.instagram" target="_blank">
+                  <img
+                    *ngIf="c.instagram"
+                    matTooltip="Instagram"
+                    src="../../../assets/imgs/instagram-white.png"
+                /></a>
+                <a
+                  *ngIf="c.id_lattes"
+                  [href]="'http://lattes.cnpq.br/' + c.id_lattes"
+                  target="_blank"
+                >
+                  <img
+                    *ngIf="c.id_lattes"
+                    matTooltip="Lattes"
+                    src="../../../assets/imgs/lattes.png"
+                /></a>
+              </div>
+              <div>{{ c.nome_responsavel }}</div>
+              <div>{{ c.funcao_semana }}</div>
+            </div>
           </div>
         </div>
       </div>

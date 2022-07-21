@@ -17,7 +17,7 @@ export class CoresEdicaoService {
     cor6: '',
   };
 
-  coresCarregadas = new Subject();
+  coresCarregadas = new Subject<void>();
 
   constructor(private http: HttpService) {
     this.coresCarregadas.next();

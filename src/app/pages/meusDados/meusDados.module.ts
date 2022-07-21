@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SharedModule } from '../../shared/shared.module';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { SharedModule } from '../../shared/shared.module';
     MatAutocompleteModule,
     ReactiveFormsModule,
     SharedModule,
+    MatSelectModule,
   ],
   declarations: [MeusDadosComponent],
 })

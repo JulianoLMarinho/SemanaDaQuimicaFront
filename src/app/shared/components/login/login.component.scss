@@ -4,8 +4,43 @@
   flex-direction: column;
   align-items: center;
 
+  .email-senha {
+    cursor: pointer;
+  }
+
   .logo-img {
     width: 180px;
+  }
+
+  .login-email-senha {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+
+    mat-form-field {
+      width: 80%;
+    }
+
+    .email-senha-botoes {
+      display: flex;
+      justify-content: space-between;
+      width: 80%;
+    }
+
+    .verifique-email {
+      width: 80%;
+      margin-bottom: 15px;
+      color: red;
+
+      .clique-aqui {
+        cursor: pointer;
+      }
+    }
+
+    .esqueceu-senha-texto {
+      cursor: pointer;
+    }
   }
 
   .social-login-buttons {
