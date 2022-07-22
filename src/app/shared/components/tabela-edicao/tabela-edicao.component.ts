@@ -16,7 +16,10 @@ import { CoresEdicaoService } from '../../../services/coresEdicao.service';
 import { StyleService } from '../../../services/style.service';
 import { BaseModel } from '../../models/baseModel';
 import { ModalAdicionarEditarComponent } from '../modal-adicionar-editar/modal-adicionar-editar.component';
-import { ModalFieldConfiguration } from '../modal-adicionar-editar/modal-field-configuration';
+import {
+  CustomActions,
+  ModalFieldConfiguration,
+} from '../modal-adicionar-editar/modal-field-configuration';
 import { ModalConfirmacaoComponent } from '../modal-confirmacao/modal-confirmacao.component';
 import { TabelaHeaders } from './tabela-headers';
 
@@ -29,6 +32,7 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
   @Input() headers: TabelaHeaders[] = [];
   @Input() data: T[] = [];
   @Input() loading = false;
+  @Input() readOnly = false;
   @Input() modalConfig: (entidadeEdit?: any) => ModalFieldConfiguration[] =
     () => [];
   @Input() salvarAction: (entity: any) => Observable<boolean> = ({}) =>
@@ -36,6 +40,7 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
   @Input() deletarAction: (entity: any) => Observable<boolean> = ({}) =>
     of(false);
   @Input() nomeEntidade = '';
+  @Input() customActions: CustomActions[] = [];
 
   @Output() saved = new EventEmitter();
   displayedColumns: string[] = [];
@@ -89,6 +94,7 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
 
     activeModal.componentInstance.modalFields = this.modalConfig(entidadeEdit);
     activeModal.componentInstance.salvarAction = this.salvarAction.bind(this);
+    activeModal.componentInstance.readOnly = this.readOnly;
     activeModal.componentInstance.saved.subscribe(() => {
       this.saved.emit();
     });
@@ -110,5 +116,10 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
         }
       });
     };
+  }
+
+  callCustomAction(action: any, args: any) {
+    console.log(action);
+    action(args);
   }
 }

@@ -94,3 +94,29 @@ mat-divider {
     width: 350px !important;
   }
 }
+
+.no-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .small {
+    mat-icon {
+      width: 45px;
+      height: 45px;
+      font-size: 45px;
+
+      line-height: 1;
+    }
+
+    margin-top: 0;
+  }
+
+  .large {
+    mat-icon {
+      width: 100px;
+      height: 100px;
+      font-size: 100px;
+    }
+  }
+}

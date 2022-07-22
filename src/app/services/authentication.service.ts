@@ -186,10 +186,4 @@ export class AuthenticationService {
   async resetarSenha(email: string) {
     await this.afAuth.sendPasswordResetEmail(email);
   }
-
-  refreshToken() {
-    /*return this.socialAuthService.refreshAuthToken(
-      GoogleLoginProvider.PROVIDER_ID
-    );*/
-  }
 }

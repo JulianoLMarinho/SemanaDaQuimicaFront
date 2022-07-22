@@ -57,6 +57,9 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from 'environment';
 import { ComissaoModule } from './pages/configuracao/comissao/comissao.module';
 import { QuillModule } from 'ngx-quill';
+import { ComoChegarModule } from './pages/como-chegar/como-chegar.module';
+import { FaleConoscoModule } from './pages/fale-conosco/fale-conosco.module';
+import { UsuariosModule } from './pages/configuracao/usuarios/usuarios.module';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -115,6 +118,9 @@ export function momentAdapterFactory() {
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     ComissaoModule,
+    ComoChegarModule,
+    FaleConoscoModule,
+    UsuariosModule,
   ],
   providers: [
     {

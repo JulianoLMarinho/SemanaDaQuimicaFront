@@ -32,9 +32,19 @@
             [ngStyle]="{ color: corEdicao.coresAtivas.cor6 }"
           >
             <button
+              *ngFor="let customAction of customActions"
+              mat-icon-button
+              matTooltipPosition="above"
+              [matTooltip]="customAction.tooltip"
+              (click)="customAction.action(element)"
+            >
+              <mat-icon>{{ customAction.icon }}</mat-icon>
+            </button>
+            <button
               (click)="deleteAction(element)"
               mat-icon-button
               matTooltipPosition="above"
+              *ngIf="!readOnly"
               [matTooltip]="'Excluir ' + nomeEntidade"
             >
               <mat-icon>delete</mat-icon>
@@ -42,10 +52,20 @@
             <button
               (click)="openAddEditModal(element)"
               mat-icon-button
+              *ngIf="!readOnly"
               matTooltipPosition="above"
               [matTooltip]="'Editar ' + nomeEntidade"
             >
               <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              (click)="openAddEditModal(element)"
+              mat-icon-button
+              *ngIf="readOnly"
+              matTooltipPosition="above"
+              matTooltip="Ver detalhes"
+            >
+              <mat-icon>find_in_page</mat-icon>
             </button>
           </div>
         </mat-cell>
@@ -68,6 +88,7 @@
     <div class="buttons-table">
       <button
         mat-button
+        *ngIf="!readOnly"
         [ngStyle]="{ color: corEdicao.coresAtivas.cor6 }"
         (click)="openAddEditModal()"
       >

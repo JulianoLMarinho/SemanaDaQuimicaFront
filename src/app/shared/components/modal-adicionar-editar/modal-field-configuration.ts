@@ -31,9 +31,17 @@ export type FIELD_TYPE =
   | 'number'
   | 'picture'
   | 'date'
-  | 'image';
+  | 'image'
+  | 'action';
 
 export interface FieldOptions {
   name: string;
   value: string;
+}
+
+export interface CustomActions {
+  name: string;
+  icon: string;
+  tooltip: string;
+  action: (args: any) => any;
 }

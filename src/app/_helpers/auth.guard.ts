@@ -5,19 +5,32 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
 } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private toast: ToastrService
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUser = this.authenticationService.usuarioLogado;
 
     if (currentUser) {
+      if (
+        route.data.role === 'adm' &&
+        !this.authenticationService.userIsAdmin()
+      ) {
+        this.toast.error(
+          'O usuário não tem permissão para acessar a página!',
+          undefined,
+          { timeOut: 10000 }
+        );
+        this.router.navigate(['/']);
+      }
       // logged in so return true
       return true;
     }

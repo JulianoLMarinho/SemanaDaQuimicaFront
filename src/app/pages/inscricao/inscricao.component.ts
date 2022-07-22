@@ -147,18 +147,25 @@ export class InscricaoComponent implements OnInit {
       ],
     };
 
-    this.inscricaoService.criarInscricao(saveOjb).subscribe(
-      (res) => {
+    this.inscricaoService.criarInscricao(saveOjb).subscribe({
+      next: (res) => {
+        if (Array.isArray(res)) {
+          this.toast.error('Não há mais vagas em uma ou mais atividades.');
+          res.forEach((e) => {
+            this.toast.error(e);
+          });
+        } else {
+          this.toast.success('Inscrição salva com sucesso');
+        }
         this.carregarAtividades();
-        this.toast.success('Inscrição salva com sucesso');
       },
-      (_) => {
+      error: (_) => {
         this.toast.error('Houve algum erro e a inscrição não foi salva.');
       },
-      () => {
+      complete: () => {
         this.salvando = false;
-      }
-    );
+      },
+    });
   }
 
   existeHorarioSobreposto(): boolean {

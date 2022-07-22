@@ -15,9 +15,15 @@
     <div class="dados">
       <div class="foto-linha">
         <img
+          *ngIf="usuario?.url_foto_perfil"
           class="avatar x-large mat-elevation-z8"
           [src]="usuario?.url_foto_perfil"
         />
+        <div class="no-avatar" *ngIf="!usuario?.url_foto_perfil">
+          <div class="avatar large mat-elevation-z8">
+            <mat-icon>person</mat-icon>
+          </div>
+        </div>
       </div>
       <div class="dados-cadastrais">
         <p>

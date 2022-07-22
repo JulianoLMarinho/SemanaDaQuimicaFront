@@ -11,7 +11,11 @@
           Conheça a comissão organizadora da 28° Edição da Semana da Química
         </h1>
         <div class="comissao-fotos">
-          <div *ngFor="let c of comissao" class="comissao-foto">
+          <div
+            *ngFor="let c of comissao"
+            class="comissao-foto"
+            [ngStyle]="{ background: coresEdicao.coresAtivas.cor1 }"
+          >
             <img class="foto-perfil" *ngIf="c.fotoEnc" [src]="c.fotoEnc" />
             <mat-icon class="foto-perfil" *ngIf="!c.fotoEnc">person</mat-icon>
             <div class="comissao-det">

@@ -20,4 +20,12 @@ export class UsuarioService {
   obterUsuarioLogado(): Observable<Usuario> {
     return this.http.get<Usuario>('usuario');
   }
+
+  obterTodosUsuarios(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>('usuario/get-all');
+  }
+
+  alterarPerfilUsuario(usuarioId: number, perfilId: number): Observable<void> {
+    return this.http.put(`usuario/perfil/${usuarioId}/${perfilId}`);
+  }
 }

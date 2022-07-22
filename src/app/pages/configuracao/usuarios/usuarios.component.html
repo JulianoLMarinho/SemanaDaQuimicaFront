@@ -1,0 +1,13 @@
+<div class="main-container">
+  <app-page-top-bar titulo="Usuários" [loading]="loading"></app-page-top-bar>
+  <div class="container-usuarios">
+    <app-tabela-edicao
+      [data]="usuarios"
+      [modalConfig]="obterModelo.bind(this)"
+      [loading]="loading"
+      [readOnly]="true"
+      [customActions]="acoes"
+      nomeEntidade="Atividade"
+    ></app-tabela-edicao>
+  </div>
+</div>
