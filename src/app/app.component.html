@@ -372,29 +372,21 @@
               >Gerar Certificado</a
             >
           </li>
+          <li class="nav-item">
+            <a
+              (click)="sidenav.opened = false"
+              mat-button
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+              routerLink="/configuracao/tabelas"
+              >Tabelas</a
+            >
+          </li>
         </ul>
       </div>
       <mat-divider
         *ngIf="authService.usuarioLogado?.perfil === 'adm'"
         [ngStyle]="{ 'background-color': coresEdicao.coresAtivas.cor5 }"
       ></mat-divider>
-
-      <div
-        *ngIf="authService.usuarioLogado?.perfil === 'adm'"
-        [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
-      >
-        Tabelas
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a
-              (click)="sidenav.opened = false"
-              mat-button
-              [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
-              >Inscrições</a
-            >
-          </li>
-        </ul>
-      </div>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>

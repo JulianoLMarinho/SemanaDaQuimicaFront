@@ -1,4 +1,17 @@
 <div class="table-wrapper">
+  <div class="top-bar-tabela">
+    <mat-form-field class="filtro">
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" />
+    </mat-form-field>
+    <button
+      mat-icon-button
+      (click)="download()"
+      *ngIf="enableDownload && data.length > 0"
+      [ngStyle]="{ color: corEdicao.coresAtivas.cor6 }"
+    >
+      <mat-icon matTooltip="Fazer download da tabela">file_download</mat-icon>
+    </button>
+  </div>
   <div class="table-container">
     <mat-table [dataSource]="dataSource" matSort [sti]>
       <ng-container
@@ -21,7 +34,7 @@
           </div>
         </mat-cell>
       </ng-container>
-      <ng-container matColumnDef="acoes">
+      <ng-container matColumnDef="acoes" *ngIf="!noActions">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell
           *matCellDef="let element"

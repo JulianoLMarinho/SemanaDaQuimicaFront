@@ -28,6 +28,7 @@ import { CadastroIncompletoGuard } from './_helpers/cadastro_incompleto.guard';
 import { ComoChegarComponent } from './pages/como-chegar/como-chegar.component';
 import { FaleConoscoComponent } from './pages/fale-conosco/fale-conosco.component';
 import { UsuariosComponent } from './pages/configuracao/usuarios/usuarios.component';
+import { TabelasComponent } from './pages/configuracao/tabelas/tabelas.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -77,6 +78,14 @@ const routes: Routes = [
   {
     path: 'configuracao/comissao',
     component: ComissaoComponent,
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
+    data: {
+      role: 'adm',
+    },
+  },
+  {
+    path: 'configuracao/tabelas',
+    component: TabelasComponent,
     canActivate: [AuthGuard, CadastroIncompletoGuard],
     data: {
       role: 'adm',

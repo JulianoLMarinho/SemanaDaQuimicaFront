@@ -1,0 +1,78 @@
+<div class="main-container">
+  <app-page-top-bar
+    titulo="Tabelas"
+    [loading]="false"
+    [loadingSave]="false"
+  ></app-page-top-bar>
+  <div class="content">
+    <mat-expansion-panel hideToggle [expanded]="filterExpanded">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="tabela-opcoes">
+            <mat-form-field
+              appearance="legacy"
+              (click)="$event.stopPropagation()"
+            >
+              <mat-label>Tabela</mat-label>
+              <mat-select
+                [(value)]="tabelaSelecionada"
+                (selectionChange)="primeiroFiltro($event.value)"
+              >
+                <mat-option *ngFor="let tabela of tabelas" [value]="tabela">
+                  {{ tabela.nome }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div (click)="$event.stopPropagation()">
+            <button
+              [disabled]="!tabelaSelecionada"
+              mat-raised-button
+              (click)="filterExpanded = !filterExpanded"
+              [ngStyle]="{
+                background: coresEdicao.coresAtivas.cor2,
+                color: coresEdicao.coresAtivas.cor4
+              }"
+            >
+              Filtros
+            </button>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="filtros-opcoes" *ngIf="tabelaSelecionada">
+        <mat-form-field
+          appearance="legacy"
+          *ngFor="let filtro of tabelaSelecionada.filtros"
+        >
+          <mat-label
+            ><mat-spinner *ngIf="filtro.loading" diameter="20"></mat-spinner>
+            {{ filtro.nome }}</mat-label
+          >
+          <mat-select
+            [(value)]="filtro.opcaoSelecionada"
+            [disabled]="filtro.loading"
+            (selectionChange)="filtro.selecionarAcao(tabelaSelecionada)"
+          >
+            <mat-option
+              *ngFor="let opcao of filtro.opcoesLista"
+              [value]="opcao"
+            >
+              {{ filtro.opcaoLabel(opcao) }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-expansion-panel>
+
+    <app-tabela-edicao
+      *ngIf="tabelaSelecionada && !reloadTable"
+      [data]="tabelaSelecionada.dados"
+      [modalConfig]="tabelaSelecionada.obterModelo.bind(this)"
+      [loading]="false"
+      [noActions]="true"
+      [enableDownload]="true"
+      [readOnly]="true"
+      [nomeEntidade]="tabelaSelecionada.nome"
+    ></app-tabela-edicao>
+  </div>
+</div>

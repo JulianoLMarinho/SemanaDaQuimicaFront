@@ -60,6 +60,7 @@ import { QuillModule } from 'ngx-quill';
 import { ComoChegarModule } from './pages/como-chegar/como-chegar.module';
 import { FaleConoscoModule } from './pages/fale-conosco/fale-conosco.module';
 import { UsuariosModule } from './pages/configuracao/usuarios/usuarios.module';
+import { TabelasModule } from './pages/configuracao/tabelas/tabelas.module';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -121,6 +122,7 @@ export function momentAdapterFactory() {
     ComoChegarModule,
     FaleConoscoModule,
     UsuariosModule,
+    TabelasModule,
   ],
   providers: [
     {

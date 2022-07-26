@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Atividade } from '../shared/models/atividades';
 import { AtividadeInscricao, Inscricao } from '../shared/models/inscricao';
+import { InscricoesEdicao } from '../shared/models/tabelas-exportacao';
 import { HttpService } from './http.service';
 
 @Injectable({
@@ -56,5 +57,15 @@ export class InscricaoService {
 
   totalInscricoesPagamentoInformado(): Observable<number> {
     return this.http.get<number>('inscricao/total-pagamento-informado');
+  }
+
+  obterInscricoesPorAtividade(atividadeId: number): Observable<any[]> {
+    return this.http.get<any[]>('inscricao/usuarios/' + atividadeId);
+  }
+
+  obterInscricoesPorEdicao(edicaoId: number): Observable<InscricoesEdicao[]> {
+    return this.http.get<InscricoesEdicao[]>(
+      'inscricao/inscritos/edicao/' + edicaoId
+    );
   }
 }

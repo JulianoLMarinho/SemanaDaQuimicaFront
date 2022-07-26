@@ -60,7 +60,7 @@ export class InscricaoComponent implements OnInit {
       this.toast.info('A edição não está aceitando inscrições no momento');
       return;
     }
-    if (atividade.vagas! - atividade.total_inscritos! < 1) {
+    if (atividade.vagas! - atividade.total_inscritos! < 1 && deletavel) {
       this.toast.info(
         'Esta atividade atingiu o número máximo de inscritos e não pode aceitar mais inscrições'
       );

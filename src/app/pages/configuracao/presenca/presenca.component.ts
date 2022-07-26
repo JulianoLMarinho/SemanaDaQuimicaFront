@@ -65,17 +65,17 @@ export class PresencaComponent extends BaseConfiguracaoComponent {
   loadEntidade(): void {
     this.atividadesService
       .getAtividadesByEdicaoInscricao(this.edicaoService.semanaSelecionada!.id)
-      .subscribe(
-        (atividades) => {
+      .subscribe({
+        next: (atividades) => {
           this.atividades = atividades;
         },
-        (_) => {
+        error: (_) => {
           this.toastService.error('Erro ao carregar presença');
         },
-        () => {
+        complete: () => {
           this.carregandoPresenca = false;
-        }
-      );
+        },
+      });
   }
 
   obterModelo(entidadeEdicao?: BaseModel): ModalFieldConfiguration[] {

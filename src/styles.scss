@@ -85,3 +85,9 @@ body {
 .modal-content {
   overflow: hidden;
 }
+
+.atividades-opcoes {
+  mat-form-field {
+    width: 100%;
+  }
+}

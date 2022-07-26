@@ -9,12 +9,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of } from 'rxjs';
 import { CoresEdicaoService } from '../../../services/coresEdicao.service';
 import { StyleService } from '../../../services/style.service';
 import { BaseModel } from '../../models/baseModel';
+import { TableUtil } from '../../utils/table-utils';
 import { ModalAdicionarEditarComponent } from '../modal-adicionar-editar/modal-adicionar-editar.component';
 import {
   CustomActions,
@@ -33,6 +35,8 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
   @Input() data: T[] = [];
   @Input() loading = false;
   @Input() readOnly = false;
+  @Input() noActions = false;
+  @Input() enableDownload = false;
   @Input() modalConfig: (entidadeEdit?: any) => ModalFieldConfiguration[] =
     () => [];
   @Input() salvarAction: (entity: any) => Observable<boolean> = ({}) =>
@@ -47,6 +51,7 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
   dataSource = new MatTableDataSource<T>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private modalService: NgbModal,
@@ -61,6 +66,7 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   ngOnInit() {
@@ -80,7 +86,7 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
     this.displayedColumns = this.headers
       .filter((x) => x.show)
       .map((x) => x.property);
-    this.displayedColumns.push('acoes');
+    !this.noActions && this.displayedColumns.push('acoes');
     this.dataSource.data = this.data;
   }
 
@@ -121,5 +127,16 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
   callCustomAction(action: any, args: any) {
     console.log(action);
     action(args);
+  }
+
+  applyFilter(event: any) {
+    let filterValue = event.target.value;
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
+
+  download() {
+    TableUtil.exportArrayToExcel(this.data, this.nomeEntidade);
   }
 }

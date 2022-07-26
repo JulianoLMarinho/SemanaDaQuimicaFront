@@ -4,12 +4,12 @@ import { OpcaoSelect } from '../../models/atividades';
 
 export interface ModalFieldConfiguration {
   fieldName: string;
-  fieldInitialValue: any;
+  fieldInitialValue?: any;
   fieldProperty: string;
-  fieldType: FIELD_TYPE;
+  fieldType?: FIELD_TYPE;
   fieldPlaceholder?: string;
-  fieldErrorMessage: string;
-  fieldValidators: ValidatorFn[];
+  fieldErrorMessage?: string;
+  fieldValidators?: ValidatorFn[];
   fieldOptions?: OpcaoSelect[];
   fieldOptionsFiltered?: OpcaoSelect[];
   fieldPlaceholderFilter?: string;

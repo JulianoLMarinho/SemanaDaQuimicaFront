@@ -1,8 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { from, Observable, of } from 'rxjs';
-import { mergeMap, switchMap, tap } from 'rxjs/operators';
-import { Usuario } from '../shared/models/usuario';
+import { from, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -21,7 +20,7 @@ export class HttpService {
   }
 
   get<T>(url: string, cacheData: boolean = false) {
-    cacheData = false;
+    // cacheData = false;
     if (cacheData) {
       let getHeaders = this.headers.set('cache_data', 'cache_data');
       this.storage;
