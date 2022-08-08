@@ -12,13 +12,11 @@ import { PalestrasComponent } from './pages/palestras/palestras.component';
 import { VisitasTecnicasComponent } from './pages/visitas-tecnicas/visitas-tecnicas.component';
 import { WorkshopsComponent } from './pages/workshops/workshops.component';
 import { AuthGuard } from './_helpers/auth.guard';
-import { GerenciarSiteComponent } from './pages/configuracao/gerenciar-site/gerenciar-site.component';
 import { QuemSomosComponent } from './pages/quem-somos/quem-somos.component';
 import { InscricaoComponent } from './pages/inscricao/inscricao.component';
 import { MeusCursosComponent } from './pages/meus-cursos/meus-cursos.component';
 import { ConfirmarInscricoesComponent } from './pages/configuracao/confirmar-inscricoes/confirmar-inscricoes.component';
 import { PresencaComponent } from './pages/configuracao/presenca/presenca.component';
-import { MeusCertificadosModule } from './pages/meus-certificados/meus-certificados.module';
 import { MeusCertificadosComponent } from './pages/meus-certificados/meus-certificados.component';
 import { GerarCertificadoComponent } from './pages/configuracao/gerar-certificado/gerar-certificado.component';
 import { GerenciarEdicaoAtivaComponent } from './pages/configuracao/gerenciar-edicao-ativa/gerenciar-edicao-ativa.component';
@@ -32,11 +30,14 @@ import { TabelasComponent } from './pages/configuracao/tabelas/tabelas.component
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
-  { path: 'inicio', component: InicioComponent },
+  {
+    path: 'inicio',
+    component: InicioComponent,
+  },
   {
     path: 'atividades',
     component: AtividadesComponent,
-    canActivate: [EmConstrucaoGuard],
+    canActivate: [EmConstrucaoGuard, CadastroIncompletoGuard],
   },
   {
     path: 'meus_dados',
@@ -94,37 +95,37 @@ const routes: Routes = [
   {
     path: 'cursos',
     component: CursosComponent,
-    canActivate: [EmConstrucaoGuard],
+    canActivate: [EmConstrucaoGuard, CadastroIncompletoGuard],
   },
   {
     path: 'palestras',
     component: PalestrasComponent,
-    canActivate: [EmConstrucaoGuard],
+    canActivate: [EmConstrucaoGuard, CadastroIncompletoGuard],
   },
   {
     path: 'workshops',
     component: WorkshopsComponent,
-    canActivate: [EmConstrucaoGuard],
+    canActivate: [EmConstrucaoGuard, CadastroIncompletoGuard],
   },
   {
     path: 'visitas-tecnicas',
     component: VisitasTecnicasComponent,
-    canActivate: [EmConstrucaoGuard],
+    canActivate: [EmConstrucaoGuard, CadastroIncompletoGuard],
   },
   {
     path: 'quem-somos',
     component: QuemSomosComponent,
-    canActivate: [EmConstrucaoGuard],
+    canActivate: [EmConstrucaoGuard, CadastroIncompletoGuard],
   },
   {
     path: 'como-chegar',
     component: ComoChegarComponent,
-    canActivate: [EmConstrucaoGuard],
+    canActivate: [EmConstrucaoGuard, CadastroIncompletoGuard],
   },
   {
     path: 'fale-conosco',
     component: FaleConoscoComponent,
-    canActivate: [EmConstrucaoGuard],
+    canActivate: [EmConstrucaoGuard, CadastroIncompletoGuard],
   },
   {
     path: 'inscricao',

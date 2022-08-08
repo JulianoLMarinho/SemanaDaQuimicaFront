@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CoresEdicaoService } from 'src/app/services/coresEdicao.service';
+import { CoresEdicaoService } from '../../services/coresEdicao.service';
 
 @Component({
   selector: 'app-fale-conosco',

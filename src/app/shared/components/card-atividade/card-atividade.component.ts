@@ -1,8 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CoresEdicaoService } from 'src/app/services/coresEdicao.service';
-import { AuthenticationService } from '../../../services/authentication.service';
+import { Router } from '@angular/router';
+import { CoresEdicaoService } from '../../../services/coresEdicao.service';
 
 @Component({
   selector: 'card-atividade',

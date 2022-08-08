@@ -8,8 +8,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import jsPDF from 'jspdf';
-import { CoresEdicaoService } from 'src/app/services/coresEdicao.service';
-import { EdicaoSemanaService } from 'src/app/services/edicaoSemana.service';
+import { CoresEdicaoService } from '../../../services/coresEdicao.service';
+import { EdicaoSemanaService } from '../../../services/edicaoSemana.service';
 import { CertificadoExportacao } from '../../models/dados-certificados';
 import { EdicaoSemana } from '../../models/edicao-semana';
 

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { UsuarioService } from 'src/app/services/usuario.service';
+import { UsuarioService } from '../../../services/usuario.service';
 import {
   CustomActions,
   ModalFieldConfiguration,
-} from 'src/app/shared/components/modal-adicionar-editar/modal-field-configuration';
-import { ModalConfirmacaoComponent } from 'src/app/shared/components/modal-confirmacao/modal-confirmacao.component';
-import { Usuario } from 'src/app/shared/models/usuario';
+} from '../../../shared/components/modal-adicionar-editar/modal-field-configuration';
+import { ModalConfirmacaoComponent } from '../../../shared/components/modal-confirmacao/modal-confirmacao.component';
+import { Usuario } from '../../../shared/models/usuario';
 
 @Component({
   selector: 'app-usuarios',

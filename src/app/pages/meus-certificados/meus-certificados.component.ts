@@ -4,18 +4,18 @@ import * as moment from 'moment';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
-import { AtividadesService } from 'src/app/services/atividades.service';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { CoresEdicaoService } from 'src/app/services/coresEdicao.service';
-import { EdicaoSemanaService } from 'src/app/services/edicaoSemana.service';
-import { InscricaoService } from 'src/app/services/inscricao.service';
-import { ResponsavelService } from 'src/app/services/responsavel.service';
-import { CertificadoExportComponent } from 'src/app/shared/components/certificado-export/certificado-export.component';
+import { AtividadesService } from '../../services/atividades.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { CoresEdicaoService } from '../../services/coresEdicao.service';
+import { EdicaoSemanaService } from '../../services/edicaoSemana.service';
+import { InscricaoService } from '../../services/inscricao.service';
+import { ResponsavelService } from '../../services/responsavel.service';
+import { CertificadoExportComponent } from '../../shared/components/certificado-export/certificado-export.component';
 import {
   CertificadoExportacao,
   DadosCertificados,
-} from 'src/app/shared/models/dados-certificados';
-import { Inscricao } from 'src/app/shared/models/inscricao';
+} from '../../shared/models/dados-certificados';
+import { Inscricao } from '../../shared/models/inscricao';
 const htmlToPdfmake = require('html-to-pdfmake');
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 

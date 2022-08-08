@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { AtividadesService } from 'src/app/services/atividades.service';
-import { EdicaoSemanaService } from 'src/app/services/edicaoSemana.service';
-import { InscricaoService } from 'src/app/services/inscricao.service';
-import { ModalFieldConfiguration } from 'src/app/shared/components/modal-adicionar-editar/modal-field-configuration';
-import { AtividadeLista } from 'src/app/shared/models/atividades';
-import { EdicaoSemana } from 'src/app/shared/models/edicao-semana';
-import { TabelasObject } from 'src/app/shared/models/tabelas-exportacao';
+import { AtividadesService } from '../../../../services/atividades.service';
+import { EdicaoSemanaService } from '../../../../services/edicaoSemana.service';
+import { InscricaoService } from '../../../../services/inscricao.service';
+import { ModalFieldConfiguration } from '../../../../shared/components/modal-adicionar-editar/modal-field-configuration';
+import { AtividadeLista } from '../../../../shared/models/atividades';
+import { EdicaoSemana } from '../../../../shared/models/edicao-semana';
+import { TabelasObject } from '../../../../shared/models/tabelas-exportacao';
 
 @Injectable({
   providedIn: 'root',

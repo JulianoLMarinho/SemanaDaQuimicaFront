@@ -14,7 +14,7 @@ import { ModalConfirmacaoComponent } from '../../shared/components/modal-confirm
 import { EditButtonDirective } from '../../shared/models/edit-button-directive';
 import { AppUtils } from '../../shared/utils';
 import { StorageService } from '../../services/storage.service';
-import { EdicaoSemana } from 'src/app/shared/models/edicao-semana';
+import { EdicaoSemana } from '../../shared/models/edicao-semana';
 
 @Component({
   selector: 'app-inicio',

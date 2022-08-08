@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { CoresEdicaoService } from 'src/app/services/coresEdicao.service';
-import { TabelasObject } from 'src/app/shared/models/tabelas-exportacao';
-import { TableUtil } from 'src/app/shared/utils/table-utils';
+import { CoresEdicaoService } from '../../../services/coresEdicao.service';
 import { AtividadesTotaisService } from './services/atividades-totais.service';
 import { InscricoesPorAtividadeService } from './services/inscricoes-por-atividade.service';
 import { InscricoesPorEdicaoService } from './services/inscricoes-por-edicao.service';

@@ -61,15 +61,38 @@ export class EdicaoSemanaService {
     private coresEdicaoService: CoresEdicaoService
   ) {
     this.getDetalhes().subscribe((edicao) => {
-      this.semanaAtiva = edicao;
-      this.semanaSelecionada = edicao;
-      this.loadingSemanaAtivaSubject.next(edicao);
-      this.coresEdicaoService.obterCoresEdicao(edicao.id).subscribe((cores) => {
-        if (cores) {
-          this.coresEdicaoService.carregarCores(cores);
-        }
+      if (edicao) {
+        this.semanaAtiva = edicao;
+        this.semanaSelecionada = edicao;
+        this.loadingSemanaAtivaSubject.next(edicao);
+        this.coresEdicaoService
+          .obterCoresEdicao(edicao.id)
+          .subscribe((cores) => {
+            if (cores) {
+              this.coresEdicaoService.carregarCores(cores);
+            }
+            this.loadingSemanaAtiva = false;
+          });
+      } else {
+        const edicao: EdicaoSemana = {
+          data_fim: '01-01-2022',
+          parsed_data_fim: new Date(),
+          data_inicio: '01-01-2022',
+          parsed_data_inicio: new Date(),
+          id: 0,
+          aceita_inscricao_atividade: false,
+          ativa: true,
+          certificado_liberado: false,
+          numero_edicao: 0,
+          site_em_construcao: true,
+          tema: 'Edição Em Construção',
+          titulo: 'Edição em Construção',
+        };
+        this.semanaAtiva = edicao;
+        this.semanaSelecionada = edicao;
+        this.loadingSemanaAtivaSubject.next(edicao);
         this.loadingSemanaAtiva = false;
-      });
+      }
     });
   }
 

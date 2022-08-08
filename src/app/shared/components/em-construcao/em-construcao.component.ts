@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EdicaoSemanaService } from 'src/app/services/edicaoSemana.service';
+import { EdicaoSemanaService } from '../../../services/edicaoSemana.service';
 import { EdicaoSemana } from '../../models/edicao-semana';
 
 @Component({

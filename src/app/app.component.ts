@@ -5,11 +5,12 @@ import { delay } from 'rxjs/operators';
 import { AuthenticationService } from './services/authentication.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './shared/components/login/login.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EdicaoSemanaService } from './services/edicaoSemana.service';
 import { CoresEdicaoService } from './services/coresEdicao.service';
 import * as $ from 'jquery';
 import { InscricaoService } from './services/inscricao.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +33,9 @@ export class AppComponent implements OnInit {
     public edicaoSemanaService: EdicaoSemanaService,
     private modalService: NgbModal,
     public router: Router,
-    private inscricaoService: InscricaoService
+    private route: ActivatedRoute,
+    private inscricaoService: InscricaoService,
+    private toast: ToastrService
   ) {}
 
   ngAfterViewInit() {
@@ -69,6 +72,48 @@ export class AppComponent implements OnInit {
           this.inscricoesAtivas = total;
         });
     }
+
+    this.route.queryParamMap.subscribe((res) => {
+      const mode = res.get('mode');
+      const code = res.get('oobCode');
+      if (code && mode === 'verifyEmail') {
+        this.authService.verificarEmail(code).then(
+          (res) => {
+            this.toast.success(
+              'Seu email foi validado com sucesso.',
+              undefined,
+              {
+                timeOut: 10000,
+              }
+            );
+          },
+          (err) => {
+            switch (err.code) {
+              case 'auth/expired-action-code':
+                this.toast.error(
+                  'O código de verificação expirou. Tente reenviar o código.'
+                );
+                break;
+              case 'invalid-action-code':
+                this.toast.error(
+                  'O código de verificação não é válido. Tente reenviar o código.'
+                );
+                break;
+              case 'auth/user-disabled':
+                this.toast.error(
+                  'O usuário está desabilitado e não pode acessar o sistema. Entre em contato com a Comissão Organizadora da Semana da Química.'
+                );
+                break;
+              case 'auth/user-not-found':
+                this.toast.error('O usuário não existe.');
+                break;
+
+                defaul: this.toast.error('O usuário não existe.');
+            }
+          }
+        );
+      }
+    });
   }
 
   login() {

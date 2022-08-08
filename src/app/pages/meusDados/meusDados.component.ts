@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { finalize, map, startWith } from 'rxjs/operators';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from '../../services/authentication.service';
 import { LocalizacaoService } from '../../services/localizacao.service';
 import { StyleService } from '../../services/style.service';
 import { UsuarioService } from '../../services/usuario.service';

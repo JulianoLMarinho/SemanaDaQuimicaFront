@@ -10,7 +10,7 @@ import { InscricaoService } from '../../services/inscricao.service';
 import { AtividadeInscricao } from '../../shared/models/inscricao';
 import { ToastrService } from 'ngx-toastr';
 import { CoresEdicaoService } from '../../services/coresEdicao.service';
-import { EdicaoSemana } from 'src/app/shared/models/edicao-semana';
+import { EdicaoSemana } from '../../shared/models/edicao-semana';
 
 @Component({
   selector: 'app-inscricao',
@@ -188,7 +188,7 @@ export class InscricaoComponent implements OnInit {
 
     if (horarioSobreposto) {
       this.toast.error(
-        'Não é possível salvar inscrição com horario sobreposto',
+        'Não é possível salvar inscrição com horário sobreposto',
         'Horário sobreposto',
         { timeOut: 10000 }
       );
