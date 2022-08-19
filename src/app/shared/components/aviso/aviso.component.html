@@ -1,0 +1,16 @@
+<app-page-top-bar titulo="Aviso" [loading]="loading"></app-page-top-bar>
+<div class="modal-body aviso-modal-body" style="align-self: center">
+  <div [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }"><b>Título: </b></div>
+  <div>{{ aviso.titulo }}</div>
+  <div [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }">
+    <b>Mensagem: </b>
+  </div>
+  <div
+    [innerHtml]="transformTexto()"
+    class="modal-text"
+    [ngStyle]="{ 'border-color': coresEdicao.coresAtivas.cor6 }"
+  ></div>
+</div>
+<div class="confirmation-buttons">
+  <button mat-button color="primary" (click)="cancelarAction()">Fechar</button>
+</div>

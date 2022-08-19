@@ -12,6 +12,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
 import { CoresEdicaoService } from '../../../services/coresEdicao.service';
 import { StyleService } from '../../../services/style.service';
@@ -55,7 +56,8 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
 
   constructor(
     private modalService: NgbModal,
-    public corEdicao: CoresEdicaoService
+    public corEdicao: CoresEdicaoService,
+    private toast: ToastrService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -115,11 +117,18 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
     modal.componentInstance.mensagem = 'Deseja deletar este item?';
 
     modal.componentInstance.salvar = () => {
-      this.deletarAction(entidade).subscribe((res) => {
-        if (res) {
-          this.saved.emit();
-          modal.dismiss();
-        }
+      this.deletarAction(entidade).subscribe({
+        next: (res) => {
+          if (res) {
+            this.toast.success('Operação realizada com sucesso.');
+            this.saved.emit();
+            modal.dismiss();
+          }
+        },
+        error: (err) => {
+          modal.componentInstance.loading = false;
+          this.toast.error('Houve algum erro.');
+        },
       });
     };
   }

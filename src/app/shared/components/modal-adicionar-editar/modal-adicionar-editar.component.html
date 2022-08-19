@@ -164,6 +164,17 @@
         "
         [formControlName]="field.fieldProperty"
       ></app-dias-semana-select>
+
+      <quill-editor
+        [modules]="modules"
+        *ngIf="
+          field.fieldType === 'textHTML' &&
+          (!field.fieldVisible || showHideField(field))
+        "
+        defaultEmptyValue=""
+        placeholder="Escreva o texto"
+        [formControlName]="field.fieldProperty"
+      ></quill-editor>
     </div>
     <!--
   

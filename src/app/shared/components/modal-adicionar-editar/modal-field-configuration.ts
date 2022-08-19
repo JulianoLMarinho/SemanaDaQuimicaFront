@@ -32,7 +32,8 @@ export type FIELD_TYPE =
   | 'picture'
   | 'date'
   | 'image'
-  | 'action';
+  | 'action'
+  | 'textHTML';
 
 export interface FieldOptions {
   name: string;

@@ -27,6 +27,7 @@ import { ComoChegarComponent } from './pages/como-chegar/como-chegar.component';
 import { FaleConoscoComponent } from './pages/fale-conosco/fale-conosco.component';
 import { UsuariosComponent } from './pages/configuracao/usuarios/usuarios.component';
 import { TabelasComponent } from './pages/configuracao/tabelas/tabelas.component';
+import { AvisoComponent } from './pages/configuracao/aviso/aviso.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -93,6 +94,14 @@ const routes: Routes = [
     },
   },
   {
+    path: 'configuracao/avisos',
+    component: AvisoComponent,
+    canActivate: [AuthGuard, CadastroIncompletoGuard],
+    data: {
+      role: 'adm',
+    },
+  },
+  {
     path: 'cursos',
     component: CursosComponent,
     canActivate: [EmConstrucaoGuard, CadastroIncompletoGuard],
@@ -133,7 +142,7 @@ const routes: Routes = [
     canActivate: [AuthGuard, EmConstrucaoGuard, CadastroIncompletoGuard],
   },
   {
-    path: 'meus-cursos',
+    path: 'minhas-atividades',
     component: MeusCursosComponent,
     canActivate: [AuthGuard, CadastroIncompletoGuard],
   },

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Aviso } from '../shared/models/aviso';
 import {
   CarouselImage,
   CarouselImageCreate,
@@ -113,15 +114,15 @@ export class EdicaoSemanaService {
   }
 
   getDetalhes(): Observable<EdicaoSemana> {
-    return this.http.get<EdicaoSemana>('edicaoSemana', true);
+    return this.http.get<EdicaoSemana>('edicaosemana', true);
   }
 
   updateTemaEdicaoAtiva(tema: any) {
-    return this.http.put('edicaoSemana/tema', tema);
+    return this.http.put('edicaosemana/tema', tema);
   }
 
   getEdicoes(): Observable<EdicaoSemana[]> {
-    return this.http.get<EdicaoSemana[]>('edicaoSemana/edicoes', true).pipe(
+    return this.http.get<EdicaoSemana[]>('edicaosemana/edicoes', true).pipe(
       tap((res) => {
         return res.map((ed) => {
           ed.parsed_data_fim = new Date(ed.data_fim + 'T00:00:00-0300');
@@ -133,26 +134,26 @@ export class EdicaoSemanaService {
   }
 
   salvarCarrousselImage(carroussel: CarouselImageCreate): Observable<void> {
-    return this.http.post('edicaoSemana/carousel-image', carroussel);
+    return this.http.post('edicaosemana/carousel-image', carroussel);
   }
 
   editarCarrousselImage(carroussel: CarouselImage): Observable<void> {
-    return this.http.put('edicaoSemana/carousel-image', carroussel);
+    return this.http.put('edicaosemana/carousel-image', carroussel);
   }
 
   getCarouselEdicao(edicaoId: number): Observable<CarouselImage[]> {
     return this.http.get<CarouselImage[]>(
-      'edicaoSemana/carousel-edicao/' + edicaoId,
+      'edicaosemana/carousel-edicao/' + edicaoId,
       true
     );
   }
 
   deletarCarouselImage(carouselImageId: number): Observable<void> {
-    return this.http.delete(`edicaoSemana/carousel-image/${carouselImageId}`);
+    return this.http.delete(`edicaosemana/carousel-image/${carouselImageId}`);
   }
 
   editarEdicaoSemana(edicaoSemana: EdicaoSemana): Observable<boolean> {
-    return this.http.put('edicaoSemana', edicaoSemana);
+    return this.http.put('edicaosemana', edicaoSemana);
   }
 
   liberarCertificado(
@@ -160,7 +161,7 @@ export class EdicaoSemanaService {
     liberar: boolean
   ): Observable<void> {
     return this.http.put(
-      `edicaoSemana/liberar-certificado/${edicaoSemanaId}/${liberar}`
+      `edicaosemana/liberar-certificado/${edicaoSemanaId}/${liberar}`
     );
   }
 
@@ -169,7 +170,7 @@ export class EdicaoSemanaService {
     aceitarInscricoes: boolean
   ): Observable<void> {
     return this.http.put(
-      `edicaoSemana/aceitar-inscricao-atividade/${edicaoSemanaId}/${aceitarInscricoes}`
+      `edicaosemana/aceitar-inscricao-atividade/${edicaoSemanaId}/${aceitarInscricoes}`
     );
   }
 
@@ -178,7 +179,7 @@ export class EdicaoSemanaService {
     logo: string,
     logo_tipo: string
   ): Observable<void> {
-    return this.http.post('edicaoSemana/salvar-logo', {
+    return this.http.post('edicaosemana/salvar-logo', {
       edicao_semana_id: edicaoSemanaId,
       logo: logo,
       tipo_logo: logo_tipo,
@@ -190,7 +191,7 @@ export class EdicaoSemanaService {
     siteEmConstrucao: boolean
   ): Observable<void> {
     return this.http.put(
-      `edicaoSemana/site-em-construcao/${edicaoSemanaId}/${siteEmConstrucao}`
+      `edicaosemana/site-em-construcao/${edicaoSemanaId}/${siteEmConstrucao}`
     );
   }
 
@@ -201,20 +202,39 @@ export class EdicaoSemanaService {
       assinatura: assinatura.assinatura,
       nome: assinatura.nome,
     };
-    return this.http.post('edicaoSemana/salvar-assinatura', obj);
-  }
-
-  streamValuesTest() {
-    const ret = new EventSource(
-      'http://localhost:8000/edicaoSemana/stream-results'
-    );
-    return ret;
+    return this.http.post('edicaosemana/salvar-assinatura', obj);
   }
 
   salvarQuemSomos(quemSomos: string, edicaoSemanaId: number): Observable<void> {
-    return this.http.put('edicaoSemana/quem-somos', {
+    return this.http.put('edicaosemana/quem-somos', {
       quem_somos: quemSomos,
       edicao_semana_id: edicaoSemanaId,
     });
+  }
+
+  obterAvisos(semanaId: number): Observable<Aviso[]> {
+    return this.http.get<Aviso[]>('edicaosemana/avisos/' + semanaId);
+  }
+
+  salvarAviso(aviso: Aviso): Observable<boolean> {
+    return this.http.post<boolean, Aviso>('edicaosemana/aviso', aviso);
+  }
+
+  updateAviso(aviso: Aviso): Observable<boolean> {
+    return this.http.put<boolean, Aviso>('edicaosemana/aviso', aviso);
+  }
+
+  obterAvisosPorData(
+    edicao: number,
+    data_criacao: string
+  ): Observable<Aviso[]> {
+    return this.http.post<Aviso[], any>('edicaosemana/avisos/obter-data', {
+      edicao_semana_id: edicao,
+      data_criacao: data_criacao,
+    });
+  }
+
+  deletarAviso(avisoId: number): Observable<boolean> {
+    return this.http.delete<boolean>('edicaosemana/avisos/' + avisoId);
   }
 }

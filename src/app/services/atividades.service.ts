@@ -73,4 +73,8 @@ export class AtividadesService {
   obterTotaisAtividades(edicaoId: number): Observable<any[]> {
     return this.http.get<any[]>('atividades/totais/' + edicaoId);
   }
+
+  deletarAtividade(atividadeId: number): Observable<boolean> {
+    return this.http.delete<boolean>('atividades/' + atividadeId);
+  }
 }

@@ -1,14 +1,17 @@
 <div class="main-container">
   <app-page-top-bar
-    titulo="Configurar Atividades"
-    [loading]="false"
-    [loadingSave]="false"
+    titulo="Avisos"
+    [loading]="loadingEntidade"
+    [loadingSave]="loadingEntidade"
   ></app-page-top-bar>
   <div class="content">
     <div class="atividades-opcoes">
       <mat-form-field appearance="legacy">
         <mat-label>Edição</mat-label>
-        <mat-select [(value)]="edicaoSelecionada">
+        <mat-select
+          [(value)]="edicaoSelecionada"
+          (selectionChange)="loadEntidade()"
+        >
           <mat-option *ngFor="let edicao of edicoes" [value]="edicao">
             {{ edicao.parsed_data_inicio.getFullYear() + " - " + edicao.tema }}
           </mat-option>
@@ -16,13 +19,12 @@
       </mat-form-field>
     </div>
     <app-tabela-edicao
-      [data]="atividades"
+      [data]="avisos"
       [modalConfig]="obterModelo.bind(this)"
-      [salvarAction]="salvarAtividade.bind(this)"
-      [deletarAction]="deletarAtividade.bind(this)"
-      [loading]="loadingAtividades"
-      nomeEntidade="Atividade"
-      (saved)="loadAtividades()"
+      [loading]="loadingEntidade"
+      (saved)="loadEntidade()"
+      [salvarAction]="salvarAviso.bind(this)"
+      [deletarAction]="deletarAviso.bind(this)"
     ></app-tabela-edicao>
   </div>
 </div>

@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { from, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { StorageService } from './storage.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpService {
-  API_URL = 'http://localhost:8000/';
+  API_URL = environment.apiURL;
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
   });
@@ -20,7 +21,7 @@ export class HttpService {
   }
 
   get<T>(url: string, cacheData: boolean = false) {
-    // cacheData = false;
+    cacheData = false;
     if (cacheData) {
       let getHeaders = this.headers.set('cache_data', 'cache_data');
       this.storage;
@@ -31,7 +32,7 @@ export class HttpService {
               headers: getHeaders,
             });
           } else {
-            return of(res);
+            return of<T>(res);
           }
         })
       );

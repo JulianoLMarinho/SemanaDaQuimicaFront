@@ -37,6 +37,19 @@ export class ModalAdicionarEditarComponent implements OnInit {
 
   @ViewChild(DiasSemanaSelectComponent)
   dayField!: DiasSemanaSelectComponent;
+
+  modules = {
+    toolbar: [
+      [{ align: [] }],
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ list: 'bullet' }],
+      [{ color: [] }],
+      ['image'],
+    ],
+  };
+
+  htmlText = '';
   constructor(
     private toastService: ToastrService,
     private activeModal: NgbActiveModal,

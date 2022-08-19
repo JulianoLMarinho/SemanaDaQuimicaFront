@@ -24,7 +24,7 @@ export class StorageService {
     await this.db.put('keyval', value, key);
   }
 
-  async getValue(key: string) {
+  async getValue<T>(key: string) {
     if (!this.db) {
       await this.initDatabase();
     }

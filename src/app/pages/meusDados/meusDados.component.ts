@@ -26,7 +26,13 @@ export class MeusDadosComponent implements OnInit {
   loadingCidade = false;
   loadingSave = false;
   editando = false;
-  nivelOpcao = ['Ensino Técnico', 'Graduação'];
+  nivelOpcao = [
+    'Graduação',
+    'Ensino Técnico',
+    'Ensino Médio',
+    'Ensino Fundamental',
+    'Outro',
+  ];
   cursosOpcoes = {
     tecnico: [
       'Química',
@@ -49,6 +55,13 @@ export class MeusDadosComponent implements OnInit {
       'Biologia',
     ],
   };
+  generoOpcoes = [
+    'Masculino',
+    'Feminino',
+    'Não binário',
+    'Outro',
+    'Prefiro não responder',
+  ];
 
   instituicoes = {
     tecnico: [

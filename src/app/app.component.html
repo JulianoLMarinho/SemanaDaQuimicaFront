@@ -172,6 +172,45 @@
         </div>
       </nav>
     </div>
+    <button mat-icon-button matTooltip="Notificações">
+      <mat-icon
+        [matBadge]="newNotifications"
+        [matBadgeHidden]="newNotifications < 1"
+        [matMenuTriggerFor]="menu"
+        matBadgeColor="warn"
+        >notifications</mat-icon
+      >
+    </button>
+    <mat-menu #menu="matMenu" class="avisos-menu">
+      <div style="width: 250px; max-height: 500px">
+        <div
+          class="titulo-avisos"
+          [ngStyle]="{
+            background: coresEdicao.coresAtivas.cor2,
+            color: coresEdicao.coresAtivas.cor5
+          }"
+        >
+          Notificações
+        </div>
+        <div
+          class="avisos-item"
+          *ngFor="let aviso of avisos"
+          [ngStyle]="{
+            'border-color': coresEdicao.coresAtivas.cor1,
+            color: coresEdicao.coresAtivas.cor6,
+            background: !aviso.notificacao_aberta
+              ? coresEdicao.coresAtivas.cor6 + '4f'
+              : '#fff'
+          }"
+          [matTooltip]="aviso.titulo"
+          (click)="abrirAviso(aviso)"
+        >
+          <mat-icon *ngIf="aviso.notificacao_aberta">drafts</mat-icon>
+          <mat-icon *ngIf="!aviso.notificacao_aberta">email</mat-icon>
+          <span>{{ aviso.titulo }}</span>
+        </div>
+      </div>
+    </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -249,9 +288,9 @@
           <a
             (click)="sidenav.opened = false"
             mat-button
-            routerLink="/meus-cursos"
+            routerLink="/minhas-atividades"
             [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
-            >Meus Cursos</a
+            >Minhas Atividades</a
           >
         </li>
         <li class="nav-item">
@@ -370,6 +409,15 @@
               [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
               routerLink="/configuracao/gerar-certificado"
               >Gerar Certificado</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              (click)="sidenav.opened = false"
+              mat-button
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+              routerLink="/configuracao/avisos"
+              >Avisos</a
             >
           </li>
           <li class="nav-item">

@@ -60,6 +60,8 @@ import { ComoChegarModule } from './pages/como-chegar/como-chegar.module';
 import { FaleConoscoModule } from './pages/fale-conosco/fale-conosco.module';
 import { UsuariosModule } from './pages/configuracao/usuarios/usuarios.module';
 import { TabelasModule } from './pages/configuracao/tabelas/tabelas.module';
+import { AvisoModule } from './pages/configuracao/aviso/aviso.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -69,6 +71,7 @@ export function momentAdapterFactory() {
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    MatTooltipModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
@@ -122,6 +125,7 @@ export function momentAdapterFactory() {
     FaleConoscoModule,
     UsuariosModule,
     TabelasModule,
+    AvisoModule,
   ],
   providers: [
     {

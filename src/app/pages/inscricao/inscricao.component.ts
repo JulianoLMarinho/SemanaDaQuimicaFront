@@ -26,6 +26,7 @@ export class InscricaoComponent implements OnInit {
   valor: number = 0;
   salvando = false;
   semanaAtiva: EdicaoSemana;
+  editando = false;
 
   constructor(
     private atividadeService: AtividadesService,
@@ -114,6 +115,7 @@ export class InscricaoComponent implements OnInit {
       );
 
     this.valor = valorTotal ? valorTotal : 0;
+    this.haAtividades(false);
     this.refresh.next();
   }
 
@@ -196,10 +198,14 @@ export class InscricaoComponent implements OnInit {
     return horarioSobreposto;
   }
 
-  haAtividades() {
+  haAtividades(showToast = true) {
     const novasAtividades = this.events.some((x) => x.meta === true);
     if (!novasAtividades) {
-      this.toast.info('Não existem novas atividades a serem salvas');
+      showToast &&
+        this.toast.info('Não existem novas atividades a serem salvas');
+      this.editando = false;
+    } else {
+      this.editando = true;
     }
     return novasAtividades;
   }
@@ -209,5 +215,6 @@ export class InscricaoComponent implements OnInit {
     this.atividades.map((x) => {
       x.selecionada = this.events.some((y) => y.id === x.id);
     });
+    this.editando = false;
   }
 }
