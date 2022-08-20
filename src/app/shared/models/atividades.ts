@@ -65,6 +65,8 @@ export interface Turno {
   id: number;
   hor_inicio?: string;
   hor_fim?: string;
+  inicio?: Date;
+  fim?: Date;
   duracao?: number;
   horarios: DiaHoraAtividade[];
 }

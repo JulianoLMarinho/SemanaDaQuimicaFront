@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { finalize, map, startWith } from 'rxjs/operators';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from '../../services/authentication.service';
 import { LocalizacaoService } from '../../services/localizacao.service';
 import { StyleService } from '../../services/style.service';
 import { UsuarioService } from '../../services/usuario.service';
@@ -26,7 +26,13 @@ export class MeusDadosComponent implements OnInit {
   loadingCidade = false;
   loadingSave = false;
   editando = false;
-  nivelOpcao = ['Ensino Técnico', 'Graduação'];
+  nivelOpcao = [
+    'Graduação',
+    'Ensino Técnico',
+    'Ensino Médio',
+    'Ensino Fundamental',
+    'Outro',
+  ];
   cursosOpcoes = {
     tecnico: [
       'Química',
@@ -49,6 +55,13 @@ export class MeusDadosComponent implements OnInit {
       'Biologia',
     ],
   };
+  generoOpcoes = [
+    'Masculino',
+    'Feminino',
+    'Não binário',
+    'Outro',
+    'Prefiro não responder',
+  ];
 
   instituicoes = {
     tecnico: [

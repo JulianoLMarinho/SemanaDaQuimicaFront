@@ -7,7 +7,11 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
@@ -26,12 +30,26 @@ export class ModalAdicionarEditarComponent implements OnInit {
   salvarAction: Function = () => {};
   @Input() modalFields: ModalFieldConfiguration[] = [];
   @Input() saveDataAction!: (entidade: any) => Observable<boolean>;
+  @Input() readOnly = false;
 
   @Output() saved = new EventEmitter();
   groupControl: UntypedFormGroup = new UntypedFormGroup({});
 
   @ViewChild(DiasSemanaSelectComponent)
   dayField!: DiasSemanaSelectComponent;
+
+  modules = {
+    toolbar: [
+      [{ align: [] }],
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ list: 'bullet' }],
+      [{ color: [] }],
+      ['image'],
+    ],
+  };
+
+  htmlText = '';
   constructor(
     private toastService: ToastrService,
     private activeModal: NgbActiveModal,
@@ -52,6 +70,9 @@ export class ModalAdicionarEditarComponent implements OnInit {
           field.fieldOptionsFiltered = options;
         });
       }
+    }
+    if (this.readOnly) {
+      this.groupControl.disable();
     }
   }
 

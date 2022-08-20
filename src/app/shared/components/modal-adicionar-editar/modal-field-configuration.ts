@@ -4,12 +4,12 @@ import { OpcaoSelect } from '../../models/atividades';
 
 export interface ModalFieldConfiguration {
   fieldName: string;
-  fieldInitialValue: any;
+  fieldInitialValue?: any;
   fieldProperty: string;
-  fieldType: FIELD_TYPE;
+  fieldType?: FIELD_TYPE;
   fieldPlaceholder?: string;
-  fieldErrorMessage: string;
-  fieldValidators: ValidatorFn[];
+  fieldErrorMessage?: string;
+  fieldValidators?: ValidatorFn[];
   fieldOptions?: OpcaoSelect[];
   fieldOptionsFiltered?: OpcaoSelect[];
   fieldPlaceholderFilter?: string;
@@ -31,9 +31,18 @@ export type FIELD_TYPE =
   | 'number'
   | 'picture'
   | 'date'
-  | 'image';
+  | 'image'
+  | 'action'
+  | 'textHTML';
 
 export interface FieldOptions {
   name: string;
   value: string;
+}
+
+export interface CustomActions {
+  name: string;
+  icon: string;
+  tooltip: string;
+  action: (args: any) => any;
 }

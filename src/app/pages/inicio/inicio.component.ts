@@ -14,7 +14,7 @@ import { ModalConfirmacaoComponent } from '../../shared/components/modal-confirm
 import { EditButtonDirective } from '../../shared/models/edit-button-directive';
 import { AppUtils } from '../../shared/utils';
 import { StorageService } from '../../services/storage.service';
-import { EdicaoSemana } from 'src/app/shared/models/edicao-semana';
+import { EdicaoSemana } from '../../shared/models/edicao-semana';
 
 @Component({
   selector: 'app-inicio',
@@ -39,6 +39,7 @@ export class InicioComponent implements OnInit {
     link: null,
   };
   carregandoPatrocinador = false;
+  salvandoHeader = false;
 
   editDirective: EditButtonDirective = {
     editAction: this.alterarTema.bind(this),
@@ -118,31 +119,39 @@ export class InicioComponent implements OnInit {
       this.edicaoSemanaService.semanaAtiva.id;
 
     if (this.addEditCarousel.id) {
+      this.salvandoHeader = true;
       this.edicaoSemanaService
         .editarCarrousselImage(this.addEditCarousel)
-        .subscribe(
-          (_) => {
+        .subscribe({
+          next: (_) => {
             this.toastr.success('Imagem salva com sucesso');
             this.carregarCarousel(this.edicaoSemanaService.semanaAtiva.id);
             modalRef.close();
           },
-          (err) => {
+          error: (err) => {
             this.toastr.error('Houve algum erro!');
-          }
-        );
+          },
+          complete: () => {
+            this.salvandoHeader = false;
+          },
+        });
     } else {
+      this.salvandoHeader = true;
       this.edicaoSemanaService
         .salvarCarrousselImage(this.addEditCarousel)
-        .subscribe(
-          (_) => {
+        .subscribe({
+          next: (_) => {
             this.toastr.success('Imagem salva com sucesso');
             this.carregarCarousel(this.edicaoSemanaService.semanaAtiva.id);
             modalRef.close();
           },
-          (err) => {
+          error: (err) => {
             this.toastr.error('Houve algum erro!');
-          }
-        );
+          },
+          complete: () => {
+            this.salvandoHeader = false;
+          },
+        });
     }
   }
 
@@ -154,6 +163,7 @@ export class InicioComponent implements OnInit {
     this.addEditCarousel.titulo = image.titulo;
     this.addEditCarousel.subtitulo = image.subtitulo;
     this.addEditCarousel.link = image.link;
+    this.addEditCarousel.ordem = image.ordem;
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(

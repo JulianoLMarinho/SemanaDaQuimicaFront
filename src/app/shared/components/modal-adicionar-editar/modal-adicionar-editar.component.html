@@ -1,11 +1,11 @@
 <div class="main-container">
   <app-page-top-bar
-    titulo="Criar Atividade"
+    [titulo]="readOnly ? 'Detalhes' : 'Adicionar/Editar'"
     [loadingSave]="saving"
     [loading]="saving"
     [salvarAction]="salvar.bind(this)"
     [cancelarAction]="closeModal.bind(this)"
-    [editando]="true"
+    [editando]="!readOnly"
   ></app-page-top-bar>
   <div class="content" *ngIf="groupControl" [formGroup]="groupControl">
     <div *ngFor="let field of modalFields">
@@ -164,6 +164,17 @@
         "
         [formControlName]="field.fieldProperty"
       ></app-dias-semana-select>
+
+      <quill-editor
+        [modules]="modules"
+        *ngIf="
+          field.fieldType === 'textHTML' &&
+          (!field.fieldVisible || showHideField(field))
+        "
+        defaultEmptyValue=""
+        placeholder="Escreva o texto"
+        [formControlName]="field.fieldProperty"
+      ></quill-editor>
     </div>
     <!--
   

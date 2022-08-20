@@ -1,5 +1,19 @@
 .table-wrapper {
-  height: calc(100% - 57.5px);
+  height: calc(100% - 110.5px);
+
+  .top-bar-tabela {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: #fff;
+  }
+
+  .filtro {
+    background-color: white;
+    width: 100%;
+    padding: 0 24px;
+  }
 }
 
 table {

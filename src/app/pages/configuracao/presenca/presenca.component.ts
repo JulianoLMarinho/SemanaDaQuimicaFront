@@ -10,13 +10,13 @@ import {
   mergeMap,
   switchMap,
 } from 'rxjs/operators';
-import { AtividadesService } from 'src/app/services/atividades.service';
-import { CoresEdicaoService } from 'src/app/services/coresEdicao.service';
-import { PresencaService } from 'src/app/services/presenca.service';
-import { ModalFieldConfiguration } from 'src/app/shared/components/modal-adicionar-editar/modal-field-configuration';
-import { AtividadeLista } from 'src/app/shared/models/atividades';
-import { BaseModel } from 'src/app/shared/models/baseModel';
-import { Presenca, PresencaItem } from 'src/app/shared/models/presenca';
+import { AtividadesService } from '../../../services/atividades.service';
+import { CoresEdicaoService } from '../../../services/coresEdicao.service';
+import { PresencaService } from '../../../services/presenca.service';
+import { ModalFieldConfiguration } from '../../../shared/components/modal-adicionar-editar/modal-field-configuration';
+import { AtividadeLista } from '../../../shared/models/atividades';
+import { BaseModel } from '../../../shared/models/baseModel';
+import { Presenca, PresencaItem } from '../../../shared/models/presenca';
 import { EdicaoSemanaService } from '../../../services/edicaoSemana.service';
 import { BaseConfiguracaoComponent } from '../base-configuracao/base-configuracao.component';
 
@@ -65,17 +65,17 @@ export class PresencaComponent extends BaseConfiguracaoComponent {
   loadEntidade(): void {
     this.atividadesService
       .getAtividadesByEdicaoInscricao(this.edicaoService.semanaSelecionada!.id)
-      .subscribe(
-        (atividades) => {
+      .subscribe({
+        next: (atividades) => {
           this.atividades = atividades;
         },
-        (_) => {
+        error: (_) => {
           this.toastService.error('Erro ao carregar presença');
         },
-        () => {
+        complete: () => {
           this.carregandoPresenca = false;
-        }
-      );
+        },
+      });
   }
 
   obterModelo(entidadeEdicao?: BaseModel): ModalFieldConfiguration[] {

@@ -1,4 +1,17 @@
 <div class="table-wrapper">
+  <div class="top-bar-tabela">
+    <mat-form-field class="filtro">
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" />
+    </mat-form-field>
+    <button
+      mat-icon-button
+      (click)="download()"
+      *ngIf="enableDownload && data.length > 0"
+      [ngStyle]="{ color: corEdicao.coresAtivas.cor6 }"
+    >
+      <mat-icon matTooltip="Fazer download da tabela">file_download</mat-icon>
+    </button>
+  </div>
   <div class="table-container">
     <mat-table [dataSource]="dataSource" matSort [sti]>
       <ng-container
@@ -21,7 +34,7 @@
           </div>
         </mat-cell>
       </ng-container>
-      <ng-container matColumnDef="acoes">
+      <ng-container matColumnDef="acoes" *ngIf="!noActions">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell
           *matCellDef="let element"
@@ -32,9 +45,19 @@
             [ngStyle]="{ color: corEdicao.coresAtivas.cor6 }"
           >
             <button
+              *ngFor="let customAction of customActions"
+              mat-icon-button
+              matTooltipPosition="above"
+              [matTooltip]="customAction.tooltip"
+              (click)="customAction.action(element)"
+            >
+              <mat-icon>{{ customAction.icon }}</mat-icon>
+            </button>
+            <button
               (click)="deleteAction(element)"
               mat-icon-button
               matTooltipPosition="above"
+              *ngIf="!readOnly"
               [matTooltip]="'Excluir ' + nomeEntidade"
             >
               <mat-icon>delete</mat-icon>
@@ -42,10 +65,20 @@
             <button
               (click)="openAddEditModal(element)"
               mat-icon-button
+              *ngIf="!readOnly"
               matTooltipPosition="above"
               [matTooltip]="'Editar ' + nomeEntidade"
             >
               <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              (click)="openAddEditModal(element)"
+              mat-icon-button
+              *ngIf="readOnly"
+              matTooltipPosition="above"
+              matTooltip="Ver detalhes"
+            >
+              <mat-icon>find_in_page</mat-icon>
             </button>
           </div>
         </mat-cell>
@@ -68,6 +101,7 @@
     <div class="buttons-table">
       <button
         mat-button
+        *ngIf="!readOnly"
         [ngStyle]="{ color: corEdicao.coresAtivas.cor6 }"
         (click)="openAddEditModal()"
       >

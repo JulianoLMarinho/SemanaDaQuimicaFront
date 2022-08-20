@@ -1,0 +1,18 @@
+:host ::ng-deep {
+  .aviso-modal-body {
+    display: flex;
+    flex-direction: column;
+
+    .modal-text {
+      padding: 10px;
+      border: 1px solid;
+      border-radius: 5px;
+      max-height: calc(100vh - 300px);
+      overflow: auto;
+
+      img {
+        max-width: 100%;
+      }
+    }
+  }
+}

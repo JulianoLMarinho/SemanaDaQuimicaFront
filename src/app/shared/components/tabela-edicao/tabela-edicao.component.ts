@@ -9,14 +9,20 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
 import { CoresEdicaoService } from '../../../services/coresEdicao.service';
 import { StyleService } from '../../../services/style.service';
 import { BaseModel } from '../../models/baseModel';
+import { TableUtil } from '../../utils/table-utils';
 import { ModalAdicionarEditarComponent } from '../modal-adicionar-editar/modal-adicionar-editar.component';
-import { ModalFieldConfiguration } from '../modal-adicionar-editar/modal-field-configuration';
+import {
+  CustomActions,
+  ModalFieldConfiguration,
+} from '../modal-adicionar-editar/modal-field-configuration';
 import { ModalConfirmacaoComponent } from '../modal-confirmacao/modal-confirmacao.component';
 import { TabelaHeaders } from './tabela-headers';
 
@@ -29,6 +35,9 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
   @Input() headers: TabelaHeaders[] = [];
   @Input() data: T[] = [];
   @Input() loading = false;
+  @Input() readOnly = false;
+  @Input() noActions = false;
+  @Input() enableDownload = false;
   @Input() modalConfig: (entidadeEdit?: any) => ModalFieldConfiguration[] =
     () => [];
   @Input() salvarAction: (entity: any) => Observable<boolean> = ({}) =>
@@ -36,16 +45,19 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
   @Input() deletarAction: (entity: any) => Observable<boolean> = ({}) =>
     of(false);
   @Input() nomeEntidade = '';
+  @Input() customActions: CustomActions[] = [];
 
   @Output() saved = new EventEmitter();
   displayedColumns: string[] = [];
   dataSource = new MatTableDataSource<T>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private modalService: NgbModal,
-    public corEdicao: CoresEdicaoService
+    public corEdicao: CoresEdicaoService,
+    private toast: ToastrService
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -56,6 +68,7 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   ngOnInit() {
@@ -75,7 +88,7 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
     this.displayedColumns = this.headers
       .filter((x) => x.show)
       .map((x) => x.property);
-    this.displayedColumns.push('acoes');
+    !this.noActions && this.displayedColumns.push('acoes');
     this.dataSource.data = this.data;
   }
 
@@ -89,6 +102,7 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
 
     activeModal.componentInstance.modalFields = this.modalConfig(entidadeEdit);
     activeModal.componentInstance.salvarAction = this.salvarAction.bind(this);
+    activeModal.componentInstance.readOnly = this.readOnly;
     activeModal.componentInstance.saved.subscribe(() => {
       this.saved.emit();
     });
@@ -103,12 +117,35 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
     modal.componentInstance.mensagem = 'Deseja deletar este item?';
 
     modal.componentInstance.salvar = () => {
-      this.deletarAction(entidade).subscribe((res) => {
-        if (res) {
-          this.saved.emit();
-          modal.dismiss();
-        }
+      this.deletarAction(entidade).subscribe({
+        next: (res) => {
+          if (res) {
+            this.toast.success('Operação realizada com sucesso.');
+            this.saved.emit();
+            modal.dismiss();
+          }
+        },
+        error: (err) => {
+          modal.componentInstance.loading = false;
+          this.toast.error('Houve algum erro.');
+        },
       });
     };
+  }
+
+  callCustomAction(action: any, args: any) {
+    console.log(action);
+    action(args);
+  }
+
+  applyFilter(event: any) {
+    let filterValue = event.target.value;
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
+
+  download() {
+    TableUtil.exportArrayToExcel(this.data, this.nomeEntidade);
   }
 }

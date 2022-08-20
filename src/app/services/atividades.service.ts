@@ -69,4 +69,12 @@ export class AtividadesService {
   ): Observable<DadosCertificados[]> {
     return this.http.get<DadosCertificados[]>('atividades/lista-certificados');
   }
+
+  obterTotaisAtividades(edicaoId: number): Observable<any[]> {
+    return this.http.get<any[]>('atividades/totais/' + edicaoId);
+  }
+
+  deletarAtividade(atividadeId: number): Observable<boolean> {
+    return this.http.delete<boolean>('atividades/' + atividadeId);
+  }
 }

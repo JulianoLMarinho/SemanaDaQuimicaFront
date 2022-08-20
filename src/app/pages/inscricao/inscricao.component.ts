@@ -10,7 +10,7 @@ import { InscricaoService } from '../../services/inscricao.service';
 import { AtividadeInscricao } from '../../shared/models/inscricao';
 import { ToastrService } from 'ngx-toastr';
 import { CoresEdicaoService } from '../../services/coresEdicao.service';
-import { EdicaoSemana } from 'src/app/shared/models/edicao-semana';
+import { EdicaoSemana } from '../../shared/models/edicao-semana';
 
 @Component({
   selector: 'app-inscricao',
@@ -26,6 +26,7 @@ export class InscricaoComponent implements OnInit {
   valor: number = 0;
   salvando = false;
   semanaAtiva: EdicaoSemana;
+  editando = false;
 
   constructor(
     private atividadeService: AtividadesService,
@@ -60,7 +61,7 @@ export class InscricaoComponent implements OnInit {
       this.toast.info('A edição não está aceitando inscrições no momento');
       return;
     }
-    if (atividade.vagas! - atividade.total_inscritos! < 1) {
+    if (atividade.vagas! - atividade.total_inscritos! < 1 && deletavel) {
       this.toast.info(
         'Esta atividade atingiu o número máximo de inscritos e não pode aceitar mais inscrições'
       );
@@ -114,6 +115,7 @@ export class InscricaoComponent implements OnInit {
       );
 
     this.valor = valorTotal ? valorTotal : 0;
+    this.haAtividades(false);
     this.refresh.next();
   }
 
@@ -147,18 +149,25 @@ export class InscricaoComponent implements OnInit {
       ],
     };
 
-    this.inscricaoService.criarInscricao(saveOjb).subscribe(
-      (res) => {
+    this.inscricaoService.criarInscricao(saveOjb).subscribe({
+      next: (res) => {
+        if (Array.isArray(res)) {
+          this.toast.error('Não há mais vagas em uma ou mais atividades.');
+          res.forEach((e) => {
+            this.toast.error(e);
+          });
+        } else {
+          this.toast.success('Inscrição salva com sucesso');
+        }
         this.carregarAtividades();
-        this.toast.success('Inscrição salva com sucesso');
       },
-      (_) => {
+      error: (_) => {
         this.toast.error('Houve algum erro e a inscrição não foi salva.');
       },
-      () => {
+      complete: () => {
         this.salvando = false;
-      }
-    );
+      },
+    });
   }
 
   existeHorarioSobreposto(): boolean {
@@ -181,7 +190,7 @@ export class InscricaoComponent implements OnInit {
 
     if (horarioSobreposto) {
       this.toast.error(
-        'Não é possível salvar inscrição com horario sobreposto',
+        'Não é possível salvar inscrição com horário sobreposto',
         'Horário sobreposto',
         { timeOut: 10000 }
       );
@@ -189,10 +198,14 @@ export class InscricaoComponent implements OnInit {
     return horarioSobreposto;
   }
 
-  haAtividades() {
+  haAtividades(showToast = true) {
     const novasAtividades = this.events.some((x) => x.meta === true);
     if (!novasAtividades) {
-      this.toast.info('Não existem novas atividades a serem salvas');
+      showToast &&
+        this.toast.info('Não existem novas atividades a serem salvas');
+      this.editando = false;
+    } else {
+      this.editando = true;
     }
     return novasAtividades;
   }
@@ -202,5 +215,6 @@ export class InscricaoComponent implements OnInit {
     this.atividades.map((x) => {
       x.selecionada = this.events.some((y) => y.id === x.id);
     });
+    this.editando = false;
   }
 }

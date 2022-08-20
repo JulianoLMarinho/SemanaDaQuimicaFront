@@ -15,9 +15,15 @@
     <div class="dados">
       <div class="foto-linha">
         <img
+          *ngIf="usuario?.url_foto_perfil"
           class="avatar x-large mat-elevation-z8"
-          [src]="usuario?.url_foto_perfil"
+          [src]="usuario.url_foto_perfil"
         />
+        <div class="no-avatar" *ngIf="!usuario?.url_foto_perfil">
+          <div class="avatar large mat-elevation-z8">
+            <mat-icon>person</mat-icon>
+          </div>
+        </div>
       </div>
       <div class="dados-cadastrais">
         <p>
@@ -45,20 +51,12 @@
         </p>
         <p>
           <mat-form-field appearance="legacy">
-            <mat-label>Nível</mat-label>
-            <input
-              type="text"
-              [disabled]="!editando"
-              placeholder="Selecione ou escreva o nível"
-              matInput
-              [matAutocomplete]="autoNivel"
-              [(ngModel)]="usuario.nivel"
-            />
-            <mat-autocomplete #autoNivel="matAutocomplete">
+            <mat-label>Escolaridade</mat-label>
+            <mat-select [disabled]="!editando" [(value)]="usuario.nivel">
               <mat-option *ngFor="let option of nivelOpcao" [value]="option">
                 {{ option }}
               </mat-option>
-            </mat-autocomplete>
+            </mat-select>
           </mat-form-field>
         </p>
         <p
@@ -135,12 +133,11 @@
         <p>
           <mat-form-field appearance="legacy">
             <mat-label>Gênero</mat-label>
-            <input
-              matInput
-              [disabled]="!editando"
-              [(ngModel)]="usuario.genero"
-              placeholder="Insira seu Nome"
-            />
+            <mat-select [disabled]="!editando" [(value)]="usuario.genero">
+              <mat-option *ngFor="let genero of generoOpcoes" [value]="genero">
+                {{ genero }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
         </p>
         <p>

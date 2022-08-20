@@ -41,6 +41,8 @@ import { ImageUploadComponent } from './components/image-upload/image-upload.com
 import { EmConstrucaoComponent } from './components/em-construcao/em-construcao.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { QuillModule } from 'ngx-quill';
+import { AvisoModalComponent } from './components/aviso/aviso.component';
 
 registerLocaleData(localePT);
 
@@ -69,6 +71,7 @@ registerLocaleData(localePT);
     MatSortModule,
     MatCardModule,
     MatDividerModule,
+    QuillModule.forRoot(),
   ],
   declarations: [
     CardPatrocinadorComponent,
@@ -87,6 +90,7 @@ registerLocaleData(localePT);
     CertificadoExportComponent,
     ImageUploadComponent,
     EmConstrucaoComponent,
+    AvisoModalComponent,
   ],
   exports: [
     CardPatrocinadorComponent,
@@ -105,6 +109,7 @@ registerLocaleData(localePT);
     CertificadoExportComponent,
     ImageUploadComponent,
     EmConstrucaoComponent,
+    AvisoModalComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

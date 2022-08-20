@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CoresEdicaoService } from 'src/app/services/coresEdicao.service';
+import { CoresEdicaoService } from '../../services/coresEdicao.service';
 import { EdicaoSemanaService } from '../../services/edicaoSemana.service';
 import { ResponsavelService } from '../../services/responsavel.service';
 import { Responsavel } from '../../shared/models/responsavel';

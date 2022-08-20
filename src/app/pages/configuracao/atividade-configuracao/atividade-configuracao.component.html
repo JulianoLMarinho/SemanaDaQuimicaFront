@@ -19,6 +19,7 @@
       [data]="atividades"
       [modalConfig]="obterModelo.bind(this)"
       [salvarAction]="salvarAtividade.bind(this)"
+      [deletarAction]="deletarAtividade.bind(this)"
       [loading]="loadingAtividades"
       nomeEntidade="Atividade"
       (saved)="loadAtividades()"

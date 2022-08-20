@@ -67,7 +67,7 @@
     </mat-form-field>
     <div
       class="esqueceu-senha-texto"
-      *ngIf="!esqueceuSenha"
+      *ngIf="!esqueceuSenha && !cadastroEmailSenha"
       [ngStyle]="{ color: coresEdicao.coresAtivas.cor6 }"
       (click)="esqueceuSenha = true"
     >

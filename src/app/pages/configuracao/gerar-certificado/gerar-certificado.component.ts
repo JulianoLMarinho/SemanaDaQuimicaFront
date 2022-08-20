@@ -2,16 +2,16 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import jsPDF from 'jspdf';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
-import { AtividadesService } from 'src/app/services/atividades.service';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { CoresEdicaoService } from 'src/app/services/coresEdicao.service';
-import { EdicaoSemanaService } from 'src/app/services/edicaoSemana.service';
-import { PresencaService } from 'src/app/services/presenca.service';
-import { CertificadoExportComponent } from 'src/app/shared/components/certificado-export/certificado-export.component';
-import { ModalFieldConfiguration } from 'src/app/shared/components/modal-adicionar-editar/modal-field-configuration';
-import { AtividadeLista } from 'src/app/shared/models/atividades';
-import { BaseModel } from 'src/app/shared/models/baseModel';
-import { CertificadoExportacao } from 'src/app/shared/models/dados-certificados';
+import { AtividadesService } from '../../../services/atividades.service';
+import { AuthenticationService } from '../../../services/authentication.service';
+import { CoresEdicaoService } from '../../../services/coresEdicao.service';
+import { EdicaoSemanaService } from '../../../services/edicaoSemana.service';
+import { PresencaService } from '../../../services/presenca.service';
+import { CertificadoExportComponent } from '../../../shared/components/certificado-export/certificado-export.component';
+import { ModalFieldConfiguration } from '../../../shared/components/modal-adicionar-editar/modal-field-configuration';
+import { AtividadeLista } from '../../../shared/models/atividades';
+import { BaseModel } from '../../../shared/models/baseModel';
+import { CertificadoExportacao } from '../../../shared/models/dados-certificados';
 import { BaseConfiguracaoComponent } from '../base-configuracao/base-configuracao.component';
 
 @Component({

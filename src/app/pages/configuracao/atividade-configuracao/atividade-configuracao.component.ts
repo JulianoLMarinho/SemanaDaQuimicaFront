@@ -308,4 +308,8 @@ export class AtividadeConfiguracaoComponent
     }
     return this.atividadesService.criarEditarAtividade(atividadeSave);
   }
+
+  deletarAtividade(atividade: AtividadeLista) {
+    return this.atividadesService.deletarAtividade(atividade.id);
+  }
 }

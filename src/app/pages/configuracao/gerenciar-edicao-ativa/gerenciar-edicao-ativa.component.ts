@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { CoresEdicaoService } from 'src/app/services/coresEdicao.service';
-import { EdicaoSemanaService } from 'src/app/services/edicaoSemana.service';
-import { ImageUploadComponent } from 'src/app/shared/components/image-upload/image-upload.component';
-import { Assinatura } from 'src/app/shared/models/assinatura';
-import { EdicaoSemana } from 'src/app/shared/models/edicao-semana';
+import { CoresEdicaoService } from '../../../services/coresEdicao.service';
+import { EdicaoSemanaService } from '../../../services/edicaoSemana.service';
+import { ImageUploadComponent } from '../../../shared/components/image-upload/image-upload.component';
+import { Assinatura } from '../../../shared/models/assinatura';
+import { EdicaoSemana } from '../../../shared/models/edicao-semana';
 import { GerenciarSiteComponent } from '../gerenciar-site/gerenciar-site.component';
 
 @Component({
@@ -156,20 +156,26 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
   }
 
   salvarLogo(modal: NgbModalRef, tipo_logo: string) {
+    modal.componentInstance.saving = true;
     this.edicaoService
       .salvarLogo(
         this.edicaoSemanaAtiva.id,
         modal.componentInstance.croppedImage,
         tipo_logo
       )
-      .subscribe((_) => {
-        if (tipo_logo === 'logo') {
-          this.edicaoSemanaAtiva.logo = modal.componentInstance.croppedImage;
-        } else {
-          this.edicaoSemanaAtiva.logo_completa =
-            modal.componentInstance.croppedImage;
-        }
-        modal.dismiss();
+      .subscribe({
+        next: (_) => {
+          if (tipo_logo === 'logo') {
+            this.edicaoSemanaAtiva.logo = modal.componentInstance.croppedImage;
+          } else {
+            this.edicaoSemanaAtiva.logo_completa =
+              modal.componentInstance.croppedImage;
+          }
+          modal.dismiss();
+        },
+        complete: () => {
+          modal.componentInstance.saving = false;
+        },
       });
   }
 

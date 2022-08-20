@@ -27,9 +27,18 @@
         class="avatar small mat-elevation-z8"
         style="margin: 0"
         [ngStyle]="{ color: coresEdicao.coresAtivas.cor4 }"
-        *ngIf="!sidenav.opened"
+        *ngIf="!sidenav.opened && authService.usuarioLogado?.url_foto_perfil"
         [src]="authService.usuarioLogado?.url_foto_perfil"
       />
+      <div class="no-avatar">
+        <div
+          class="avatar small mat-elevation-z8"
+          *ngIf="!sidenav.opened && !authService.usuarioLogado?.url_foto_perfil"
+        >
+          <mat-icon>person</mat-icon>
+        </div>
+      </div>
+
       <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
     </button>
     <div class="toolbar-menu-options">
@@ -136,11 +145,11 @@
                 class="nav-link"
                 [ngStyle]="{
                   color:
-                    router.url === '/atividades'
+                    router.url === '/como-chegar'
                       ? coresEdicao.coresAtivas.cor2
                       : coresEdicao.coresAtivas.cor4
                 }"
-                routerLink="/atividades"
+                routerLink="/como-chegar"
                 (click)="isMenuCollapsed = true"
                 >Como Chegar</a
               >
@@ -150,11 +159,11 @@
                 class="nav-link"
                 [ngStyle]="{
                   color:
-                    router.url === '/atividades'
+                    router.url === '/fale-conosco'
                       ? coresEdicao.coresAtivas.cor2
                       : coresEdicao.coresAtivas.cor4
                 }"
-                routerLink="/atividades"
+                routerLink="/fale-conosco"
                 (click)="isMenuCollapsed = true"
                 >Fale Conosco</a
               >
@@ -163,6 +172,45 @@
         </div>
       </nav>
     </div>
+    <button mat-icon-button matTooltip="Notificações">
+      <mat-icon
+        [matBadge]="newNotifications"
+        [matBadgeHidden]="newNotifications < 1"
+        [matMenuTriggerFor]="menu"
+        matBadgeColor="warn"
+        >notifications</mat-icon
+      >
+    </button>
+    <mat-menu #menu="matMenu" class="avisos-menu">
+      <div style="width: 250px; max-height: 500px">
+        <div
+          class="titulo-avisos"
+          [ngStyle]="{
+            background: coresEdicao.coresAtivas.cor2,
+            color: coresEdicao.coresAtivas.cor5
+          }"
+        >
+          Notificações
+        </div>
+        <div
+          class="avisos-item"
+          *ngFor="let aviso of avisos"
+          [ngStyle]="{
+            'border-color': coresEdicao.coresAtivas.cor1,
+            color: coresEdicao.coresAtivas.cor6,
+            background: !aviso.notificacao_aberta
+              ? coresEdicao.coresAtivas.cor6 + '4f'
+              : '#fff'
+          }"
+          [matTooltip]="aviso.titulo"
+          (click)="abrirAviso(aviso)"
+        >
+          <mat-icon *ngIf="aviso.notificacao_aberta">drafts</mat-icon>
+          <mat-icon *ngIf="!aviso.notificacao_aberta">email</mat-icon>
+          <span>{{ aviso.titulo }}</span>
+        </div>
+      </div>
+    </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -180,8 +228,15 @@
   >
     <img
       class="avatar large mat-elevation-z8"
+      *ngIf="authService.usuarioLogado?.url_foto_perfil"
       [src]="authService.usuarioLogado?.url_foto_perfil"
     />
+
+    <div class="no-avatar" *ngIf="!authService.usuarioLogado?.url_foto_perfil">
+      <div class="avatar large mat-elevation-z8">
+        <mat-icon>person</mat-icon>
+      </div>
+    </div>
 
     <h4 class="name" [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }">
       {{ authService.usuarioLogado?.nome }}
@@ -233,9 +288,9 @@
           <a
             (click)="sidenav.opened = false"
             mat-button
-            routerLink="/meus-cursos"
+            routerLink="/minhas-atividades"
             [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
-            >Meus Cursos</a
+            >Minhas Atividades</a
           >
         </li>
         <li class="nav-item">
@@ -298,6 +353,15 @@
           <li class="nav-item">
             <a
               (click)="sidenav.opened = false"
+              mat-button
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+              routerLink="/configuracao/usuarios"
+              >Usuários</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              (click)="sidenav.opened = false"
               routerLink="/configuracao/comissao"
               [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
               mat-button
@@ -347,28 +411,30 @@
               >Gerar Certificado</a
             >
           </li>
-        </ul>
-      </div>
-      <mat-divider
-        [ngStyle]="{ 'background-color': coresEdicao.coresAtivas.cor5 }"
-      ></mat-divider>
-
-      <div
-        *ngIf="authService.usuarioLogado?.perfil === 'adm'"
-        [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
-      >
-        Tabelas
-        <ul class="navbar-nav">
           <li class="nav-item">
             <a
               (click)="sidenav.opened = false"
               mat-button
               [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
-              >Inscrições</a
+              routerLink="/configuracao/avisos"
+              >Avisos</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              (click)="sidenav.opened = false"
+              mat-button
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor5 }"
+              routerLink="/configuracao/tabelas"
+              >Tabelas</a
             >
           </li>
         </ul>
       </div>
+      <mat-divider
+        *ngIf="authService.usuarioLogado?.perfil === 'adm'"
+        [ngStyle]="{ 'background-color': coresEdicao.coresAtivas.cor5 }"
+      ></mat-divider>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>

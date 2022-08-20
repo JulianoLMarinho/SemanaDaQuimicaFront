@@ -3,10 +3,10 @@ import { Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
-import { EdicaoSemanaService } from 'src/app/services/edicaoSemana.service';
-import { ResponsavelService } from 'src/app/services/responsavel.service';
-import { ModalFieldConfiguration } from 'src/app/shared/components/modal-adicionar-editar/modal-field-configuration';
-import { Responsavel } from 'src/app/shared/models/responsavel';
+import { EdicaoSemanaService } from '../../../services/edicaoSemana.service';
+import { ResponsavelService } from '../../../services/responsavel.service';
+import { ModalFieldConfiguration } from '../../../shared/components/modal-adicionar-editar/modal-field-configuration';
+import { Responsavel } from '../../../shared/models/responsavel';
 import { BaseConfiguracaoComponent } from '../base-configuracao/base-configuracao.component';
 
 @Component({

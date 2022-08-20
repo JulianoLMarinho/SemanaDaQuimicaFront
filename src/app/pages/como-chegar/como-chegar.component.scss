@@ -1,0 +1,26 @@
+:host {
+  width: 100%;
+
+  .como-chegar-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    .mapa {
+      padding: 20px;
+      flex-grow: 1;
+      width: 50%;
+      min-width: 300px;
+
+      iframe {
+        border: 2px solid;
+        border-radius: 20px;
+      }
+    }
+
+    .como-chegar-linhas {
+      padding: 20px;
+      flex-grow: 1;
+      width: 50%;
+    }
+  }
+}

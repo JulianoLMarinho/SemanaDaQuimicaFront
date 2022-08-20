@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { CoresEdicaoService } from 'src/app/services/coresEdicao.service';
-import { EdicaoSemanaService } from 'src/app/services/edicaoSemana.service';
+import { CoresEdicaoService } from '../../../services/coresEdicao.service';
+import { EdicaoSemanaService } from '../../../services/edicaoSemana.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { UsuarioService } from '../../../services/usuario.service';
 import { EdicaoSemana } from '../../models/edicao-semana';
@@ -86,6 +86,7 @@ export class LoginComponent implements OnInit {
           (res) => {
             if (!res.user?.emailVerified) {
               this.aguardandoValidacao = true;
+              this.loading = false;
             }
           },
           (err) => {

@@ -187,9 +187,7 @@ export class AuthenticationService {
     await this.afAuth.sendPasswordResetEmail(email);
   }
 
-  refreshToken() {
-    /*return this.socialAuthService.refreshAuthToken(
-      GoogleLoginProvider.PROVIDER_ID
-    );*/
+  verificarEmail(codigo: string) {
+    return this.afAuth.applyActionCode(codigo);
   }
 }

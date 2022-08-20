@@ -94,3 +94,65 @@ mat-divider {
     width: 350px !important;
   }
 }
+
+::ng-deep {
+  .avisos-menu {
+    .mat-menu-content:not(:empty) {
+      padding: 0;
+    }
+
+    .titulo-avisos {
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: large;
+    }
+
+    .avisos-item {
+      height: 25px;
+      padding: 5px;
+      border: 1px solid;
+      margin: 2px;
+      display: flex;
+      align-items: center;
+      border-radius: 5px;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      span {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+
+.no-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .small {
+    mat-icon {
+      width: 45px;
+      height: 45px;
+      font-size: 45px;
+
+      line-height: 1;
+    }
+
+    margin-top: 0;
+  }
+
+  .large {
+    mat-icon {
+      width: 100px;
+      height: 100px;
+      font-size: 100px;
+    }
+  }
+}
