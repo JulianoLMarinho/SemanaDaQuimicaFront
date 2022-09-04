@@ -94,11 +94,14 @@ export class AuthenticationService {
               !this.usuarioLogado?.email ||
               !this.usuarioLogado?.nome ||
               !this.usuarioLogado?.cidade ||
-              !this.usuarioLogado?.curso ||
               !this.usuarioLogado?.estado ||
               !this.usuarioLogado?.genero ||
-              !this.usuarioLogado?.universidade ||
-              !this.usuarioLogado?.nivel;
+              !this.usuarioLogado?.nivel ||
+              (['Ensino Técnico', 'Graduação'].includes(
+                this.usuarioLogado?.nivel || ''
+              ) &&
+                (!this.usuarioLogado?.universidade ||
+                  !this.usuarioLogado?.curso));
 
             if (this.usuarioLogado) {
               this.usuarioLogado.accessToken = res.access_token;
