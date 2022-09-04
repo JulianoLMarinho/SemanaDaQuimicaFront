@@ -1,8 +1,8 @@
 <div class="main-container">
   <app-page-top-bar
     titulo="Inscrição"
-    [salvarAction]="salvarInscricao.bind(this)"
-    [cancelarAction]="cancelar.bind(this)"
+    [salvarAction]="abrirModalInscricao.bind(this, inscricaoConfirmacao)"
+    [cancelarAction]="cancelar.bind(this, inscricaoConfirmacao)"
     [loadingSave]="salvando"
     [loading]="salvando"
     [editando]="editando"
@@ -12,7 +12,10 @@
   </div>
   <div class="calendario-wraper">
     <div class="selecao-atividades">
-      <div>Adicione atividades ao seu plano. Valor total: {{ valor }}</div>
+      <div>
+        Adicione atividades ao seu plano. Valor total:
+        {{ valor | currency: "BRL" }}
+      </div>
       <div class="atividade-lista">
         <div
           class="atividade-card"
@@ -66,3 +69,139 @@
     </div>
   </div>
 </div>
+
+<ng-template #inscricaoConfirmacao let-modal>
+  <div>
+    <app-page-top-bar
+      titulo="Confirmar Inscrição"
+      [loadingSave]="salvando"
+      [loading]="salvando"
+      [editando]="false"
+    ></app-page-top-bar>
+    <div class="inscricao-modal-body">
+      <mat-card>
+        <mat-card-title-group>
+          <mat-card-title
+            >Camisa da Edição -
+            {{ valorCamisa | currency: "BRL" }}</mat-card-title
+          >
+          <mat-card-subtitle
+            >Deseja adicionar Camisa da Semana da Química ao seu
+            Kit?</mat-card-subtitle
+          >
+          <img mat-card-lg-image src="../../../assets/imgs/camisa.jpeg" />
+        </mat-card-title-group>
+        <mat-card-content>
+          <div class="checkbox-camisa">
+            <mat-checkbox
+              [checked]="camisaEdicao"
+              (change)="camisaEdicao = $event.checked"
+              [disabled]="camisaJaSelecionada"
+              >Desejo adicionar a camisa da semana da química ao meu
+              Kit.</mat-checkbox
+            >
+            <mat-error *ngIf="camisaJaSelecionada">
+              Você já adicionou a camisa da Semana da Química em outra inscrição
+            </mat-error>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-title-group>
+          <mat-card-title>É cotista ou associado da SBQ?</mat-card-title>
+          <mat-card-subtitle
+            >Alunos costistas ou associados à SBQ tem direito a 10% de desconto
+            no valor total das atividades selecionadas. Será necessário enviar o
+            comprovante para o email
+            <a href="mailto:inscricoessdq@gmail.com">inscricoessdq@gmail.com</a>
+            para confirmar a sua inscrição informando o número da
+            inscrição.</mat-card-subtitle
+          >
+        </mat-card-title-group>
+        <mat-card-content>
+          <mat-checkbox
+            [checked]="cotistaOuSBQ"
+            (change)="cotistaOuSBQ = $event.checked"
+            >Sou cotista ou associado à SBQ e enviarei o comprovante para o
+            email
+            <a href="mailto:inscricoessdq@gmail.com">inscricoessdq@gmail.com</a
+            >.</mat-checkbox
+          >
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-title-group>
+          <mat-card-title>Pagamento</mat-card-title>
+          <mat-card-subtitle
+            >Para concluir a inscrição você deve ir até a página
+            <b>Minhas Atividades</b> (no menu lateral), efetuar a pagamento das
+            atividades por transferência bancária ou por PIX e informar o número
+            do comprovante de pagamento. <br />
+            Você tem 3 dias para informar o pagamento, caso contrário a sua
+            inscrição será automaticamente cancelada. <br />
+            <b>Transferência</b><br />
+            Banco do Brasil<br />
+            <b>Agência: </b> 1568-7<br />
+            <b>C/C: </b>1055-3 <br />
+            <b>Variação: </b>55 <br />
+            <b>Chave PIX: </b>aos.gustavo@gmail.com</mat-card-subtitle
+          >
+        </mat-card-title-group>
+        <mat-card-content>
+          <mat-checkbox
+            [checked]="confirmarPagamento"
+            (change)="confirmarPagamento = $event.checked"
+            >Confirmo que li como efetuar o pagamento das atividades
+            selecionadas.</mat-checkbox
+          >
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <div class="detalhes-inscricao">
+            <div>
+              <div>Valor total da inscrição</div>
+              <div>{{ valor | currency: "BRL" }}</div>
+            </div>
+            <div *ngIf="camisaEdicao">
+              <div>Camisa da Edição</div>
+              <div>{{ valorCamisa | currency: "BRL" }}</div>
+            </div>
+            <div *ngIf="cotistaOuSBQ" class="detalhe-desconto">
+              <div>Desconto cotista/SBQ</div>
+              <div>- {{ valor - valor * 0.9 | currency: "BRL" }}</div>
+            </div>
+            <div class="detalhe-desconto" *ngIf="descontoAcumulo > 0">
+              <div>Desconto por acúmulo de atividades</div>
+              <div>- {{ descontoAcumulo | currency: "BRL" }}</div>
+            </div>
+            <div>
+              <div>Total</div>
+              <div>
+                {{
+                  valor -
+                    descontoAcumulo +
+                    valorCamisa * (camisaEdicao ? 1 : 0) -
+                    (valor - valor * 0.9) * (cotistaOuSBQ ? 1 : 0)
+                    | currency: "BRL"
+                }}
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button (click)="cancelar(modal)">Cancelar</button>
+          <button
+            (click)="salvarInscricao(modal)"
+            mat-raised-button
+            matTooltipPosition="above"
+            matTooltip="Você precisa confirmar que leu como efetuar o pagamento da sua inscrição."
+            [ngStyle]="{ background: coresEdicao.coresAtivas.cor1 }"
+          >
+            Confirmar
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</ng-template>

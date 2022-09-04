@@ -64,19 +64,19 @@ export class ConfirmarInscricoesComponent implements OnInit {
     this.loadingSalvar = true;
     this.inscricaoService
       .confirmarInscricao(this.inscricaoPagamento.id)
-      .subscribe(
-        (_) => {
+      .subscribe({
+        next: (_) => {
           this.carregarInscricoes();
           this.modalService.dismissAll();
           this.toast.success('Inscrição confirmada!');
         },
-        (_) => {
+        error: (_) => {
           this.toast.error('Houve algum erro!');
         },
-        () => {
+        complete: () => {
           this.loadingSalvar = false;
-        }
-      );
+        },
+      });
   }
 
   openModal(modal: any, inscricao: Inscricao) {

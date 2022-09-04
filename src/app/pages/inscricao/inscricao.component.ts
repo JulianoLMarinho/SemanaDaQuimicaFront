@@ -11,6 +11,7 @@ import { AtividadeInscricao } from '../../shared/models/inscricao';
 import { ToastrService } from 'ngx-toastr';
 import { CoresEdicaoService } from '../../services/coresEdicao.service';
 import { EdicaoSemana } from '../../shared/models/edicao-semana';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-inscricao',
@@ -24,9 +25,15 @@ export class InscricaoComponent implements OnInit {
   refresh = new Subject<void>();
   atividadesInscritas: AtividadeInscricao[] = [];
   valor: number = 0;
+  descontoAcumulo: number = 0;
   salvando = false;
   semanaAtiva: EdicaoSemana;
   editando = false;
+  camisaEdicao = false;
+  cotistaOuSBQ = false;
+  valorCamisa = 37;
+  camisaJaSelecionada = false;
+  confirmarPagamento = false;
 
   constructor(
     private atividadeService: AtividadesService,
@@ -34,7 +41,8 @@ export class InscricaoComponent implements OnInit {
     private authService: AuthenticationService,
     private inscricaoService: InscricaoService,
     private toast: ToastrService,
-    public coresEdicao: CoresEdicaoService
+    public coresEdicao: CoresEdicaoService,
+    private modalService: NgbModal
   ) {
     this.viewDate = new Date(this.semanaEdicaoService.semanaAtiva.data_inicio);
     this.semanaAtiva = this.semanaEdicaoService.semanaAtiva;
@@ -113,8 +121,13 @@ export class InscricaoComponent implements OnInit {
         (partialSum, a) => (partialSum ? partialSum : 0) + (a ? a : 0),
         0
       );
-
+    const totalAtividades = this.atividades.filter(
+      (x) =>
+        x.selecionada &&
+        this.events.filter((z) => z.meta !== false).some((z) => z.id === x.id)
+    ).length;
     this.valor = valorTotal ? valorTotal : 0;
+    this.descontoAcumulo = 5 * (totalAtividades - 1);
     this.haAtividades(false);
     this.refresh.next();
   }
@@ -124,6 +137,9 @@ export class InscricaoComponent implements OnInit {
       .obterAtividadesInscricao(this.authService.usuarioLogado!.id)
       .subscribe((atividadesIds) => {
         this.atividadesInscritas = atividadesIds;
+        this.camisaJaSelecionada = this.atividadesInscritas.some(
+          (x) => x.camisa_kit === true
+        );
         this.events = [];
         for (let atividade of this.atividades.filter((x) =>
           this.atividadesInscritas.some((y) => y.atividade_id === x.id)
@@ -134,16 +150,32 @@ export class InscricaoComponent implements OnInit {
       });
   }
 
-  salvarInscricao() {
+  abrirModalInscricao(modal: any) {
     if (!this.haAtividades()) return;
     if (this.existeHorarioSobreposto()) return;
+    const modalInstance = this.modalService.open(modal);
+  }
+
+  salvarInscricao(modal: any) {
+    if (!this.confirmarPagamento) {
+      this.toast.info(
+        'Você precisa confirmar que leu as instruções para o pagamento da sua inscrição.'
+      );
+      return;
+    }
     this.salvando = true;
     const usuario = this.authService.usuarioLogado!;
     const saveOjb = {
       edicao_semana_id: this.semanaEdicaoService.semanaAtiva.id,
       usuario_id: usuario.id,
-      valor: this.valor,
+      valor:
+        this.valor -
+        this.descontoAcumulo +
+        this.valorCamisa * (this.camisaEdicao ? 1 : 0) -
+        (this.valor - this.valor * 0.9) * (this.cotistaOuSBQ ? 1 : 0),
       status: 'AGUARDANDO_PAGAMENTO',
+      camisa_kit: this.camisaEdicao,
+      cotista_sbq: this.cotistaOuSBQ,
       atividades: [
         ...new Set(this.events.filter((x) => x.meta === true).map((x) => x.id)),
       ],
@@ -158,6 +190,7 @@ export class InscricaoComponent implements OnInit {
           });
         } else {
           this.toast.success('Inscrição salva com sucesso');
+          modal.dismiss();
         }
         this.carregarAtividades();
       },
@@ -210,11 +243,16 @@ export class InscricaoComponent implements OnInit {
     return novasAtividades;
   }
 
-  cancelar() {
+  cancelar(modal: any) {
     this.events = this.events.filter((x) => x.meta === false);
     this.atividades.map((x) => {
       x.selecionada = this.events.some((y) => y.id === x.id);
     });
     this.editando = false;
+    this.camisaEdicao = false;
+    this.cotistaOuSBQ = false;
+    this.descontoAcumulo = 0;
+    this.valor = 0;
+    modal.dismiss();
   }
 }

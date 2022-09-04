@@ -13,10 +13,14 @@ export interface Inscricao {
   atividades?: Atividade[];
   carregandoAtividades?: boolean;
   status_nome?: string;
+  camisa_kit: boolean;
+  cotista_sbq: boolean;
 }
 
 export interface AtividadeInscricao {
   atividade_id: number;
   inscricao_id: number;
   status: StatusInscricao;
+  camisa_kit: boolean;
+  cotista_sbq: boolean;
 }

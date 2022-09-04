@@ -44,6 +44,12 @@
         >
           {{ atividade.titulo }}
         </div>
+        <div *ngIf="inscricao.camisa_kit">
+          Camisa da Semana da Química adicionada ao Kit.
+        </div>
+        <div *ngIf="inscricao.cotista_sbq">
+          Participante cotista ou associado da SBQ.
+        </div>
       </div>
       <mat-action-row>
         <div>

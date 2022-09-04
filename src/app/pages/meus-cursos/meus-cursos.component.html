@@ -1,5 +1,5 @@
 <div class="main-container">
-  <app-page-top-bar titulo="Meus Cursos"></app-page-top-bar>
+  <app-page-top-bar titulo="Minhas Atividades"></app-page-top-bar>
   <div *ngIf="false" class="loader-spinner">
     <mat-spinner class="progress-spinner"></mat-spinner>
   </div>
@@ -17,7 +17,7 @@
           Edição: 2022
         </mat-panel-description>
         <mat-panel-description class="middle-item">
-          Valor: R${{ inscricao.valor }}</mat-panel-description
+          Valor: {{ inscricao.valor | currency: "BRL" }}</mat-panel-description
         >
         <div class="middle-item">
           <div class="status-inscricao" [ngClass]="inscricao.status">
@@ -36,6 +36,12 @@
           [ngStyle]="{ 'border-color': coresEdicao.coresAtivas.cor2 }"
         >
           {{ atividade.titulo }}
+        </div>
+        <div *ngIf="inscricao.camisa_kit">
+          Camisa da Semana da Química adicionada ao Kit.
+        </div>
+        <div *ngIf="inscricao.cotista_sbq">
+          Participante cotista ou associado da SBQ.
         </div>
       </div>
       <mat-action-row *ngIf="inscricao.status === 'AGUARDANDO_PAGAMENTO'">
@@ -69,6 +75,23 @@
     [editando]="true"
   ></app-page-top-bar>
   <div class="modal-body-pagamento" style="align-self: center">
+    <mat-card>
+      <mat-card-title-group>
+        <mat-card-title>Pagamento</mat-card-title>
+      </mat-card-title-group>
+      <mat-card-content>
+        Para concluir a inscrição você deve ir até a página
+        <b>Minhas Atividades</b> (no menu lateral), efetuar a pagamento das
+        atividades por transferência bancária ou por PIX e informar o número do
+        comprovante de pagamento. <br />
+        <b>Transferência</b><br />
+        Banco do Brasil<br />
+        <b>Agência: </b> 1568-7<br />
+        <b>C/C: </b>1055-3 <br />
+        <b>Variação: </b>55 <br />
+        <b>Chave PIX: </b>aos.gustavo@gmail.com
+      </mat-card-content>
+    </mat-card>
     <mat-form-field appearance="legacy">
       <mat-label>Comprovante de Pagamento</mat-label>
       <input

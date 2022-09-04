@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -62,6 +62,10 @@ import { UsuariosModule } from './pages/configuracao/usuarios/usuarios.module';
 import { TabelasModule } from './pages/configuracao/tabelas/tabelas.module';
 import { AvisoModule } from './pages/configuracao/aviso/aviso.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import ptBr from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(ptBr);
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -143,6 +147,7 @@ export function momentAdapterFactory() {
       useClass: HttpCacheIntercept,
       multi: true,
     },
+    { provide: LOCALE_ID, useValue: 'pt' },
   ],
   bootstrap: [AppComponent],
 })

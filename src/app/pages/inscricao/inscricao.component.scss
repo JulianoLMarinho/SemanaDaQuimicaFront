@@ -6,6 +6,38 @@
   }
 }
 
+::ng-deep {
+  .inscricao-modal-body {
+    .mat-checkbox-layout {
+      white-space: break-spaces;
+    }
+  }
+}
+
+.inscricao-modal-body {
+  padding: 10px;
+
+  mat-card {
+    margin-bottom: 15px;
+  }
+
+  .detalhes-inscricao {
+    div {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .detalhe-desconto {
+      color: red;
+    }
+  }
+
+  .checkbox-camisa {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 .calendario-wraper {
   display: flex;
   height: calc(100% - 65px);
