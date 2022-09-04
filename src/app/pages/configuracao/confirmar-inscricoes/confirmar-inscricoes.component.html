@@ -17,10 +17,11 @@
           Inscrição: {{ inscricao.id }}
         </mat-panel-title>
         <mat-panel-description class="middle-item">
-          Edição: 2022
-        </mat-panel-description>
+          Participante:
+          {{ inscricao.nome }}</mat-panel-description
+        >
         <mat-panel-description class="middle-item">
-          Valor: R${{ inscricao.valor }}</mat-panel-description
+          Valor: {{ inscricao.valor | currency: "BRL" }}</mat-panel-description
         >
         <mat-panel-description class="middle-item">
           Comprovante de Pagamento:

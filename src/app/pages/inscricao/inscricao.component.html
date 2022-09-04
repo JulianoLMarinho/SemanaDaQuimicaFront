@@ -108,7 +108,9 @@
       </mat-card>
       <mat-card>
         <mat-card-title-group>
-          <mat-card-title>É cotista ou associado da SBQ?</mat-card-title>
+          <mat-card-title
+            >É cotista de renda ou raça ou associado da SBQ?</mat-card-title
+          >
           <mat-card-subtitle
             >Alunos costistas ou associados à SBQ tem direito a 10% de desconto
             no valor total das atividades selecionadas. Será necessário enviar o
@@ -122,8 +124,8 @@
           <mat-checkbox
             [checked]="cotistaOuSBQ"
             (change)="cotistaOuSBQ = $event.checked"
-            >Sou cotista ou associado à SBQ e enviarei o comprovante para o
-            email
+            >Sou cotista (renda ou raça) ou associado à SBQ e enviarei o
+            comprovante para o email
             <a href="mailto:inscricoessdq@gmail.com">inscricoessdq@gmail.com</a
             >.</mat-checkbox
           >

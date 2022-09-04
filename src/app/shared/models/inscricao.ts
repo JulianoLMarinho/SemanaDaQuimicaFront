@@ -15,6 +15,8 @@ export interface Inscricao {
   status_nome?: string;
   camisa_kit: boolean;
   cotista_sbq: boolean;
+  nome?: string;
+  email?: string;
 }
 
 export interface AtividadeInscricao {
