@@ -8,11 +8,12 @@ import {
   InscricoesEdicao,
   TabelasObject,
 } from '../../../../shared/models/tabelas-exportacao';
+import { BaseTabelaService } from './baseTabela.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AtividadesTotaisService {
+export class AtividadesTotaisService extends BaseTabelaService {
   public tabela: TabelasObject<any> = {
     nome: 'Totais das Atividades',
     filtros: [
@@ -30,13 +31,16 @@ export class AtividadesTotaisService {
     loadTabela: this.carregarAtividades.bind(this),
     dados: [],
     obterModelo: this.obterModelo,
+    mostrarTabela: true,
   };
 
   constructor(
     private atividadesService: AtividadesService,
     private toast: ToastrService,
     private edicaoService: EdicaoSemanaService
-  ) {}
+  ) {
+    super();
+  }
 
   carregarAtividades(tabela: TabelasObject<any>) {
     const edicao = tabela.filtros.find((x: any) => x.nome === 'Edição');

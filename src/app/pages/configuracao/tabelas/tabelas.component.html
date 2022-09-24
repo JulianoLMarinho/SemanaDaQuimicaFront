@@ -65,7 +65,9 @@
     </mat-expansion-panel>
 
     <app-tabela-edicao
-      *ngIf="tabelaSelecionada && !reloadTable"
+      *ngIf="
+        tabelaSelecionada && tabelaSelecionada.mostrarTabela && !reloadTable
+      "
       [data]="tabelaSelecionada.dados"
       [modalConfig]="tabelaSelecionada.obterModelo.bind(this)"
       [loading]="false"

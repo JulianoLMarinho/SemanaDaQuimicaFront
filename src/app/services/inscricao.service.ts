@@ -68,4 +68,12 @@ export class InscricaoService {
       'inscricao/inscritos/edicao/' + edicaoId
     );
   }
+
+  obterPrimeiroCursoUsuario(edicaoId: number): Observable<any[]> {
+    return this.http.get<any[]>('inscricao/primeiro-curso/' + edicaoId);
+  }
+
+  obterListaDados(url: string): Observable<any[]> {
+    return this.http.get<any[]>(url);
+  }
 }

@@ -7,11 +7,12 @@ import { ModalFieldConfiguration } from '../../../../shared/components/modal-adi
 import { AtividadeLista } from '../../../../shared/models/atividades';
 import { EdicaoSemana } from '../../../../shared/models/edicao-semana';
 import { TabelasObject } from '../../../../shared/models/tabelas-exportacao';
+import { BaseTabelaService } from './baseTabela.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class InscricoesPorAtividadeService {
+export class InscricoesPorAtividadeService extends BaseTabelaService {
   public tabela: TabelasObject<any> = {
     nome: 'Inscrições por Atividade',
     filtros: [
@@ -37,6 +38,7 @@ export class InscricoesPorAtividadeService {
     loadTabela: this.carregarInscricoes.bind(this),
     dados: [],
     obterModelo: this.obterModelo,
+    mostrarTabela: true,
   };
 
   constructor(
@@ -44,7 +46,9 @@ export class InscricoesPorAtividadeService {
     private toast: ToastrService,
     private inscricaoService: InscricaoService,
     private edicaoService: EdicaoSemanaService
-  ) {}
+  ) {
+    super();
+  }
 
   loadAtividades(tabela: TabelasObject<any>) {
     const edicao = tabela.filtros.find(

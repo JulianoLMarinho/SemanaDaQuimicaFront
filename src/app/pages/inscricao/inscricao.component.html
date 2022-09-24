@@ -53,6 +53,11 @@
               Vagas Restantes:
               {{ atividade.vagas! - atividade.total_inscritos! }}
             </div>
+            <div *ngIf="atividade.horarios && atividade.horarios.length > 0">
+              Horário:
+              {{ obterHoraString(atividade.horarios![0].hora_inicio) }} até
+              {{ obterHoraString(atividade.horarios![0].hora_fim) }}
+            </div>
             <div *ngIf="!(atividade.vagas! - atividade.total_inscritos! > 0)">
               <i>Não há mais vagas para esta atividade</i>
             </div>

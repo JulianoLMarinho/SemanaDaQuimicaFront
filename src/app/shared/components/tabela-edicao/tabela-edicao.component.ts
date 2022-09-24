@@ -146,6 +146,6 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
   }
 
   download() {
-    TableUtil.exportArrayToExcel(this.data, this.nomeEntidade);
+    TableUtil.exportArrayToExcel(this.data, 'export');
   }
 }

@@ -255,4 +255,8 @@ export class InscricaoComponent implements OnInit {
     this.valor = 0;
     modal.dismiss();
   }
+
+  obterHoraString(hora: string) {
+    return moment('2000-01-01T' + hora + '-0300').format('HH:mm');
+  }
 }

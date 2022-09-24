@@ -6,6 +6,8 @@ export interface TabelasObject<T> {
   loadTabela: (tabela: TabelasObject<T>) => void;
   dados: T[];
   obterModelo: (entidade: T) => ModalFieldConfiguration[];
+  mostrarTabela: boolean;
+  urlDados?: string;
 }
 
 export interface FiltroTabela<T> {
