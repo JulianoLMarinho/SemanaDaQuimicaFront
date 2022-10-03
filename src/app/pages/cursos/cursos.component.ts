@@ -45,8 +45,8 @@ export class CursosComponent implements OnInit {
             let start: moment.Moment = moment();
             let end: moment.Moment = moment();
             x.turno.horarios.map((y) => {
-              start = moment('2000-01-01T' + y.hora_inicio);
-              end = moment('2000-01-01T' + y.hora_fim);
+              start = moment('2022-01-01T' + y.hora_inicio);
+              end = moment('2022-01-01T' + y.hora_fim);
               startDisplay = start.format('HH[h]mm');
               endDisplay = end.format('HH[h]mm');
               duration += end.diff(start);

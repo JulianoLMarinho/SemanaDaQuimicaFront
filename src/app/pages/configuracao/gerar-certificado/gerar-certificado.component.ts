@@ -63,8 +63,8 @@ export class GerarCertificadoComponent extends BaseConfiguracaoComponent {
             let endDisplay = '';
             if (x.horarios) {
               x.horarios.map((y) => {
-                const start = moment('2000-01-01T' + y.hora_inicio);
-                const end = moment('2000-01-01T' + y.hora_fim);
+                const start = moment('2022-01-01T' + y.hora_inicio);
+                const end = moment('2022-01-01T' + y.hora_fim);
                 startDisplay = start.format('hh[h]mm');
                 endDisplay = end.format('hh[h]mm');
                 duration += end.diff(start);

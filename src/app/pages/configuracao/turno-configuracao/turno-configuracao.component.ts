@@ -153,11 +153,11 @@ export class TurnoConfiguracaoComponent extends BaseConfiguracaoComponent {
     if (turno && turno.horarios && turno.horarios.length > 0) {
       ret +=
         ' das ' +
-        moment('2000-01-01T' + turno.horarios[0].hora_inicio + '-0300').format(
+        moment('2022-01-01T' + turno.horarios[0].hora_inicio + '-0300').format(
           'hh:mm A'
         ) +
         ' até às ' +
-        moment('2000-01-01T' + turno.horarios[0].hora_fim + '-0300').format(
+        moment('2022-01-01T' + turno.horarios[0].hora_fim + '-0300').format(
           'hh:mm A'
         );
     }

@@ -257,6 +257,6 @@ export class InscricaoComponent implements OnInit {
   }
 
   obterHoraString(hora: string) {
-    return moment('2000-01-01T' + hora + '-0300').format('HH:mm');
+    return moment('2022-01-01T' + hora + '-0300').format('HH:mm');
   }
 }
