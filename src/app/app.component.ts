@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
   isMenuCollapsed = true;
   avisos: Aviso[] = [];
   notificacoesAbertas: number[] = [];
+  favIcon: HTMLLinkElement = document.querySelector('#appfavicon')!;
 
   constructor(
     private observer: BreakpointObserver,
@@ -131,6 +132,7 @@ export class AppComponent implements OnInit {
     this.edicaoSemanaService.loadingSemanaAtivaSubject
       .asObservable()
       .subscribe(async (_) => {
+        this.favIcon.href = this.edicaoSemanaService.semanaAtiva.logo || '';
         await this.obterAvisos();
         setInterval(async () => {
           await this.obterAvisos();

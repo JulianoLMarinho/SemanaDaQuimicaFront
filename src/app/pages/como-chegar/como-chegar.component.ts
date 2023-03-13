@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { EdicaoSemanaService } from 'src/app/services/edicaoSemana.service';
 import { CoresEdicaoService } from '../../services/coresEdicao.service';
 
 @Component({
@@ -54,7 +56,17 @@ export class ComoChegarComponent implements OnInit {
       link: 'https://prefeitura.ufrj.br/index.php/pt/linhas-internas-e-intercampi',
     },
   ];
-  constructor(public coresEdicao: CoresEdicaoService) {}
+
+  comoChegarTexto: SafeHtml = '';
+  constructor(
+    public coresEdicao: CoresEdicaoService,
+    public semanaEdicaoService: EdicaoSemanaService,
+    private sanitizer: DomSanitizer
+  ) {
+    this.comoChegarTexto = sanitizer.bypassSecurityTrustHtml(
+      semanaEdicaoService.semanaAtiva.como_chegar || ''
+    );
+  }
 
   ngOnInit() {}
 }

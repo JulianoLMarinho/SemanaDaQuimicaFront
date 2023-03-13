@@ -16,6 +16,7 @@ export class QuemSomosComponent implements OnInit {
   loading = false;
   comissao: Responsavel[] = [];
   quemSomosTexto: string = '';
+  edicaoNumero: number = 0;
   constructor(
     private edicaoSemanaService: EdicaoSemanaService,
     private sanitizer: DomSanitizer,
@@ -28,6 +29,7 @@ export class QuemSomosComponent implements OnInit {
 
   loadComissao() {
     this.quemSomosTexto = this.edicaoSemanaService.semanaAtiva.quem_somos || '';
+    this.edicaoNumero = this.edicaoSemanaService.semanaAtiva.numero_edicao;
     this.comissao = this.edicaoSemanaService.semanaAtiva.comissao_edicao || [];
 
     this.comissao.map((x) => {

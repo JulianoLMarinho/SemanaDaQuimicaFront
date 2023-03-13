@@ -1,12 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import jsPDF from 'jspdf';
+import { Component, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { AtividadesService } from '../../../services/atividades.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { CoresEdicaoService } from '../../../services/coresEdicao.service';
 import { EdicaoSemanaService } from '../../../services/edicaoSemana.service';
-import { PresencaService } from '../../../services/presenca.service';
 import { CertificadoExportComponent } from '../../../shared/components/certificado-export/certificado-export.component';
 import { ModalFieldConfiguration } from '../../../shared/components/modal-adicionar-editar/modal-field-configuration';
 import { AtividadeLista } from '../../../shared/models/atividades';

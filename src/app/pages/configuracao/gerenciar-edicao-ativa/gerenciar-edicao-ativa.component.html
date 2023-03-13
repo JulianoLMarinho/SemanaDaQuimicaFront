@@ -412,5 +412,139 @@
         ></mat-progress-bar>
       </mat-card-footer>
     </mat-card>
+
+    <mat-card [ngClass]="{ expanded: comoChegarExpanded }">
+      <mat-card-header class="quem-somos">
+        <mat-card-title [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >Como Chegar</mat-card-title
+        >
+        <div>
+          <button
+            (click)="comoChegarExpanded = !comoChegarExpanded"
+            mat-icon-button
+          >
+            <mat-icon
+              *ngIf="!comoChegarExpanded"
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+              >open_in_full</mat-icon
+            >
+            <mat-icon
+              *ngIf="comoChegarExpanded"
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+              >close_fullscreen</mat-icon
+            >
+          </button>
+        </div>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content class="quem-somos">
+        <quill-editor
+          [(ngModel)]="comoChegar"
+          defaultEmptyValue=""
+          [disabled]="!editandoComoChegar"
+          placeholder="Escreva o texto 'Como Chegar'"
+        ></quill-editor>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button
+          *ngIf="!editandoComoChegar"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="editandoComoChegar = true"
+        >
+          Alterar
+        </button>
+        <button
+          *ngIf="editandoComoChegar"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="salvarComoChegar()"
+        >
+          Salvar
+        </button>
+        <button
+          *ngIf="editandoComoChegar"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="carregarComoChegar()"
+        >
+          Cancelar
+        </button>
+      </mat-card-actions>
+      <mat-card-footer
+        ><mat-progress-bar
+          mode="indeterminate"
+          *ngIf="carregandoComoChegar"
+        ></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
+
+    <mat-card [ngClass]="{ expanded: faleConoscoExpanded }">
+      <mat-card-header class="quem-somos">
+        <mat-card-title [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >Fale Conosco</mat-card-title
+        >
+        <div>
+          <button
+            (click)="faleConoscoExpanded = !faleConoscoExpanded"
+            mat-icon-button
+          >
+            <mat-icon
+              *ngIf="!faleConoscoExpanded"
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+              >open_in_full</mat-icon
+            >
+            <mat-icon
+              *ngIf="faleConoscoExpanded"
+              [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+              >close_fullscreen</mat-icon
+            >
+          </button>
+        </div>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content class="quem-somos">
+        <quill-editor
+          [(ngModel)]="faleConosco"
+          defaultEmptyValue=""
+          [disabled]="!editandoFaleConosco"
+          placeholder="Escreva o texto 'Fale Conosco'"
+        ></quill-editor>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button
+          *ngIf="!editandoFaleConosco"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="editandoFaleConosco = true"
+        >
+          Alterar
+        </button>
+        <button
+          *ngIf="editandoFaleConosco"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="salvarFaleConosco()"
+        >
+          Salvar
+        </button>
+        <button
+          *ngIf="editandoFaleConosco"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="carregarComoChegar()"
+        >
+          Cancelar
+        </button>
+      </mat-card-actions>
+      <mat-card-footer
+        ><mat-progress-bar
+          mode="indeterminate"
+          *ngIf="carregandoFaleConosco"
+        ></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
   </div>
 </div>

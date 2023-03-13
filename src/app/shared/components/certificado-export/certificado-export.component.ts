@@ -66,7 +66,7 @@ export class CertificadoExportComponent implements OnInit {
   }
 
   saveDoc(doc: jsPDF, resolve: any) {
-    doc.save('test');
+    doc.save('certificado');
     this.exportando = false;
     this.exportandoChange.emit(false);
     resolve();

@@ -37,6 +37,7 @@ import { QuillModule } from 'ngx-quill';
           ['bold', 'italic', 'underline', 'strike'],
           [{ list: 'bullet' }],
           [{ color: [] }],
+          ['link'],
         ],
       },
     }),

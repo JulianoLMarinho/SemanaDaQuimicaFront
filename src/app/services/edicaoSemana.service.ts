@@ -212,6 +212,26 @@ export class EdicaoSemanaService {
     });
   }
 
+  salvarComoChegar(
+    comoChegar: string,
+    edicaoSemanaId: number
+  ): Observable<void> {
+    return this.http.put('edicaosemana/como-chegar', {
+      como_chegar: comoChegar,
+      edicao_semana_id: edicaoSemanaId,
+    });
+  }
+
+  salvarFaleConosco(
+    faleConosco: string,
+    edicaoSemanaId: number
+  ): Observable<void> {
+    return this.http.put('edicaosemana/fale-conosco', {
+      fale_conosco: faleConosco,
+      edicao_semana_id: edicaoSemanaId,
+    });
+  }
+
   obterAvisos(semanaId: number): Observable<Aviso[]> {
     return this.http.get<Aviso[]>('edicaosemana/avisos/' + semanaId);
   }

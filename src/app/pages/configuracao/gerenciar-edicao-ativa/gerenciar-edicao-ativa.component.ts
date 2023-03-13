@@ -30,6 +30,16 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
   carregandoQuemSomos = false;
   quemSomosExpanded = false;
 
+  comoChegar?: string;
+  editandoComoChegar = false;
+  carregandoComoChegar = false;
+  comoChegarExpanded = false;
+
+  faleConosco?: string;
+  editandoFaleConosco = false;
+  carregandoFaleConosco = false;
+  faleConoscoExpanded = false;
+
   @ViewChild(GerenciarSiteComponent)
   gerenciarSiteComponent!: GerenciarSiteComponent;
 
@@ -41,6 +51,8 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
   ) {
     this.edicaoSemanaAtiva = this.edicaoService.semanaAtiva;
     this.quemSomos = this.edicaoSemanaAtiva.quem_somos;
+    this.comoChegar = this.edicaoSemanaAtiva.como_chegar;
+    this.faleConosco = this.edicaoSemanaAtiva.fale_conosco;
     this.carregarAssinaturas();
     this.tituloTela = `Gerenciar ${this.edicaoSemanaAtiva.numero_edicao}ª Edição`;
   }
@@ -88,6 +100,16 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
   carregarQuemSomos() {
     this.quemSomos = this.edicaoSemanaAtiva.quem_somos;
     this.editandoQuemSomos = false;
+  }
+
+  carregarComoChegar() {
+    this.comoChegar = this.edicaoSemanaAtiva.como_chegar;
+    this.editandoComoChegar = false;
+  }
+
+  carregarFaleConosco() {
+    this.faleConosco = this.edicaoSemanaAtiva.fale_conosco;
+    this.editandoFaleConosco = false;
   }
 
   salvarAssinatura(assinatura: Assinatura) {
@@ -255,6 +277,44 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
         },
         complete: () => {
           this.carregandoQuemSomos = false;
+        },
+      });
+  }
+
+  salvarComoChegar() {
+    this.carregandoComoChegar = true;
+    this.edicaoService
+      .salvarComoChegar(this.comoChegar!, this.edicaoSemanaAtiva.id)
+      .subscribe({
+        next: (_) => {
+          this.toastService.success('Configuração salva com sucesso!');
+          this.editandoComoChegar = false;
+          this.edicaoSemanaAtiva.como_chegar = this.comoChegar;
+        },
+        error: (_) => {
+          this.toastService.error('Erro ao salvar configuração!');
+        },
+        complete: () => {
+          this.carregandoComoChegar = false;
+        },
+      });
+  }
+
+  salvarFaleConosco() {
+    this.carregandoFaleConosco = true;
+    this.edicaoService
+      .salvarFaleConosco(this.faleConosco!, this.edicaoSemanaAtiva.id)
+      .subscribe({
+        next: (_) => {
+          this.toastService.success('Configuração salva com sucesso!');
+          this.editandoFaleConosco = false;
+          this.edicaoSemanaAtiva.fale_conosco = this.faleConosco;
+        },
+        error: (_) => {
+          this.toastService.error('Erro ao salvar configuração!');
+        },
+        complete: () => {
+          this.carregandoFaleConosco = false;
         },
       });
   }

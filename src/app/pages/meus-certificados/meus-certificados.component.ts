@@ -1,22 +1,17 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { jsPDF } from 'jspdf';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { AtividadesService } from '../../services/atividades.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { CoresEdicaoService } from '../../services/coresEdicao.service';
 import { EdicaoSemanaService } from '../../services/edicaoSemana.service';
-import { InscricaoService } from '../../services/inscricao.service';
 import { ResponsavelService } from '../../services/responsavel.service';
 import { CertificadoExportComponent } from '../../shared/components/certificado-export/certificado-export.component';
 import {
   CertificadoExportacao,
   DadosCertificados,
 } from '../../shared/models/dados-certificados';
-import { Inscricao } from '../../shared/models/inscricao';
-const htmlToPdfmake = require('html-to-pdfmake');
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -62,10 +57,10 @@ export class MeusCertificadosComponent implements OnInit {
   }
 
   async prepararDadosCertificado(info: DadosCertificados) {
+    info.carregando = true;
     this.responsavelService
       .getResponsaveisByAtividade(info.id)
-      .subscribe((responsaveis) => {
-        info.carregando = true;
+      .subscribe(async (responsaveis) => {
         moment.locale('pt-br');
         const inicio = moment(info.data_inicio);
         const fim = moment(info.data_fim);
@@ -77,8 +72,7 @@ export class MeusCertificadosComponent implements OnInit {
           )}`;
         }
         this.dadosCertificado.texto_data = textoData;
-        this.dadosCertificado.titulo_atividade =
-          info.titulo.toLocaleUpperCase();
+        this.dadosCertificado.titulo_atividade = info.titulo;
         this.dadosCertificado.duracao_atividade = (
           info.duracao_atividade / 3600.0
         ).toLocaleString();
@@ -105,16 +99,16 @@ export class MeusCertificadosComponent implements OnInit {
             this.dadosCertificado.tipo = 'da palestra';
             break;
         }
+        this.dadosCertificado.logo_semana =
+          this.edicaoService.semanaAtiva?.logo_completa!;
+        await this.downloadCertificado();
+        info.carregando = false;
       });
-    this.dadosCertificado.logo_semana =
-      this.edicaoService.semanaAtiva?.logo_completa!;
-    await this.downloadCertificado();
-    info.carregando = false;
   }
 
   async downloadCertificado() {
-    const alutoAtivo = this.authService.usuarioLogado;
-    this.dadosCertificado.nome_aluno = alutoAtivo?.nome!;
+    const alunoAtivo = this.authService.usuarioLogado;
+    this.dadosCertificado.nome_aluno = alunoAtivo?.nome!;
     await this.certificadoExportComponent.downloadAsPDF();
   }
 }

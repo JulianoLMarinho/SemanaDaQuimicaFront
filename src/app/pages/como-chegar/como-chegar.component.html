@@ -5,43 +5,7 @@
   </div>
   <ng-template #mainContent>
     <div class="como-chegar-container">
-      <div class="como-chegar-linhas">
-        <div>
-          O Centro de Tecnologia (CT) fica localizado da Ilha do Fundão <br />
-          Endereço: Av. Athos da Silveira Ramos, 149 - Fundão - Rio de Janeiro
-          <br />
-          <b
-            >As atividades acontecem no Bloco A do CT nos 1º, 5º e 6º
-            andares.</b
-          >
-        </div>
-        <br />
-        <div>
-          <h2 [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }">
-            Linhas de Ônibus que passam pelo Fundão
-          </h2>
-          <ul>
-            <li *ngFor="let linha of linhasOnibus">
-              <b [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
-                >{{ linha.nome }}: </b
-              ><a [href]="linha.link" target="_blank">{{ linha.rota }}</a>
-            </li>
-          </ul>
-        </div>
-        <br />
-        <div>
-          <h2 [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }">
-            Linhas Internas da UFRJ
-          </h2>
-          <ul>
-            <li *ngFor="let linha of linhasUFRJ">
-              <b [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
-                >{{ linha.nome }}: </b
-              ><a [href]="linha.link" target="_blank">{{ linha.rota }}</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <div class="como-chegar-linhas" [innerHtml]="comoChegarTexto"></div>
       <div class="mapa">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1838.243717991886!2d-43.23194960815443!3d-22.858445498934973!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x99793653897e45%3A0x71e2b3ce458e89f3!2sCentro%20de%20Tecnologia%20da%20UFRJ!5e0!3m2!1spt-BR!2sbr!4v1658425802790!5m2!1spt-BR!2sbr"

@@ -21,4 +21,6 @@ export interface EdicaoSemana {
   assinatura_presidente_edicao?: string;
   direcao_instituto?: string;
   assinatura_direcao_instituto?: string;
+  como_chegar?: string;
+  fale_conosco?: string;
 }
