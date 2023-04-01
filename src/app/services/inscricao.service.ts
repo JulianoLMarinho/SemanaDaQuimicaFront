@@ -16,9 +16,14 @@ export class InscricaoService {
   }
 
   obterAtividadesInscricao(
-    usuarioId: number
+    usuarioId: number,
+    edicaoSemanaId?: number
   ): Observable<AtividadeInscricao[]> {
-    return this.http.get<AtividadeInscricao[]>('inscricao/' + usuarioId);
+    return this.http.get<AtividadeInscricao[]>(
+      'inscricao/' + usuarioId,
+      undefined,
+      { edicaoSemana: edicaoSemanaId }
+    );
   }
 
   obterInscricoesResumo(usuarioId: number): Observable<Inscricao[]> {

@@ -31,7 +31,7 @@ export class InscricaoComponent implements OnInit {
   editando = false;
   camisaEdicao = false;
   cotistaOuSBQ = false;
-  valorCamisa = 37;
+  valorCamisa = 40;
   camisaJaSelecionada = false;
   confirmarPagamento = false;
 
@@ -134,7 +134,10 @@ export class InscricaoComponent implements OnInit {
 
   carregarAtividadesUsuario() {
     this.inscricaoService
-      .obterAtividadesInscricao(this.authService.usuarioLogado!.id)
+      .obterAtividadesInscricao(
+        this.authService.usuarioLogado!.id,
+        this.semanaEdicaoService.semanaAtiva.id
+      )
       .subscribe((atividadesIds) => {
         this.atividadesInscritas = atividadesIds;
         this.camisaJaSelecionada = this.atividadesInscritas.some(

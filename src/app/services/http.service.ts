@@ -20,7 +20,7 @@ export class HttpService {
     this.headers = this.headers.set('Authorization', 'Bearer ' + userToken);
   }
 
-  get<T>(url: string, cacheData: boolean = false) {
+  get<T>(url: string, cacheData: boolean = false, params?: any) {
     cacheData = false;
     if (cacheData) {
       let getHeaders = this.headers.set('cache_data', 'cache_data');
@@ -37,7 +37,10 @@ export class HttpService {
         })
       );
     }
-    return this.http.get<T>(this.API_URL + url, { headers: this.headers });
+    return this.http.get<T>(this.API_URL + url, {
+      headers: this.headers,
+      params,
+    });
   }
 
   post<T, U>(url: string, body: U) {

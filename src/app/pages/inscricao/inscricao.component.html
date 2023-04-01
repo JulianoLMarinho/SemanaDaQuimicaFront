@@ -14,7 +14,7 @@
     <div class="selecao-atividades">
       <div>
         Adicione atividades ao seu plano. Valor total:
-        {{ valor | currency: "BRL" }}
+        {{ valor | currency : "BRL" }}
       </div>
       <div class="atividade-lista">
         <div
@@ -88,13 +88,13 @@
         <mat-card-title-group>
           <mat-card-title
             >Camisa da Edição -
-            {{ valorCamisa | currency: "BRL" }}</mat-card-title
+            {{ valorCamisa | currency : "BRL" }}</mat-card-title
           >
           <mat-card-subtitle
             >Deseja adicionar Camisa da Semana da Química ao seu
             Kit?</mat-card-subtitle
           >
-          <img mat-card-lg-image src="../../../assets/imgs/camisa.jpeg" />
+          <img mat-card-lg-image src="../../../assets/imgs/camisa_2023.jpg" />
         </mat-card-title-group>
         <mat-card-content>
           <div class="checkbox-camisa">
@@ -168,19 +168,19 @@
           <div class="detalhes-inscricao">
             <div>
               <div>Valor total da inscrição</div>
-              <div>{{ valor | currency: "BRL" }}</div>
+              <div>{{ valor | currency : "BRL" }}</div>
             </div>
             <div *ngIf="camisaEdicao">
               <div>Camisa da Edição</div>
-              <div>{{ valorCamisa | currency: "BRL" }}</div>
+              <div>{{ valorCamisa | currency : "BRL" }}</div>
             </div>
             <div *ngIf="cotistaOuSBQ" class="detalhe-desconto">
               <div>Desconto cotista/SBQ</div>
-              <div>- {{ valor - valor * 0.9 | currency: "BRL" }}</div>
+              <div>- {{ valor - valor * 0.9 | currency : "BRL" }}</div>
             </div>
             <div class="detalhe-desconto" *ngIf="descontoAcumulo > 0">
               <div>Desconto por acúmulo de atividades</div>
-              <div>- {{ descontoAcumulo | currency: "BRL" }}</div>
+              <div>- {{ descontoAcumulo | currency : "BRL" }}</div>
             </div>
             <div>
               <div>Total</div>
@@ -190,7 +190,7 @@
                     descontoAcumulo +
                     valorCamisa * (camisaEdicao ? 1 : 0) -
                     (valor - valor * 0.9) * (cotistaOuSBQ ? 1 : 0)
-                    | currency: "BRL"
+                    | currency : "BRL"
                 }}
               </div>
             </div>
