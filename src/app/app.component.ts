@@ -190,7 +190,7 @@ export class AppComponent implements OnInit {
     this.notificacoesAbertas = this.notificacoesAbertas
       ? this.notificacoesAbertas
       : [];
-    this.avisos = <Aviso[]>await this.storage.getValue<Aviso[]>('avisos');
+    this.avisos = [];
     this.avisos = this.avisos ? this.avisos : [];
     let ultimoAviso = null;
     if (this.avisos.length > 0) {
@@ -203,7 +203,6 @@ export class AppComponent implements OnInit {
       .obterAvisosPorData(this.edicaoSemanaService.semanaAtiva.id, ultimoAviso)
       .subscribe(async (res) => {
         this.avisos.unshift(...res);
-        await this.storage.setValue('avisos', this.avisos);
         this.avisos.map((x) => {
           x.notificacao_aberta = this.notificacoesAbertas.includes(x.id);
         });

@@ -13,4 +13,5 @@ export interface Responsavel extends BaseModel {
   facebook?: string;
   tipo: string;
   funcao_semana?: string;
+  ordem?: number;
 }

@@ -87,10 +87,20 @@ export class ComissaoComponent
         tableStyle: {
           overflow: 'hidden',
           'white-space': 'nowrap',
-          width: '70%',
+          width: '50%',
           'text-overflow': 'ellipsis',
           flex: 'none',
         },
+      },
+      {
+        fieldName: 'Ordem',
+        fieldInitialValue: editResponsavel?.ordem,
+        fieldProperty: 'ordem',
+        fieldType: 'number',
+        fieldPlaceholder: 'Insira a ordem de apresentação',
+        fieldErrorMessage: '',
+        fieldValidators: [],
+        fieldShowOnTable: true,
       },
       {
         fieldName: 'Twitter',

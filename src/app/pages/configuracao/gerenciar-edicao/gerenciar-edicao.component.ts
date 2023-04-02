@@ -75,11 +75,33 @@ export class GerenciarEdicaoComponent extends BaseConfiguracaoComponent {
         fieldDisplayFormatter: (args: EdicaoSemana) =>
           moment(args.data_fim).format('DD/MM/yyyy'),
       },
+      {
+        fieldName: 'Semana Ativa',
+        fieldInitialValue: edicaoAtividade?.ativa,
+        fieldProperty: 'ativa',
+        fieldType: 'select',
+        fieldPlaceholder: '',
+        fieldErrorMessage: '',
+        fieldValidators: [],
+        fieldOptions: [
+          { name: 'Sim', value: true },
+          { name: 'Não', value: false },
+        ],
+        fieldDisplayFormatter: (args: EdicaoSemana) =>
+          args.ativa ? 'Sim' : 'Não',
+        fieldOptionChange: (event: any) => {
+          event &&
+            this.toastService.info(
+              'Ao alterar esta opção para "Sim", todas as outras edições terão este campo alterado para "Não". É possível ter apenas uma edição ativa.',
+              'Atenção',
+              { closeButton: true, timeOut: 50000 }
+            );
+        },
+      },
     ];
   }
 
   salvarEdicao(formValues: any) {
-    formValues.ativa = true;
     return this.edicaoServices.editarEdicaoSemana(formValues);
   }
 
