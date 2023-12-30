@@ -117,6 +117,10 @@ export class EdicaoSemanaService {
     return this.http.get<EdicaoSemana>('edicaosemana', true);
   }
 
+  getDetalhesById(edicaoId: number): Observable<EdicaoSemana> {
+    return this.http.get<EdicaoSemana>('edicaosemana', true, { id: edicaoId });
+  }
+
   updateTemaEdicaoAtiva(tema: any) {
     return this.http.put('edicaosemana/tema', tema);
   }

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, SimpleChanges, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { AtividadesService } from '../../../services/atividades.service';
@@ -11,6 +11,7 @@ import { AtividadeLista } from '../../../shared/models/atividades';
 import { BaseModel } from '../../../shared/models/baseModel';
 import { CertificadoExportacao } from '../../../shared/models/dados-certificados';
 import { BaseConfiguracaoComponent } from '../base-configuracao/base-configuracao.component';
+import { EdicaoSemana } from 'src/app/shared/models/edicao-semana';
 
 @Component({
   selector: 'app-gerar-certificado',
@@ -22,12 +23,14 @@ export class GerarCertificadoComponent extends BaseConfiguracaoComponent {
   atividadeSelecionada!: AtividadeLista;
   nomeAluno: string = '';
   exportando = false;
+  edicao?: EdicaoSemana;
   dadosCertificado: CertificadoExportacao = {
     nome_aluno: '',
     texto_data: '',
     titulo_atividade: '',
     duracao_atividade: '',
     numero_edicao: 0,
+    edicao_id: 0,
     data_atual: '',
     responsaveis: '',
     tipo: '',
@@ -45,6 +48,22 @@ export class GerarCertificadoComponent extends BaseConfiguracaoComponent {
     public authService: AuthenticationService
   ) {
     super(edicaoService, toastService);
+  }
+
+  nChanges(changes: SimpleChanges) {
+    console.log('edição', this.dadosCertificado.edicao_id);
+    if (changes.dadosCertificado) {
+      this.edicaoService
+        .getDetalhesById(changes.dadosCertificado.currentValue.edicao_id)
+        .subscribe((data) => {
+          console.log(data);
+        });
+    }
+  }
+
+  selectEdicaoLoadAtividade() {
+    this.selectEdicao();
+    this.loadEntidade();
   }
 
   loadEntidade(): void {
@@ -107,6 +126,7 @@ export class GerarCertificadoComponent extends BaseConfiguracaoComponent {
     this.dadosCertificado.titulo_atividade = this.atividadeSelecionada.titulo;
     this.dadosCertificado.numero_edicao =
       this.edicaoService.semanaSelecionada?.numero_edicao!;
+    this.dadosCertificado.edicao_id = this.edicaoService.semanaSelecionada?.id!;
     this.dadosCertificado.texto_data = textoData;
     this.dadosCertificado.data_atual = moment(new Date()).format(
       'DD [de] MMMM [de] YYYY'
