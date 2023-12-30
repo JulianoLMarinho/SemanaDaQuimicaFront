@@ -12,6 +12,7 @@ import {
   CertificadoExportacao,
   DadosCertificados,
 } from '../../shared/models/dados-certificados';
+import { EdicaoSemana } from 'src/app/shared/models/edicao-semana';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -27,11 +28,13 @@ export class MeusCertificadosComponent implements OnInit {
     titulo_atividade: '',
     duracao_atividade: '',
     numero_edicao: 0,
+    edicao_id: 0,
     data_atual: '',
     responsaveis: '',
     tipo: '',
     logo_semana: '',
   };
+  edicaoAtividade?: EdicaoSemana;
 
   @ViewChild(CertificadoExportComponent)
   certificadoExportComponent!: CertificadoExportComponent;
@@ -56,7 +59,23 @@ export class MeusCertificadosComponent implements OnInit {
       });
   }
 
+  async obterEdicaoSemanaAtividade(edicaoId: number) {
+    return new Promise<EdicaoSemana>((resolve, reject) => {
+      this.edicaoService.getDetalhesById(edicaoId).subscribe({
+        next: (edicao) => {
+          resolve(edicao);
+        },
+        error: (e) => {
+          reject(e);
+        },
+      });
+    });
+  }
+
   async prepararDadosCertificado(info: DadosCertificados) {
+    this.edicaoAtividade = await this.obterEdicaoSemanaAtividade(
+      info.edicao_id
+    );
     info.carregando = true;
     this.responsavelService
       .getResponsaveisByAtividade(info.id)
@@ -100,7 +119,8 @@ export class MeusCertificadosComponent implements OnInit {
             break;
         }
         this.dadosCertificado.logo_semana =
-          this.edicaoService.semanaAtiva?.logo_completa!;
+          this.edicaoAtividade?.logo_completa || '';
+        this.dadosCertificado.edicao_id = info.edicao_id;
         await this.downloadCertificado();
         info.carregando = false;
       });

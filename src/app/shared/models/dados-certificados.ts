@@ -9,6 +9,7 @@ export interface DadosCertificados {
   titulo: string;
   duracao_atividade: number;
   numero_edicao: number;
+  edicao_id: number;
   carregando?: boolean;
   cod_tipo: TipoAtividadeCod;
 }
@@ -19,6 +20,7 @@ export interface CertificadoExportacao {
   titulo_atividade: string;
   duracao_atividade: string;
   numero_edicao: number;
+  edicao_id: number;
   data_atual: string;
   responsaveis: string;
   tipo: string;

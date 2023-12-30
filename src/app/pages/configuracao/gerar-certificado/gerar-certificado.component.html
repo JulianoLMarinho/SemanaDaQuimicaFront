@@ -10,7 +10,7 @@
           <mat-label>Edição</mat-label>
           <mat-select
             [(value)]="edicaoSelecionada"
-            (selectionChange)="selectEdicao()"
+            (selectionChange)="selectEdicaoLoadAtividade()"
           >
             <mat-option *ngFor="let edicao of edicoes" [value]="edicao">
               {{
@@ -59,4 +59,5 @@
 
 <app-certificado-export
   [dadosCertificado]="dadosCertificado"
+  [semanaAtiva]="edicaoService.semanaSelecionada || undefined"
 ></app-certificado-export>

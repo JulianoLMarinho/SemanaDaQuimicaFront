@@ -7,14 +7,14 @@
     <div class="certificado-container">
       <div
         class="header-cert"
-        [ngStyle]="{ 'background-color': coresSemana.coresAtivas.cor1 }"
+        [ngStyle]="{ 'background-color': cores?.cor1 }"
       ></div>
       <div>
         <img [src]="dadosCertificado.logo_semana" style="width: 230px" />
       </div>
       <div
         class="header-cert"
-        [ngStyle]="{ 'background-color': coresSemana.coresAtivas.cor1 }"
+        [ngStyle]="{ 'background-color': cores?.cor1 }"
       ></div>
     </div>
     <div class="certificado-titulo">
@@ -41,16 +41,16 @@
       </div>
       <div style="margin-bottom: 5px">
         <div class="assinatura-certificado">
-          <div><img [src]="semanaAtiva.assinatura_direcao_instituto" /></div>
-          <div><img [src]="semanaAtiva.assinatura_presidente_edicao" /></div>
+          <div><img [src]="semanaAtiva?.assinatura_direcao_instituto" /></div>
+          <div><img [src]="semanaAtiva?.assinatura_presidente_edicao" /></div>
         </div>
         <div class="assinatura-certificado-nomes">
           <div>
-            <p>{{ semanaAtiva.direcao_instituto }}</p>
+            <p>{{ semanaAtiva?.direcao_instituto }}</p>
             <p>Diretor do Institulo de Química</p>
           </div>
           <div>
-            <p>{{ semanaAtiva.presidente_edicao }}</p>
+            <p>{{ semanaAtiva?.presidente_edicao }}</p>
             <p>
               Presidente da Comissão Organizadora da
               {{ dadosCertificado.numero_edicao }}ª Semana da Química
