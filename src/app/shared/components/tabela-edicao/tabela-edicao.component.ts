@@ -43,10 +43,11 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
     () => [];
   @Input() salvarAction: (entity: any) => Observable<boolean> = ({}) =>
     of(false);
-  @Input() deletarAction: (entity: any) => Observable<boolean> = ({}) =>
-    of(false);
+  @Input() deletarAction?: (entity: any) => Observable<boolean>;
+  @Input() showDeletarAction?: (entity: any) => boolean;
   @Input() nomeEntidade = '';
   @Input() customActions: CustomActions[] = [];
+  @Input() deletarConfirmacaoTexto: string = 'Deseja deletar este item?';
 
   @Output() saved = new EventEmitter();
   displayedColumns: string[] = [];
@@ -115,22 +116,23 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
     });
 
     modal.componentInstance.titulo = 'Confirmar deleção';
-    modal.componentInstance.mensagem = 'Deseja deletar este item?';
+    modal.componentInstance.mensagem = this.deletarConfirmacaoTexto;
 
     modal.componentInstance.salvar = () => {
-      this.deletarAction(entidade).subscribe({
-        next: (res) => {
-          if (res) {
-            this.toast.success('Operação realizada com sucesso.');
-            this.saved.emit();
-            modal.dismiss();
-          }
-        },
-        error: (err: HttpErrorResponse) => {
-          modal.componentInstance.loading = false;
-          this.toast.error(err?.error?.detail || 'Houve algum erro.');
-        },
-      });
+      this.deletarAction &&
+        this.deletarAction(entidade).subscribe({
+          next: (res: boolean) => {
+            if (res) {
+              this.toast.success('Operação realizada com sucesso.');
+              this.saved.emit();
+              modal.dismiss();
+            }
+          },
+          error: (err: HttpErrorResponse) => {
+            modal.componentInstance.loading = false;
+            this.toast.error(err?.error?.detail || 'Houve algum erro.');
+          },
+        });
     };
   }
 

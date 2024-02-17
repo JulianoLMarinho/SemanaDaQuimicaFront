@@ -57,7 +57,11 @@
               (click)="deleteAction(element)"
               mat-icon-button
               matTooltipPosition="above"
-              *ngIf="!readOnly"
+              *ngIf="
+                !readOnly &&
+                deletarAction &&
+                (!showDeletarAction || showDeletarAction(element))
+              "
               [matTooltip]="'Excluir ' + nomeEntidade"
             >
               <mat-icon>delete</mat-icon>
