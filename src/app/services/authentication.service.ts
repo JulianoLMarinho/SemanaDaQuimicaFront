@@ -97,6 +97,7 @@ export class AuthenticationService {
               !this.usuarioLogado?.estado ||
               !this.usuarioLogado?.genero ||
               !this.usuarioLogado?.nivel ||
+              !this.usuarioLogado?.tamanho_camisa ||
               (['Ensino Técnico', 'Graduação'].includes(
                 this.usuarioLogado?.nivel || ''
               ) &&

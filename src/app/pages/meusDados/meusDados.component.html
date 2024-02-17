@@ -31,6 +31,7 @@
             <mat-label>Email</mat-label>
             <input
               matInput
+              required
               [(ngModel)]="usuario.email"
               disabled
               placeholder="Insira seu Email"
@@ -42,6 +43,7 @@
             <mat-label>Nome Completo</mat-label>
             <input
               matInput
+              required
               [(ngModel)]="usuario.nome"
               [disabled]="!editando"
               placeholder="Insira seu Nome"
@@ -121,6 +123,7 @@
           <mat-form-field appearance="legacy">
             <mat-label>Tamanho Da Camisa</mat-label>
             <mat-select
+              required
               [disabled]="!editando"
               [(value)]="usuario.tamanho_camisa"
             >
