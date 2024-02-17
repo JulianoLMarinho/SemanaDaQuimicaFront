@@ -74,6 +74,10 @@ export class TurnoConfiguracaoComponent extends BaseConfiguracaoComponent {
     }
   }
 
+  deleteTurno(turno: Turno): Observable<boolean> {
+    return this.turnoService.deletarTurno(turno.id);
+  }
+
   adicionarAtividade() {
     const activeModal = this.modalService.open(AdicionarEditarTurnoComponent, {
       centered: true,

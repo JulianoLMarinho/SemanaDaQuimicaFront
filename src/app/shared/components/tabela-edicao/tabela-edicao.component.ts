@@ -25,6 +25,7 @@ import {
 } from '../modal-adicionar-editar/modal-field-configuration';
 import { ModalConfirmacaoComponent } from '../modal-confirmacao/modal-confirmacao.component';
 import { TabelaHeaders } from './tabela-headers';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-tabela-edicao',
@@ -125,9 +126,9 @@ export class TabelaEdicaoComponent<T> implements OnInit, OnChanges {
             modal.dismiss();
           }
         },
-        error: (err) => {
+        error: (err: HttpErrorResponse) => {
           modal.componentInstance.loading = false;
-          this.toast.error('Houve algum erro.');
+          this.toast.error(err?.error?.detail || 'Houve algum erro.');
         },
       });
     };
