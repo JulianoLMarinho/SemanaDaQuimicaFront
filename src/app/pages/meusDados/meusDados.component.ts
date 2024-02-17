@@ -73,7 +73,7 @@ export class MeusDadosComponent implements OnInit {
     graduacao: ['UFRJ', 'UFF', 'UFRRJ', 'UERJ', 'PUC', 'Unirio', 'Estácio'],
   };
 
-  tamanhos = ['P', 'M', 'G', 'GG', 'EXG'];
+  tamanhos = ['P', 'M', 'G', 'GG', 'XGG'];
 
   constructor(
     private userService: UsuarioService,
@@ -89,22 +89,6 @@ export class MeusDadosComponent implements OnInit {
       this.carregarMunicipios();
     }
     this.loading = false;
-    /* this.userService.obterUsuarioLogado().subscribe(
-      (usuario) => {
-        if (usuario) {
-          this.usuario = usuario;
-          this.loading = false;
-          if (this.usuario?.estado!) {
-            this.carregarMunicipios();
-          }
-        }
-      },
-      (error) => {
-        this.toastr.error(error.message);
-        this.loading = true;
-      }
-    ); */
-
     this.carregarEstados();
   }
 
@@ -146,7 +130,7 @@ export class MeusDadosComponent implements OnInit {
   }
 
   salvarUsuario() {
-    if (this.usuario) {
+    if (this.usuario && this.usuario.nome && this.usuario.tamanho_camisa) {
       this.loadingSave = true;
       this.userService.atualizarUsuario(this.usuario).subscribe({
         next: (res) => {
@@ -165,7 +149,10 @@ export class MeusDadosComponent implements OnInit {
           this.editando = false;
         },
       });
-    } else this.toastr.error('Não é possível salvar o usuario');
+    } else
+      this.toastr.error(
+        'Não é possível salvar o usuario. Verifique se os campos obrigatórios estão preenchidos.'
+      );
   }
 
   editar() {
