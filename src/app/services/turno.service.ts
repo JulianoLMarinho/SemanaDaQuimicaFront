@@ -21,4 +21,8 @@ export class TurnoService {
   criarTurno(turno: any): Observable<boolean> {
     return this.http.post<boolean, any>('turnos', turno);
   }
+
+  deletarTurno(turnoId: number): Observable<boolean> {
+    return this.http.delete<boolean>('turnos/' + turnoId);
+  }
 }
