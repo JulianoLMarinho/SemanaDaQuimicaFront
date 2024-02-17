@@ -152,4 +152,8 @@ export class ResponsavelConfiguracaoComponent
   salvarNovoResponsavel(responsavel: any): Observable<boolean> {
     return this.responsavelService.salvarNovoResponsavel(responsavel);
   }
+
+  deletarResponsavel(responsavel: any): Observable<boolean> {
+    return this.responsavelService.deletarResponsavel(responsavel.id);
+  }
 }
