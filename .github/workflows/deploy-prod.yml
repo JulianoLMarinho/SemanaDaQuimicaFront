@@ -1,0 +1,47 @@
+name: deploy-dev-environment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-dev-environment:
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: Check out the repository to the runner
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+
+      - name: Install dependencies
+        run: npm install --force
+
+      - name: Build
+        run: |
+          npm run build 
+          sed -i 's|${API_URL}|'"$API_URL"'|' dist/SemanaDaQuimica/*.js
+          sed -i 's|${FIREBASE_API_KEY}|'"$FIREBASE_API_KEY"'|' dist/SemanaDaQuimica/*.js
+          sed -i 's|${FIREBASE_APP_ID}|'"$FIREBASE_APP_ID"'|' dist/SemanaDaQuimica/*.js
+          sed -i 's|${FIREBASE_AUTH_DOMAIN}|'"$FIREBASE_AUTH_DOMAIN"'|' dist/SemanaDaQuimica/*.js
+          sed -i 's|${FIREBASE_MESSAGING_SENDER}|'"$FIREBASE_MESSAGING_SENDER"'|' dist/SemanaDaQuimica/*.js
+          sed -i 's|${FIREBASE_PROJECT_ID}|'"$FIREBASE_PROJECT_ID"'|' dist/SemanaDaQuimica/*.js
+          sed -i 's|${FIREBASE_STORAGE_BUCKET}|'"$FIREBASE_STORAGE_BUCKET"'|' dist/SemanaDaQuimica/*.js
+        env:
+          API_URL: ${{ secrets.API_URL }}
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          FIREBASE_MESSAGING_SENDER: ${{ secrets.FIREBASE_MESSAGING_SENDER }}
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+
+      - name: Make deploy.sh executable
+        run: chmod +x scripts/deploy.sh
+      - name: Deploy to Development Environemnt
+        run: |
+          ./scripts/deploy.sh "${{ secrets.FTP_SERVER }}" "${{ secrets.FTP_USERNAME }}" "${{ secrets.FTP_PASSWORD }}"
