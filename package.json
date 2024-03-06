@@ -6,7 +6,8 @@
     "start": "ng serve",
     "startSSL": "ng serve --ssl",
     "build": "ng build",
-    "buildProd": "ng build --configuration=production",
+    "build-test": "ng build --configuration=test",
+    "build-prod": "ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

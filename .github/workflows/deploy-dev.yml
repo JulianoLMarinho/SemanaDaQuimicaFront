@@ -1,0 +1,40 @@
+name: deploy-dev-environment
+
+on:
+  push:
+    branches:
+      - dev
+      - add-github-workflow
+
+jobs:
+  deploy-dev-environment:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: Check out the repository to the runner
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build -- --prod --env.API_URL=$API_URL --env.FIREBASE_API_KEY=$FIREBASE_API_KEY --env.FIREBASE_APP_ID=$FIREBASE_APP_ID --env.FIREBASE_AUTH_DOMAIN=$FIREBASE_AUTH_DOMAIN --env.FIREBASE_MESSAGING_SENDER=$FIREBASE_MESSAGING_SENDER --env.FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID --env.FIREBASE_STORAGE_BUCKET=$FIREBASE_STORAGE_BUCKET
+        env:
+          API_URL: ${{ secrets.API_URL }}
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          FIREBASE_MESSAGING_SENDER: ${{ secrets.FIREBASE_MESSAGING_SENDER }}
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+
+      - name: Make deploy.sh executable
+        run: chmod +x scripts/deploy.sh
+      - name: Deploy to Development Environemnt
+        run: |
+          ./scripts/deploy.sh "${{ secrets.FTP_SERVER }}" "${{ secrets.FTP_USERNAME }}" "${{ secrets.FTP_PASSWORD }}"
