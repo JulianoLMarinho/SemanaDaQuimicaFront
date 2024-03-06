@@ -52,10 +52,7 @@ export class GerenciarSiteComponent extends BaseConfiguracaoComponent {
     private coresEdicaoService: CoresEdicaoService
   ) {
     super(edicaoService, toastService);
-    this.edicao_semana_id = edicaoService.semanaSelecionada
-      ? edicaoService.semanaSelecionada.id
-      : edicaoService.semanaAtiva.id;
-
+    this.edicao_semana_id = edicaoService.semanaAtiva.id;
     this.carregarPaleta(this.edicao_semana_id);
   }
 
@@ -97,6 +94,10 @@ export class GerenciarSiteComponent extends BaseConfiguracaoComponent {
   editarCores() {
     this.editar = true;
     this.editarChange.emit(this.editar);
+  }
+
+  loadEdicoes() {
+    // this function is just to sobrescribe the parent one
   }
 
   cancelarEdicao() {
