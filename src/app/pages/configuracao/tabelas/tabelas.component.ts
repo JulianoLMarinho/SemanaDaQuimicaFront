@@ -5,6 +5,7 @@ import { AtividadesTotaisService } from './services/atividades-totais.service';
 import { InscricaoPrimeiroCursoService } from './services/inscricao-primeiro-curso.service';
 import { InscricoesPorAtividadeService } from './services/inscricoes-por-atividade.service';
 import { InscricoesPorEdicaoService } from './services/inscricoes-por-edicao.service';
+import { AlunosAtividadesService } from './services/aluno-atividade.service';
 
 @Component({
   selector: 'app-tabelas',
@@ -23,6 +24,7 @@ export class TabelasComponent {
       'inscricao/tamanho-camisas/',
       'Camisas dos Usuários Com Inscrição Confirmada'
     ),
+    this.alunosAtividadesService.tabela,
   ];
 
   tabelaSelecionada!: TabelasObject<any>;
@@ -32,6 +34,7 @@ export class TabelasComponent {
     private inscricoesPorEdicaoService: InscricoesPorEdicaoService,
     private totaisAtividadesService: AtividadesTotaisService,
     private inscricaoPrimeiroCursoService: InscricaoPrimeiroCursoService,
+    private alunosAtividadesService: AlunosAtividadesService,
     public coresEdicao: CoresEdicaoService
   ) {}
 

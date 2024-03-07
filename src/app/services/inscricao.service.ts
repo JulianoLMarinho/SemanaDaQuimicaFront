@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Atividade } from '../shared/models/atividades';
-import { AtividadeInscricao, Inscricao } from '../shared/models/inscricao';
+import {
+  AlunoAtividade,
+  AtividadeInscricao,
+  Inscricao,
+} from '../shared/models/inscricao';
 import { InscricoesEdicao } from '../shared/models/tabelas-exportacao';
 import { HttpService } from './http.service';
 
@@ -80,5 +84,16 @@ export class InscricaoService {
 
   obterListaDados(url: string): Observable<any[]> {
     return this.http.get<any[]>(url);
+  }
+
+  obterAtividadesAlunos(
+    edicaoId: number,
+    atividadeId?: number
+  ): Observable<AlunoAtividade[]> {
+    return this.http.get<AlunoAtividade[]>(
+      `inscricao/inscritos-atividades-edicao/${edicaoId}`,
+      false,
+      atividadeId && { atividade_id: atividadeId }
+    );
   }
 }
