@@ -18,7 +18,10 @@
                 [(value)]="tabelaSelecionada"
                 (selectionChange)="primeiroFiltro($event.value)"
               >
-                <mat-option *ngFor="let tabela of tabelas" [value]="tabela">
+                <mat-option
+                  *ngFor="let tabela of tableasOrdenadas"
+                  [value]="tabela"
+                >
                   {{ tabela.nome }}
                 </mat-option>
               </mat-select>

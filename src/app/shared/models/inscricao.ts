@@ -26,3 +26,10 @@ export interface AtividadeInscricao {
   camisa_kit: boolean;
   cotista_sbq: boolean;
 }
+
+export interface AlunoAtividade {
+  inscricao_id: number;
+  edicao_semana_id: number;
+  aluno_nome: string;
+  atividade_titulo: string;
+}
