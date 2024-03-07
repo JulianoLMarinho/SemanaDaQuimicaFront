@@ -16,6 +16,7 @@ export class TabelasComponent {
   filterExpanded = false;
   reloadTable = false;
   tabelas = [
+    this.alunosAtividadesService.tabela,
     this.inscricoesPorAtividadeService.tabela,
     this.inscricoesPorEdicaoService.tabela,
     this.totaisAtividadesService.tabela,
@@ -24,8 +25,9 @@ export class TabelasComponent {
       'inscricao/tamanho-camisas/',
       'Camisas dos Usuários Com Inscrição Confirmada'
     ),
-    this.alunosAtividadesService.tabela,
   ];
+
+  tableasOrdenadas: TabelasObject<any>[] = [];
 
   tabelaSelecionada!: TabelasObject<any>;
 
@@ -36,7 +38,11 @@ export class TabelasComponent {
     private inscricaoPrimeiroCursoService: InscricaoPrimeiroCursoService,
     private alunosAtividadesService: AlunosAtividadesService,
     public coresEdicao: CoresEdicaoService
-  ) {}
+  ) {
+    this.tableasOrdenadas = this.tabelas.sort((t1, t2) =>
+      t1.nome < t2.nome ? -11 : 1
+    );
+  }
 
   primeiroFiltro(tabela: any) {
     this.reloadTable = true;
