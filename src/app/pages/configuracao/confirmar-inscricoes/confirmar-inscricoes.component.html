@@ -21,11 +21,19 @@
           {{ inscricao.nome }}</mat-panel-description
         >
         <mat-panel-description class="middle-item">
-          Valor: {{ inscricao.valor | currency: "BRL" }}</mat-panel-description
+          Valor: {{ inscricao.valor | currency : "BRL" }}</mat-panel-description
         >
         <mat-panel-description class="middle-item">
           Comprovante de Pagamento:
           {{ inscricao.numero_comprovante }}</mat-panel-description
+        >
+        <mat-panel-description class="middle-item">
+          Titular do Pagamento:
+          {{ inscricao.titular_comprovante }}</mat-panel-description
+        >
+        <mat-panel-description class="middle-item">
+          ID do Pagamento:
+          {{ inscricao.id_comprovante }}</mat-panel-description
         >
         <div class="middle-item">
           <div class="status-inscricao" [ngClass]="inscricao.status">

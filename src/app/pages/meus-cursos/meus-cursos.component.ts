@@ -61,25 +61,37 @@ export class MeusCursosComponent implements OnInit {
   }
 
   salvarPagamento(modal: any) {
+    if (
+      !this.inscricaoPagamento.numero_comprovante ||
+      !this.inscricaoPagamento.titular_comprovante ||
+      !this.inscricaoPagamento.id_comprovante
+    ) {
+      this.toast.info(
+        'Você precisa informar todos os campos referente ao comprovate de pagamento da sua inscrição.'
+      );
+      return;
+    }
     this.loadingSalvar = true;
     this.inscricaoService
       .informarPagamento(
         this.inscricaoPagamento.id,
-        this.inscricaoPagamento.numero_comprovante!
+        this.inscricaoPagamento.numero_comprovante!,
+        this.inscricaoPagamento.titular_comprovante!,
+        this.inscricaoPagamento.id_comprovante!
       )
-      .subscribe(
-        (_) => {
+      .subscribe({
+        next: (_) => {
           this.carregarInscricoes();
           this.modalService.dismissAll();
           this.toast.success('Pagamento informado!');
         },
-        (_) => {
+        error: (_) => {
           this.toast.error('Houve algum erro!');
         },
-        () => {
+        complete: () => {
           this.loadingSalvar = false;
-        }
-      );
+        },
+      });
   }
 
   openModal(modal: any, inscricao: Inscricao) {
