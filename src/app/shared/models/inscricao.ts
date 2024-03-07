@@ -9,6 +9,8 @@ export interface Inscricao {
   usuario_id: number;
   valor: number;
   numero_comprovante?: string;
+  titular_comprovante?: string;
+  id_comprovante?: string;
   id: number;
   atividades?: Atividade[];
   carregandoAtividades?: boolean;
@@ -17,6 +19,7 @@ export interface Inscricao {
   cotista_sbq: boolean;
   nome?: string;
   email?: string;
+  numero_edicao?: number;
 }
 
 export interface AtividadeInscricao {

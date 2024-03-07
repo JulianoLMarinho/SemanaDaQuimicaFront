@@ -14,10 +14,10 @@
           Inscrição: {{ inscricao.id }}
         </mat-panel-title>
         <mat-panel-description class="middle-item">
-          Edição: 2022
+          Edição: {{ inscricao.numero_edicao }}
         </mat-panel-description>
         <mat-panel-description class="middle-item">
-          Valor: {{ inscricao.valor | currency: "BRL" }}</mat-panel-description
+          Valor: {{ inscricao.valor | currency : "BRL" }}</mat-panel-description
         >
         <div class="middle-item">
           <div class="status-inscricao" [ngClass]="inscricao.status">
@@ -98,6 +98,22 @@
         matInput
         placeholder="Digite o número do comprovante"
         [(ngModel)]="inscricaoPagamento.numero_comprovante"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="legacy">
+      <mat-label>Titular da Conta Pagante</mat-label>
+      <input
+        matInput
+        placeholder="Digite o número do comprovante"
+        [(ngModel)]="inscricaoPagamento.titular_comprovante"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="legacy">
+      <mat-label>ID do Pagamento</mat-label>
+      <input
+        matInput
+        placeholder="Digite o número do comprovante"
+        [(ngModel)]="inscricaoPagamento.id_comprovante"
       />
     </mat-form-field>
   </div>

@@ -48,11 +48,15 @@ export class InscricaoService {
 
   informarPagamento(
     inscricaoId: number,
-    numeroDocumento: string
+    numeroDocumento: string,
+    titularComprovante: string,
+    idComprovante: string
   ): Observable<void> {
     return this.http.put('inscricao/pagamento', {
       inscricao_id: inscricaoId,
       numero_documento: numeroDocumento,
+      titular_comprovante: titularComprovante,
+      id_comprovante: idComprovante,
     });
   }
 
