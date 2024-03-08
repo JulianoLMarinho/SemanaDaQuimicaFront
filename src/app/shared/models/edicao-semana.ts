@@ -23,4 +23,7 @@ export interface EdicaoSemana {
   assinatura_direcao_instituto?: string;
   como_chegar?: string;
   fale_conosco?: string;
+  texto_pagamento?: string;
+  foto_camisa?: string;
+  valor_camisa?: string;
 }

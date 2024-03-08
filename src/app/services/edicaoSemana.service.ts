@@ -236,6 +236,16 @@ export class EdicaoSemanaService {
     });
   }
 
+  salvarTextoPagamento(
+    textoPagamento: string,
+    edicaoSemanaId: number
+  ): Observable<void> {
+    return this.http.put('edicaosemana/texto-pagamento', {
+      texto_pagamento: textoPagamento,
+      edicao_semana_id: edicaoSemanaId,
+    });
+  }
+
   obterAvisos(semanaId: number): Observable<Aviso[]> {
     return this.http.get<Aviso[]>('edicaosemana/avisos/' + semanaId);
   }

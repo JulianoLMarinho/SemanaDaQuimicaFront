@@ -140,19 +140,8 @@
         <mat-card-title-group>
           <mat-card-title>Pagamento</mat-card-title>
           <mat-card-subtitle
-            >Para concluir a inscrição você deve ir até a página
-            <b>Minhas Atividades</b> (no menu lateral), efetuar a pagamento das
-            atividades por transferência bancária ou por PIX e informar o número
-            do comprovante de pagamento. <br />
-            Você tem 3 dias para informar o pagamento, caso contrário a sua
-            inscrição será automaticamente cancelada. <br />
-            <b>Transferência</b><br />
-            Banco do Brasil<br />
-            <b>Agência: </b> 1568-7<br />
-            <b>C/C: </b>1055-3 <br />
-            <b>Variação: </b>55 <br />
-            <b>Chave PIX: </b>aos.gustavo@gmail.com</mat-card-subtitle
-          >
+            [innerHTML]="transformTextoPagamento()"
+          ></mat-card-subtitle>
         </mat-card-title-group>
         <mat-card-content>
           <mat-checkbox

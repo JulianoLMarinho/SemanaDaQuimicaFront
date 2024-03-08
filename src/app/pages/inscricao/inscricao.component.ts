@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CoresEdicaoService } from '../../services/coresEdicao.service';
 import { EdicaoSemana } from '../../shared/models/edicao-semana';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-inscricao',
@@ -28,6 +29,7 @@ export class InscricaoComponent implements OnInit {
   descontoAcumulo: number = 0;
   salvando = false;
   semanaAtiva: EdicaoSemana;
+  textoPagamento: string = '';
   editando = false;
   camisaEdicao = false;
   cotistaOuSBQ = false;
@@ -42,7 +44,8 @@ export class InscricaoComponent implements OnInit {
     private inscricaoService: InscricaoService,
     private toast: ToastrService,
     public coresEdicao: CoresEdicaoService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private sanitizer: DomSanitizer
   ) {
     this.viewDate = new Date(this.semanaEdicaoService.semanaAtiva.data_inicio);
     this.semanaAtiva = this.semanaEdicaoService.semanaAtiva;
@@ -261,5 +264,11 @@ export class InscricaoComponent implements OnInit {
 
   obterHoraString(hora: string) {
     return moment('2022-01-01T' + hora + '-0300').format('HH:mm');
+  }
+
+  transformTextoPagamento() {
+    return this.sanitizer.bypassSecurityTrustHtml(
+      this.semanaAtiva.texto_pagamento || ''
+    );
   }
 }

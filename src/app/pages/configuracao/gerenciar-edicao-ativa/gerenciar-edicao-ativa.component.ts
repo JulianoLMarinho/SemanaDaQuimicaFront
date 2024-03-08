@@ -40,6 +40,11 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
   carregandoFaleConosco = false;
   faleConoscoExpanded = false;
 
+  textoPagamento?: string;
+  editandoTextoPagamento = false;
+  carregandoTextoPagamento = false;
+  textoPagamentoExpanded = false;
+
   @ViewChild(GerenciarSiteComponent)
   gerenciarSiteComponent!: GerenciarSiteComponent;
 
@@ -53,6 +58,7 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
     this.quemSomos = this.edicaoSemanaAtiva.quem_somos;
     this.comoChegar = this.edicaoSemanaAtiva.como_chegar;
     this.faleConosco = this.edicaoSemanaAtiva.fale_conosco;
+    this.textoPagamento = this.edicaoSemanaAtiva.texto_pagamento;
     this.carregarAssinaturas();
     this.tituloTela = `Gerenciar ${this.edicaoSemanaAtiva.numero_edicao}ª Edição`;
   }
@@ -110,6 +116,11 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
   carregarFaleConosco() {
     this.faleConosco = this.edicaoSemanaAtiva.fale_conosco;
     this.editandoFaleConosco = false;
+  }
+
+  carregarTextoPagamento() {
+    this.textoPagamento = this.edicaoSemanaAtiva.texto_pagamento;
+    this.editandoTextoPagamento = false;
   }
 
   salvarAssinatura(assinatura: Assinatura) {
@@ -315,6 +326,25 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
         },
         complete: () => {
           this.carregandoFaleConosco = false;
+        },
+      });
+  }
+
+  salvarTextoPagamento() {
+    this.carregandoTextoPagamento = true;
+    this.edicaoService
+      .salvarTextoPagamento(this.textoPagamento!, this.edicaoSemanaAtiva.id)
+      .subscribe({
+        next: (_) => {
+          this.toastService.success('Configuração salva com sucesso!');
+          this.editandoTextoPagamento = false;
+          this.edicaoSemanaAtiva.texto_pagamento = this.textoPagamento;
+        },
+        error: (_) => {
+          this.toastService.error('Erro ao salvar configuração!');
+        },
+        complete: () => {
+          this.carregandoTextoPagamento = false;
         },
       });
   }
