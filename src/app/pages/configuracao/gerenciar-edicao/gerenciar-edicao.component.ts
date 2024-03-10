@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, of } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { EdicaoSemanaService } from '../../../services/edicaoSemana.service';
 import { ResponsavelService } from '../../../services/responsavel.service';
 import { ModalFieldConfiguration } from '../../../shared/components/modal-adicionar-editar/modal-field-configuration';
@@ -102,6 +102,17 @@ export class GerenciarEdicaoComponent extends BaseConfiguracaoComponent {
   }
 
   salvarEdicao(formValues: any) {
+    if (formValues.id) {
+      const e = this.edicoes.find((x) => x.id === formValues.id);
+      if (e?.ativa) {
+        this.toastService.error(
+          'Não é possível desativar uma semana já ativa.'
+        );
+        return throwError(
+          () => new Error('Não é possível desativar uma semana já ativa.')
+        );
+      }
+    }
     return this.edicaoServices.editarEdicaoSemana(formValues);
   }
 

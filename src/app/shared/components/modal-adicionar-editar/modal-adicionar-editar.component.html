@@ -91,6 +91,9 @@
           (ngModelChange)="
             field.fieldOptionChange && field.fieldOptionChange($event)
           "
+          [disabled]="
+            (field.fieldDisabled && field.fieldDisabled(field)) || false
+          "
           [formControlName]="field.fieldProperty"
         >
           <mat-option *ngFor="let op of field.fieldOptions" [value]="op.value">
