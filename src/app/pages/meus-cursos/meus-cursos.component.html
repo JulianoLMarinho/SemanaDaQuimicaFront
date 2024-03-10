@@ -14,10 +14,10 @@
           Inscrição: {{ inscricao.id }}
         </mat-panel-title>
         <mat-panel-description class="middle-item">
-          Edição: 2022
+          Edição: {{ inscricao.numero_edicao }}
         </mat-panel-description>
         <mat-panel-description class="middle-item">
-          Valor: {{ inscricao.valor | currency: "BRL" }}</mat-panel-description
+          Valor: {{ inscricao.valor | currency : "BRL" }}</mat-panel-description
         >
         <div class="middle-item">
           <div class="status-inscricao" [ngClass]="inscricao.status">
@@ -79,18 +79,9 @@
       <mat-card-title-group>
         <mat-card-title>Pagamento</mat-card-title>
       </mat-card-title-group>
-      <mat-card-content>
-        Para concluir a inscrição você deve ir até a página
-        <b>Minhas Atividades</b> (no menu lateral), efetuar a pagamento das
-        atividades por transferência bancária ou por PIX e informar o número do
-        comprovante de pagamento. <br />
-        <b>Transferência</b><br />
-        Banco do Brasil<br />
-        <b>Agência: </b> 1568-7<br />
-        <b>C/C: </b>1055-3 <br />
-        <b>Variação: </b>55 <br />
-        <b>Chave PIX: </b>aos.gustavo@gmail.com
-      </mat-card-content>
+      <mat-card-content
+        [innerHTML]="transformTextoPagamento()"
+      ></mat-card-content>
     </mat-card>
     <mat-form-field appearance="legacy">
       <mat-label>Comprovante de Pagamento</mat-label>
@@ -98,6 +89,22 @@
         matInput
         placeholder="Digite o número do comprovante"
         [(ngModel)]="inscricaoPagamento.numero_comprovante"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="legacy">
+      <mat-label>Titular da Conta Pagante</mat-label>
+      <input
+        matInput
+        placeholder="Digite o número do comprovante"
+        [(ngModel)]="inscricaoPagamento.titular_comprovante"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="legacy">
+      <mat-label>ID do Pagamento</mat-label>
+      <input
+        matInput
+        placeholder="Digite o número do comprovante"
+        [(ngModel)]="inscricaoPagamento.id_comprovante"
       />
     </mat-form-field>
   </div>

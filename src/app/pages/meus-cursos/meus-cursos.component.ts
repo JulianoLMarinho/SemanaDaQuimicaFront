@@ -10,6 +10,8 @@ import {
   StatusInscricao,
   StatusInscricaoLabel,
 } from '../../shared/models/statusInscricao';
+import { DomSanitizer } from '@angular/platform-browser';
+import { EdicaoSemanaService } from 'src/app/services/edicaoSemana.service';
 
 @Component({
   selector: 'app-meus-cursos',
@@ -27,7 +29,9 @@ export class MeusCursosComponent implements OnInit {
     private authService: AuthenticationService,
     private modalService: NgbModal,
     private toast: ToastrService,
-    public coresEdicao: CoresEdicaoService
+    public coresEdicao: CoresEdicaoService,
+    private sanitizer: DomSanitizer,
+    private edicaoService: EdicaoSemanaService
   ) {}
 
   ngOnInit() {
@@ -61,25 +65,37 @@ export class MeusCursosComponent implements OnInit {
   }
 
   salvarPagamento(modal: any) {
+    if (
+      !this.inscricaoPagamento.numero_comprovante ||
+      !this.inscricaoPagamento.titular_comprovante ||
+      !this.inscricaoPagamento.id_comprovante
+    ) {
+      this.toast.info(
+        'Você precisa informar todos os campos referente ao comprovate de pagamento da sua inscrição.'
+      );
+      return;
+    }
     this.loadingSalvar = true;
     this.inscricaoService
       .informarPagamento(
         this.inscricaoPagamento.id,
-        this.inscricaoPagamento.numero_comprovante!
+        this.inscricaoPagamento.numero_comprovante!,
+        this.inscricaoPagamento.titular_comprovante!,
+        this.inscricaoPagamento.id_comprovante!
       )
-      .subscribe(
-        (_) => {
+      .subscribe({
+        next: (_) => {
           this.carregarInscricoes();
           this.modalService.dismissAll();
           this.toast.success('Pagamento informado!');
         },
-        (_) => {
+        error: (_) => {
           this.toast.error('Houve algum erro!');
         },
-        () => {
+        complete: () => {
           this.loadingSalvar = false;
-        }
-      );
+        },
+      });
   }
 
   openModal(modal: any, inscricao: Inscricao) {
@@ -111,5 +127,11 @@ export class MeusCursosComponent implements OnInit {
 
   fecharModal(modal: any) {
     modal.dismiss();
+  }
+
+  transformTextoPagamento() {
+    return this.sanitizer.bypassSecurityTrustHtml(
+      this.edicaoService.semanaAtiva.texto_pagamento || ''
+    );
   }
 }

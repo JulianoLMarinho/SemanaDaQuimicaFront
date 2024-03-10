@@ -7,6 +7,7 @@ import { ImageUploadComponent } from '../../../shared/components/image-upload/im
 import { Assinatura } from '../../../shared/models/assinatura';
 import { EdicaoSemana } from '../../../shared/models/edicao-semana';
 import { GerenciarSiteComponent } from '../gerenciar-site/gerenciar-site.component';
+import { Camisa } from 'src/app/shared/models/camisa';
 
 @Component({
   selector: 'app-gerenciar-edicao-ativa',
@@ -40,6 +41,16 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
   carregandoFaleConosco = false;
   faleConoscoExpanded = false;
 
+  textoPagamento?: string;
+  editandoTextoPagamento = false;
+  carregandoTextoPagamento = false;
+  textoPagamentoExpanded = false;
+
+  camisaEdicao: Camisa = {
+    editando: false,
+    salvando: false,
+  };
+
   @ViewChild(GerenciarSiteComponent)
   gerenciarSiteComponent!: GerenciarSiteComponent;
 
@@ -53,7 +64,9 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
     this.quemSomos = this.edicaoSemanaAtiva.quem_somos;
     this.comoChegar = this.edicaoSemanaAtiva.como_chegar;
     this.faleConosco = this.edicaoSemanaAtiva.fale_conosco;
+    this.textoPagamento = this.edicaoSemanaAtiva.texto_pagamento;
     this.carregarAssinaturas();
+    this.carregarCamisaEdicao();
     this.tituloTela = `Gerenciar ${this.edicaoSemanaAtiva.numero_edicao}ª Edição`;
   }
 
@@ -97,6 +110,15 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
     };
   }
 
+  carregarCamisaEdicao() {
+    this.camisaEdicao = {
+      editando: false,
+      foto_camisa: this.edicaoSemanaAtiva.foto_camisa,
+      valor: this.edicaoSemanaAtiva.valor_camisa,
+      salvando: false,
+    };
+  }
+
   carregarQuemSomos() {
     this.quemSomos = this.edicaoSemanaAtiva.quem_somos;
     this.editandoQuemSomos = false;
@@ -110,6 +132,11 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
   carregarFaleConosco() {
     this.faleConosco = this.edicaoSemanaAtiva.fale_conosco;
     this.editandoFaleConosco = false;
+  }
+
+  carregarTextoPagamento() {
+    this.textoPagamento = this.edicaoSemanaAtiva.texto_pagamento;
+    this.editandoTextoPagamento = false;
   }
 
   salvarAssinatura(assinatura: Assinatura) {
@@ -201,6 +228,33 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
       });
   }
 
+  salvarCamisa() {
+    if (!this.camisaEdicao.foto_camisa || !this.camisaEdicao.valor) {
+      return;
+    }
+    this.camisaEdicao.salvando = true;
+    this.edicaoService
+      .salvarCamisa(
+        this.edicaoSemanaAtiva.id,
+        this.camisaEdicao.foto_camisa,
+        this.camisaEdicao.valor
+      )
+      .subscribe({
+        next: (_) => {
+          this.edicaoSemanaAtiva.foto_camisa = this.camisaEdicao.foto_camisa;
+          this.edicaoSemanaAtiva.valor_camisa = this.camisaEdicao.valor;
+          this.toastService.success('Camisa salva com sucesso!');
+          this.camisaEdicao.editando = false;
+        },
+        error: (_) => {
+          this.toastService.success('Erro ao salvar informações da camisa!');
+        },
+        complete: () => {
+          this.camisaEdicao.salvando = false;
+        },
+      });
+  }
+
   alterarLogo() {
     const modal = this.modalService.open(ImageUploadComponent);
     const componentInstance = <ImageUploadComponent>modal.componentInstance;
@@ -220,6 +274,19 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
       modal,
       'logo_completa'
     );
+    componentInstance.cancelar = () => {
+      modal.dismiss();
+    };
+  }
+
+  alterarCamisa() {
+    const modal = this.modalService.open(ImageUploadComponent);
+    const componentInstance = <ImageUploadComponent>modal.componentInstance;
+    componentInstance.setTamanhos(450, 583);
+    componentInstance.salvarAction = () => {
+      this.camisaEdicao.foto_camisa = componentInstance.croppedImage;
+      modal.dismiss();
+    };
     componentInstance.cancelar = () => {
       modal.dismiss();
     };
@@ -315,6 +382,25 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
         },
         complete: () => {
           this.carregandoFaleConosco = false;
+        },
+      });
+  }
+
+  salvarTextoPagamento() {
+    this.carregandoTextoPagamento = true;
+    this.edicaoService
+      .salvarTextoPagamento(this.textoPagamento!, this.edicaoSemanaAtiva.id)
+      .subscribe({
+        next: (_) => {
+          this.toastService.success('Configuração salva com sucesso!');
+          this.editandoTextoPagamento = false;
+          this.edicaoSemanaAtiva.texto_pagamento = this.textoPagamento;
+        },
+        error: (_) => {
+          this.toastService.error('Erro ao salvar configuração!');
+        },
+        complete: () => {
+          this.carregandoTextoPagamento = false;
         },
       });
   }

@@ -60,6 +60,10 @@
         justify-content: center;
         margin-bottom: 0;
 
+        &.camisa {
+          height: 315px;
+        }
+
         &.content-configuracoes {
           align-items: flex-start;
           height: 304px;

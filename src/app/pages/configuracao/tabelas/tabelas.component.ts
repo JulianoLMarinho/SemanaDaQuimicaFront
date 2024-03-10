@@ -5,6 +5,7 @@ import { AtividadesTotaisService } from './services/atividades-totais.service';
 import { InscricaoPrimeiroCursoService } from './services/inscricao-primeiro-curso.service';
 import { InscricoesPorAtividadeService } from './services/inscricoes-por-atividade.service';
 import { InscricoesPorEdicaoService } from './services/inscricoes-por-edicao.service';
+import { AlunosAtividadesService } from './services/aluno-atividade.service';
 
 @Component({
   selector: 'app-tabelas',
@@ -15,15 +16,18 @@ export class TabelasComponent {
   filterExpanded = false;
   reloadTable = false;
   tabelas = [
-    this.inscricoesPorAtividadeService.tabela,
-    this.inscricoesPorEdicaoService.tabela,
-    this.totaisAtividadesService.tabela,
-    this.inscricaoPrimeiroCursoService.tabela,
+    this.alunosAtividadesService.tabela,
     this.inscricaoPrimeiroCursoService.obterTabela(
       'inscricao/tamanho-camisas/',
       'Camisas dos Usuários Com Inscrição Confirmada'
     ),
+    this.inscricoesPorAtividadeService.tabela,
+    this.inscricoesPorEdicaoService.tabela,
+    this.inscricaoPrimeiroCursoService.tabela,
+    this.totaisAtividadesService.tabela,
   ];
+
+  tableasOrdenadas: TabelasObject<any>[] = [];
 
   tabelaSelecionada!: TabelasObject<any>;
 
@@ -32,6 +36,7 @@ export class TabelasComponent {
     private inscricoesPorEdicaoService: InscricoesPorEdicaoService,
     private totaisAtividadesService: AtividadesTotaisService,
     private inscricaoPrimeiroCursoService: InscricaoPrimeiroCursoService,
+    private alunosAtividadesService: AlunosAtividadesService,
     public coresEdicao: CoresEdicaoService
   ) {}
 

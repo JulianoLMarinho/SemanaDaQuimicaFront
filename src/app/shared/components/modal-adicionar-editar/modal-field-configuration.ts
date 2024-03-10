@@ -17,6 +17,7 @@ export interface ModalFieldConfiguration {
   fieldShowOnTable?: boolean;
   tableStyle?: any;
   fieldVisible?: (args: any) => boolean;
+  fieldDisabled?: (args: any) => boolean;
   fieldDisplayFormatter?: (args: any) => string;
   fieldLoadOptionsService?: () => Observable<OpcaoSelect[]>;
 }
