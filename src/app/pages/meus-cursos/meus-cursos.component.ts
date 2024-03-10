@@ -10,6 +10,8 @@ import {
   StatusInscricao,
   StatusInscricaoLabel,
 } from '../../shared/models/statusInscricao';
+import { DomSanitizer } from '@angular/platform-browser';
+import { EdicaoSemanaService } from 'src/app/services/edicaoSemana.service';
 
 @Component({
   selector: 'app-meus-cursos',
@@ -27,7 +29,9 @@ export class MeusCursosComponent implements OnInit {
     private authService: AuthenticationService,
     private modalService: NgbModal,
     private toast: ToastrService,
-    public coresEdicao: CoresEdicaoService
+    public coresEdicao: CoresEdicaoService,
+    private sanitizer: DomSanitizer,
+    private edicaoService: EdicaoSemanaService
   ) {}
 
   ngOnInit() {
@@ -123,5 +127,11 @@ export class MeusCursosComponent implements OnInit {
 
   fecharModal(modal: any) {
     modal.dismiss();
+  }
+
+  transformTextoPagamento() {
+    return this.sanitizer.bypassSecurityTrustHtml(
+      this.edicaoService.semanaAtiva.texto_pagamento || ''
+    );
   }
 }

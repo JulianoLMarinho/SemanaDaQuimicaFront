@@ -119,6 +119,9 @@ export class ModalAdicionarEditarComponent implements OnInit {
       () => {
         this.toastService.error('Ocorreu um erro durante o salvamento.');
         this.saving = false;
+      },
+      () => {
+        this.saving = false;
       }
     );
   }
