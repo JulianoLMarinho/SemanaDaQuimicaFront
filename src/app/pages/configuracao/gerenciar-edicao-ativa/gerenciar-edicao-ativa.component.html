@@ -613,5 +613,75 @@
         ></mat-progress-bar>
       </mat-card-footer>
     </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title [ngStyle]="{ color: coresEdicao.coresAtivas.cor2 }"
+          >Camisa da Semana da Química</mat-card-title
+        >
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content class="camisa">
+        <mat-form-field appearance="legacy">
+          <mat-label>Valor da Camisa (R$)</mat-label>
+          <input
+            matInput
+            [disabled]="!camisaEdicao.editando"
+            [(ngModel)]="camisaEdicao.valor"
+            placeholder="Valor da camisa"
+          />
+        </mat-form-field>
+        <img
+          *ngIf="camisaEdicao.foto_camisa"
+          class="imagem-principal-logo"
+          [src]="camisaEdicao.foto_camisa"
+          (click)="camisaEdicao.editando && alterarCamisa()"
+        />
+        <mat-icon
+          (click)="camisaEdicao.editando && alterarCamisa()"
+          *ngIf="!camisaEdicao.foto_camisa"
+          [ngStyle]="{
+            color: coresEdicao.coresAtivas.cor2,
+            cursor: camisaEdicao.foto_camisa ? 'pointer' : 'default'
+          }"
+          >add_photo_alternate</mat-icon
+        >
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <button
+          *ngIf="!camisaEdicao.editando"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="camisaEdicao.editando = true"
+        >
+          Alterar
+        </button>
+        <button
+          *ngIf="camisaEdicao.editando"
+          mat-button
+          [color]="coresEdicao.coresAtivas.cor2"
+          [disabled]="camisaEdicao.salvando"
+          (click)="salvarCamisa()"
+        >
+          Salvar
+        </button>
+        <button
+          *ngIf="camisaEdicao.editando"
+          mat-button
+          [disabled]="camisaEdicao.salvando"
+          [color]="coresEdicao.coresAtivas.cor2"
+          (click)="carregarCamisaEdicao()"
+        >
+          Cancelar
+        </button>
+      </mat-card-actions>
+      <mat-card-footer>
+        <mat-progress-bar
+          mode="indeterminate"
+          *ngIf="camisaEdicao.salvando"
+        ></mat-progress-bar
+      ></mat-card-footer>
+    </mat-card>
   </div>
 </div>

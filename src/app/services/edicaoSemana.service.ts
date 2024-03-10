@@ -190,6 +190,18 @@ export class EdicaoSemanaService {
     });
   }
 
+  salvarCamisa(
+    edicaoSemanaId: number,
+    foto_camisa: string,
+    valor_camisa: number
+  ): Observable<void> {
+    return this.http.post('edicaosemana/foto-camisa', {
+      edicao_semana_id: edicaoSemanaId,
+      foto_camisa: foto_camisa,
+      valor_camisa: valor_camisa,
+    });
+  }
+
   siteEmConstrucao(
     edicaoSemanaId: number,
     siteEmConstrucao: boolean

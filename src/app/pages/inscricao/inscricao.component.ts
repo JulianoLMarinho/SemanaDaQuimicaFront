@@ -33,7 +33,7 @@ export class InscricaoComponent implements OnInit {
   editando = false;
   camisaEdicao = false;
   cotistaOuSBQ = false;
-  valorCamisa = 40;
+  valorCamisa = 0;
   camisaJaSelecionada = false;
   confirmarPagamento = false;
 
@@ -49,6 +49,7 @@ export class InscricaoComponent implements OnInit {
   ) {
     this.viewDate = new Date(this.semanaEdicaoService.semanaAtiva.data_inicio);
     this.semanaAtiva = this.semanaEdicaoService.semanaAtiva;
+    this.valorCamisa = this.semanaAtiva.valor_camisa || 40;
   }
 
   ngOnInit() {

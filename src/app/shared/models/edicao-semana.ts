@@ -25,5 +25,5 @@ export interface EdicaoSemana {
   fale_conosco?: string;
   texto_pagamento?: string;
   foto_camisa?: string;
-  valor_camisa?: string;
+  valor_camisa?: number;
 }

@@ -7,6 +7,7 @@ import { ImageUploadComponent } from '../../../shared/components/image-upload/im
 import { Assinatura } from '../../../shared/models/assinatura';
 import { EdicaoSemana } from '../../../shared/models/edicao-semana';
 import { GerenciarSiteComponent } from '../gerenciar-site/gerenciar-site.component';
+import { Camisa } from 'src/app/shared/models/camisa';
 
 @Component({
   selector: 'app-gerenciar-edicao-ativa',
@@ -45,6 +46,11 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
   carregandoTextoPagamento = false;
   textoPagamentoExpanded = false;
 
+  camisaEdicao: Camisa = {
+    editando: false,
+    salvando: false,
+  };
+
   @ViewChild(GerenciarSiteComponent)
   gerenciarSiteComponent!: GerenciarSiteComponent;
 
@@ -60,6 +66,7 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
     this.faleConosco = this.edicaoSemanaAtiva.fale_conosco;
     this.textoPagamento = this.edicaoSemanaAtiva.texto_pagamento;
     this.carregarAssinaturas();
+    this.carregarCamisaEdicao();
     this.tituloTela = `Gerenciar ${this.edicaoSemanaAtiva.numero_edicao}ª Edição`;
   }
 
@@ -100,6 +107,15 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
       assinatura: this.edicaoSemanaAtiva.assinatura_direcao_instituto,
       tipo: 'direcao',
       editando: false,
+    };
+  }
+
+  carregarCamisaEdicao() {
+    this.camisaEdicao = {
+      editando: false,
+      foto_camisa: this.edicaoSemanaAtiva.foto_camisa,
+      valor: this.edicaoSemanaAtiva.valor_camisa,
+      salvando: false,
     };
   }
 
@@ -212,6 +228,33 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
       });
   }
 
+  salvarCamisa() {
+    if (!this.camisaEdicao.foto_camisa || !this.camisaEdicao.valor) {
+      return;
+    }
+    this.camisaEdicao.salvando = true;
+    this.edicaoService
+      .salvarCamisa(
+        this.edicaoSemanaAtiva.id,
+        this.camisaEdicao.foto_camisa,
+        this.camisaEdicao.valor
+      )
+      .subscribe({
+        next: (_) => {
+          this.edicaoSemanaAtiva.foto_camisa = this.camisaEdicao.foto_camisa;
+          this.edicaoSemanaAtiva.valor_camisa = this.camisaEdicao.valor;
+          this.toastService.success('Camisa salva com sucesso!');
+          this.camisaEdicao.editando = false;
+        },
+        error: (_) => {
+          this.toastService.success('Erro ao salvar informações da camisa!');
+        },
+        complete: () => {
+          this.camisaEdicao.salvando = false;
+        },
+      });
+  }
+
   alterarLogo() {
     const modal = this.modalService.open(ImageUploadComponent);
     const componentInstance = <ImageUploadComponent>modal.componentInstance;
@@ -231,6 +274,19 @@ export class GerenciarEdicaoAtivaComponent implements OnInit {
       modal,
       'logo_completa'
     );
+    componentInstance.cancelar = () => {
+      modal.dismiss();
+    };
+  }
+
+  alterarCamisa() {
+    const modal = this.modalService.open(ImageUploadComponent);
+    const componentInstance = <ImageUploadComponent>modal.componentInstance;
+    componentInstance.setTamanhos(450, 583);
+    componentInstance.salvarAction = () => {
+      this.camisaEdicao.foto_camisa = componentInstance.croppedImage;
+      modal.dismiss();
+    };
     componentInstance.cancelar = () => {
       modal.dismiss();
     };
