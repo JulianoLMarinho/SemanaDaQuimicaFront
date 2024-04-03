@@ -86,17 +86,15 @@
     <div class="inscricao-modal-body">
       <mat-card>
         <mat-card-title-group>
-          <mat-card-title
-            >Camisa da Edição -
-            {{ valorCamisa | currency : "BRL" }}</mat-card-title
-          >
+          <mat-card-title>Camisa da Edição</mat-card-title>
           <mat-card-subtitle
-            >Deseja adicionar Camisa da Semana da Química ao seu
-            Kit?</mat-card-subtitle
+            >Essa é a camisa que estará no seu kit da Semana da Química que você
+            ganhará caso se inscreva em pelo menos um curso. Também pode ser
+            adquirido separadamente.</mat-card-subtitle
           >
           <img mat-card-lg-image [src]="semanaAtiva.foto_camisa" />
         </mat-card-title-group>
-        <mat-card-content>
+        <mat-card-content *ngIf="false">
           <div class="checkbox-camisa">
             <mat-checkbox
               [checked]="camisaEdicao"
