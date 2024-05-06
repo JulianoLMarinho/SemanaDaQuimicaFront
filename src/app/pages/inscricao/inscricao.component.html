@@ -48,7 +48,7 @@
           </div>
           <div class="atividade-card-detalhes">
             <div>Tipo: {{ atividade.nome_tipo }}</div>
-            <div>Local: Sala 9 - IQ</div>
+            <div>Local: {{ atividade.local }}</div>
             <div *ngIf="atividade.vagas! - atividade.total_inscritos! > 0">
               Vagas Restantes:
               {{ atividade.vagas! - atividade.total_inscritos! }}
