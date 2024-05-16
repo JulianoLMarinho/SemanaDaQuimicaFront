@@ -17,7 +17,10 @@
           <div class="edicao-titulo">{{ atividade.titulo }}</div>
           <div>
             <button
-              *ngIf="atividade.percentual_presenca >= 0.75"
+              *ngIf="
+                atividade.percentual_presenca >=
+                (atividade.numero_edicao === 30 ? 0.61 : 0.75)
+              "
               mat-icon-button
               aria-label="Baixar certificado"
               (click)="prepararDadosCertificado(atividade)"
