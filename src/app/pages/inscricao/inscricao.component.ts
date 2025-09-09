@@ -5,7 +5,11 @@ import { Subject } from 'rxjs';
 import { AtividadesService } from '../../services/atividades.service';
 import { EdicaoSemanaService } from '../../services/edicaoSemana.service';
 import { AuthenticationService } from '../../services/authentication.service';
-import { Atividade, AtividadeLista } from '../../shared/models/atividades';
+import {
+  Atividade,
+  AtividadeLista,
+  TipoAtividadeEnum,
+} from '../../shared/models/atividades';
 import { InscricaoService } from '../../services/inscricao.service';
 import { AtividadeInscricao } from '../../shared/models/inscricao';
 import { ToastrService } from 'ngx-toastr';
@@ -130,8 +134,40 @@ export class InscricaoComponent implements OnInit {
         x.selecionada &&
         this.events.filter((z) => z.meta !== false).some((z) => z.id === x.id)
     ).length;
+
+    const descontoCurso = [0, 0, 15, 45, 75];
+
+    const totalAtividadesDict = this.atividades
+      .filter(
+        (x) =>
+          x.selecionada &&
+          this.events.filter((z) => z.meta !== false).some((z) => z.id === x.id)
+      )
+      .reduce(
+        (acc, x) => {
+          if (x.nome_tipo === TipoAtividadeEnum.CURSO) {
+            acc.curso++;
+          } else if (
+            x.nome_tipo === TipoAtividadeEnum.WORKSHOP ||
+            x.nome_tipo === TipoAtividadeEnum.VISITA_TECNICA
+          ) {
+            acc.workshopVisita++;
+          }
+          return acc;
+        },
+        { curso: 0, workshopVisita: 0 }
+      );
+
     this.valor = valorTotal ? valorTotal : 0;
-    this.descontoAcumulo = 5 * (totalAtividades - 1);
+    const acumuloDescontoCurso = descontoCurso[totalAtividadesDict.curso];
+    // this.descontoAcumulo = 5 * (totalAtividades - 1);
+    this.descontoAcumulo =
+      acumuloDescontoCurso +
+      (totalAtividadesDict.workshopVisita > 0
+        ? totalAtividadesDict.curso > 0
+          ? 10
+          : 0
+        : 0);
     this.haAtividades(false);
     this.refresh.next();
   }

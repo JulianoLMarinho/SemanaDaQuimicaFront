@@ -84,3 +84,10 @@ export type TipoAtividadeCod =
   | 'PALESTRA'
   | 'WORKSHOP'
   | 'VISITA_TECNICA';
+
+export enum TipoAtividadeEnum {
+  CURSO = 'Cursos',
+  PALESTRA = 'Palestras',
+  WORKSHOP = 'Workshops',
+  VISITA_TECNICA = 'Visitas Técnicas',
+}
