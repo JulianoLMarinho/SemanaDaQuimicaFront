@@ -1,12 +1,7 @@
 <div class="main-container">
-  <app-page-top-bar
-    titulo="Inscrição"
-    [salvarAction]="abrirModalInscricao.bind(this, inscricaoConfirmacao)"
-    [cancelarAction]="cancelar.bind(this, inscricaoConfirmacao)"
-    [loadingSave]="salvando"
-    [loading]="salvando"
-    [editando]="editando"
-  ></app-page-top-bar>
+  <app-page-top-bar titulo="Inscrição" [salvarAction]="abrirModalInscricao.bind(this, inscricaoConfirmacao)"
+    [cancelarAction]="cancelar.bind(this, inscricaoConfirmacao)" [loadingSave]="salvando" [loading]="salvando"
+    [editando]="editando"></app-page-top-bar>
   <div *ngIf="false" class="loader-spinner">
     <mat-spinner class="progress-spinner"></mat-spinner>
   </div>
@@ -14,15 +9,11 @@
     <div class="selecao-atividades">
       <div>
         Adicione atividades ao seu plano. Valor total:
-        {{ valor | currency : "BRL" }}
+        {{ valor | currency: "BRL" }}
       </div>
       <div class="atividade-lista">
-        <div
-          class="atividade-card"
-          *ngFor="let atividade of atividades"
-          (click)="adicionarEvento(atividade)"
-          [ngClass]="{ selecionado: atividade.selecionada }"
-          [ngStyle]="{
+        <div class="atividade-card" *ngFor="let atividade of atividades" (click)="adicionarEvento(atividade)"
+          [ngClass]="{ selecionado: atividade.selecionada }" [ngStyle]="{
             'border-color': atividade.selecionada
               ? coresEdicao.coresAtivas.cor2
               : coresEdicao.coresAtivas.cor1,
@@ -31,19 +22,15 @@
                 ? coresEdicao.coresAtivas.cor2 + '36'
                 : coresEdicao.coresAtivas.cor1 + '36'
               : !(atividade.vagas! - atividade.total_inscritos! > 0)
-              ? '#ababab'
-              : '#fff'
-          }"
-        >
-          <div
-            class="atividade-card-titulo"
-            [ngStyle]="{
+                ? '#ababab'
+                : '#fff'
+          }">
+          <div class="atividade-card-titulo" [ngStyle]="{
               color: coresEdicao.coresAtivas.cor2,
               'border-bottom-color': atividade.selecionada
                 ? coresEdicao.coresAtivas.cor2
                 : coresEdicao.coresAtivas.cor1
-            }"
-          >
+            }">
             {{ atividade.titulo }}
           </div>
           <div class="atividade-card-detalhes">
@@ -66,43 +53,33 @@
       </div>
     </div>
     <div class="calendario">
-      <app-calendar-view
-        [viewDate]="viewDate"
-        [events]="events"
-        [refresh]="refresh"
-      ></app-calendar-view>
+      <app-calendar-view [viewDate]="viewDate" [events]="events" [refresh]="refresh"></app-calendar-view>
     </div>
   </div>
 </div>
 
 <ng-template #inscricaoConfirmacao let-modal>
   <div>
-    <app-page-top-bar
-      titulo="Confirmar Inscrição"
-      [loadingSave]="salvando"
-      [loading]="salvando"
-      [editando]="false"
-    ></app-page-top-bar>
+    <app-page-top-bar titulo="Confirmar Inscrição" [loadingSave]="salvando" [loading]="salvando"
+      [editando]="false"></app-page-top-bar>
     <div class="inscricao-modal-body">
       <mat-card>
         <mat-card-title-group>
           <mat-card-title>Camisa da Edição</mat-card-title>
-          <mat-card-subtitle
-            >Essa é a camisa que estará no seu kit da Semana da Química que você
-            ganhará caso se inscreva em pelo menos um curso. Também pode ser
-            adquirido separadamente.</mat-card-subtitle
-          >
+          <mat-card-subtitle>Essa é a camisa que você pode adquirir diretamente com a Comissão da Semana da Química!
+            <br>
+            Qualquer pessoa pode comprar, mas quem tiver pelo menos uma inscrição em curso ou minicurso noturno garante
+            R$10 de
+            desconto (não cumulativo).
+            <br>
+            É só falar com a gente 😉</mat-card-subtitle>
           <img mat-card-lg-image [src]="semanaAtiva.foto_camisa" />
         </mat-card-title-group>
         <mat-card-content *ngIf="false">
           <div class="checkbox-camisa">
-            <mat-checkbox
-              [checked]="camisaEdicao"
-              (change)="camisaEdicao = $event.checked"
-              [disabled]="camisaJaSelecionada"
-              >Desejo adicionar a camisa da semana da química ao meu
-              Kit.</mat-checkbox
-            >
+            <mat-checkbox [checked]="camisaEdicao" (change)="camisaEdicao = $event.checked"
+              [disabled]="camisaJaSelecionada">Desejo adicionar a camisa da semana da química ao meu
+              Kit.</mat-checkbox>
             <mat-error *ngIf="camisaJaSelecionada">
               Você já adicionou a camisa da Semana da Química em outra inscrição
             </mat-error>
@@ -111,43 +88,30 @@
       </mat-card>
       <mat-card *ngIf="false">
         <mat-card-title-group>
-          <mat-card-title
-            >É cotista de renda ou raça ou associado da SBQ?</mat-card-title
-          >
-          <mat-card-subtitle
-            >Alunos costistas ou associados à SBQ tem direito a 10% de desconto
+          <mat-card-title>É cotista de renda ou raça ou associado da SBQ?</mat-card-title>
+          <mat-card-subtitle>Alunos costistas ou associados à SBQ tem direito a 10% de desconto
             no valor total das atividades selecionadas. Será necessário enviar o
             comprovante para o email
             <a href="mailto:inscricoessdq@gmail.com">inscricoessdq@gmail.com</a>
             para confirmar a sua inscrição informando o número da
-            inscrição.</mat-card-subtitle
-          >
+            inscrição.</mat-card-subtitle>
         </mat-card-title-group>
         <mat-card-content>
-          <mat-checkbox
-            [checked]="cotistaOuSBQ"
-            (change)="cotistaOuSBQ = $event.checked"
-            >Sou cotista (renda ou raça) ou associado à SBQ e enviarei o
+          <mat-checkbox [checked]="cotistaOuSBQ" (change)="cotistaOuSBQ = $event.checked">Sou cotista (renda ou raça) ou
+            associado à SBQ e enviarei o
             comprovante para o email
-            <a href="mailto:inscricoessdq@gmail.com">inscricoessdq@gmail.com</a
-            >.</mat-checkbox
-          >
+            <a href="mailto:inscricoessdq@gmail.com">inscricoessdq@gmail.com</a>.</mat-checkbox>
         </mat-card-content>
       </mat-card>
       <mat-card>
         <mat-card-title-group>
           <mat-card-title>Pagamento</mat-card-title>
-          <mat-card-subtitle
-            [innerHTML]="transformTextoPagamento()"
-          ></mat-card-subtitle>
+          <mat-card-subtitle [innerHTML]="transformTextoPagamento()"></mat-card-subtitle>
         </mat-card-title-group>
         <mat-card-content>
-          <mat-checkbox
-            [checked]="confirmarPagamento"
-            (change)="confirmarPagamento = $event.checked"
-            >Confirmo que li como efetuar o pagamento das atividades
-            selecionadas.</mat-checkbox
-          >
+          <mat-checkbox [checked]="confirmarPagamento" (change)="confirmarPagamento = $event.checked">Confirmo que li
+            como efetuar o pagamento das atividades
+            selecionadas.</mat-checkbox>
         </mat-card-content>
       </mat-card>
       <mat-card>
@@ -155,29 +119,29 @@
           <div class="detalhes-inscricao">
             <div>
               <div>Valor total da inscrição</div>
-              <div>{{ valor | currency : "BRL" }}</div>
+              <div>{{ valor | currency: "BRL" }}</div>
             </div>
             <div *ngIf="camisaEdicao">
               <div>Camisa da Edição</div>
-              <div>{{ valorCamisa | currency : "BRL" }}</div>
+              <div>{{ valorCamisa | currency: "BRL" }}</div>
             </div>
             <div *ngIf="cotistaOuSBQ" class="detalhe-desconto">
               <div>Desconto cotista/SBQ</div>
-              <div>- {{ valor - valor * 0.9 | currency : "BRL" }}</div>
+              <div>- {{ valor - valor * 0.9 | currency: "BRL" }}</div>
             </div>
             <div class="detalhe-desconto" *ngIf="descontoAcumulo > 0">
               <div>Desconto por acúmulo de atividades</div>
-              <div>- {{ descontoAcumulo | currency : "BRL" }}</div>
+              <div>- {{ descontoAcumulo | currency: "BRL" }}</div>
             </div>
             <div>
               <div>Total</div>
               <div>
                 {{
-                  valor -
-                    descontoAcumulo +
-                    valorCamisa * (camisaEdicao ? 1 : 0) -
-                    (valor - valor * 0.9) * (cotistaOuSBQ ? 1 : 0)
-                    | currency : "BRL"
+                valor -
+                descontoAcumulo +
+                valorCamisa * (camisaEdicao ? 1 : 0) -
+                (valor - valor * 0.9) * (cotistaOuSBQ ? 1 : 0)
+                | currency: "BRL"
                 }}
               </div>
             </div>
@@ -185,13 +149,9 @@
         </mat-card-content>
         <mat-card-actions>
           <button mat-raised-button (click)="cancelar(modal)">Cancelar</button>
-          <button
-            (click)="salvarInscricao(modal)"
-            mat-raised-button
-            matTooltipPosition="above"
+          <button (click)="salvarInscricao(modal)" mat-raised-button matTooltipPosition="above"
             matTooltip="Você precisa confirmar que leu como efetuar o pagamento da sua inscrição."
-            [ngStyle]="{ background: coresEdicao.coresAtivas.cor1 }"
-          >
+            [ngStyle]="{ background: coresEdicao.coresAtivas.cor1 }">
             Confirmar
           </button>
         </mat-card-actions>
