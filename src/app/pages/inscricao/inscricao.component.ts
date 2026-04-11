@@ -49,7 +49,7 @@ export class InscricaoComponent implements OnInit {
     private toast: ToastrService,
     public coresEdicao: CoresEdicaoService,
     private modalService: NgbModal,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
   ) {
     this.viewDate = new Date(this.semanaEdicaoService.semanaAtiva.data_inicio);
     this.semanaAtiva = this.semanaEdicaoService.semanaAtiva;
@@ -79,7 +79,7 @@ export class InscricaoComponent implements OnInit {
     }
     if (atividade.vagas! - atividade.total_inscritos! < 1 && deletavel) {
       this.toast.info(
-        'Esta atividade atingiu o número máximo de inscritos e não pode aceitar mais inscrições'
+        'Esta atividade atingiu o número máximo de inscritos e não pode aceitar mais inscrições',
       );
       return;
     }
@@ -88,7 +88,7 @@ export class InscricaoComponent implements OnInit {
       this.toast.info(
         'Este evento faz parte de outra inscrição ativa e não pode ser removido',
         'Este evento não pode ser removido',
-        { closeButton: true, timeOut: 10000 }
+        { closeButton: true, timeOut: 10000 },
       );
       return;
     }
@@ -100,7 +100,7 @@ export class InscricaoComponent implements OnInit {
       if (atividade.horarios) {
         for (let hor of atividade.horarios) {
           const startString = moment(
-            this.semanaEdicaoService.semanaAtiva.data_inicio
+            this.semanaEdicaoService.semanaAtiva.data_inicio,
           )
             .add(hor.dia - 1, 'days')
             .format('yyyy-MM-DD');
@@ -122,52 +122,54 @@ export class InscricaoComponent implements OnInit {
       .filter(
         (x) =>
           x.selecionada &&
-          this.events.filter((z) => z.meta !== false).some((z) => z.id === x.id)
+          this.events
+            .filter((z) => z.meta !== false)
+            .some((z) => z.id === x.id),
       )
       .map((x) => x.valor)
       .reduce(
         (partialSum, a) => (partialSum ? partialSum : 0) + (a ? a : 0),
-        0
+        0,
       );
     const totalAtividades = this.atividades.filter(
       (x) =>
         x.selecionada &&
-        this.events.filter((z) => z.meta !== false).some((z) => z.id === x.id)
+        this.events.filter((z) => z.meta !== false).some((z) => z.id === x.id),
     ).length;
 
-    const descontoCurso = [0, 0, 15, 45, 75];
+    // const descontoCurso = [0, 0, 15, 45, 75];
 
-    const totalAtividadesDict = this.atividades
-      .filter(
-        (x) =>
-          x.selecionada &&
-          this.events.filter((z) => z.meta !== false).some((z) => z.id === x.id)
-      )
-      .reduce(
-        (acc, x) => {
-          if (x.nome_tipo === TipoAtividadeEnum.CURSO) {
-            acc.curso++;
-          } else if (
-            x.nome_tipo === TipoAtividadeEnum.WORKSHOP ||
-            x.nome_tipo === TipoAtividadeEnum.VISITA_TECNICA
-          ) {
-            acc.workshopVisita++;
-          }
-          return acc;
-        },
-        { curso: 0, workshopVisita: 0 }
-      );
+    // const totalAtividadesDict = this.atividades
+    //   .filter(
+    //     (x) =>
+    //       x.selecionada &&
+    //       this.events.filter((z) => z.meta !== false).some((z) => z.id === x.id)
+    //   )
+    //   .reduce(
+    //     (acc, x) => {
+    //       if (x.nome_tipo === TipoAtividadeEnum.CURSO) {
+    //         acc.curso++;
+    //       } else if (
+    //         x.nome_tipo === TipoAtividadeEnum.WORKSHOP ||
+    //         x.nome_tipo === TipoAtividadeEnum.VISITA_TECNICA
+    //       ) {
+    //         acc.workshopVisita++;
+    //       }
+    //       return acc;
+    //     },
+    //     { curso: 0, workshopVisita: 0 }
+    //   );
 
     this.valor = valorTotal ? valorTotal : 0;
-    const acumuloDescontoCurso = descontoCurso[totalAtividadesDict.curso];
-    // this.descontoAcumulo = 5 * (totalAtividades - 1);
-    this.descontoAcumulo =
-      acumuloDescontoCurso +
-      (totalAtividadesDict.workshopVisita > 0
-        ? totalAtividadesDict.curso > 0
-          ? 10
-          : 0
-        : 0);
+    // const acumuloDescontoCurso = descontoCurso[totalAtividadesDict.curso];
+    this.descontoAcumulo = 5 * (totalAtividades - 1);
+    // this.descontoAcumulo =
+    //   acumuloDescontoCurso +
+    //   (totalAtividadesDict.workshopVisita > 0
+    //     ? totalAtividadesDict.curso > 0
+    //       ? 10
+    //       : 0
+    //     : 0);
     this.haAtividades(false);
     this.refresh.next();
   }
@@ -176,16 +178,16 @@ export class InscricaoComponent implements OnInit {
     this.inscricaoService
       .obterAtividadesInscricao(
         this.authService.usuarioLogado!.id,
-        this.semanaEdicaoService.semanaAtiva.id
+        this.semanaEdicaoService.semanaAtiva.id,
       )
       .subscribe((atividadesIds) => {
         this.atividadesInscritas = atividadesIds;
         this.camisaJaSelecionada = this.atividadesInscritas.some(
-          (x) => x.camisa_kit === true
+          (x) => x.camisa_kit === true,
         );
         this.events = [];
         for (let atividade of this.atividades.filter((x) =>
-          this.atividadesInscritas.some((y) => y.atividade_id === x.id)
+          this.atividadesInscritas.some((y) => y.atividade_id === x.id),
         )) {
           atividade.ja_salvo = true;
           this.adicionarEvento(atividade, false);
@@ -202,7 +204,7 @@ export class InscricaoComponent implements OnInit {
   salvarInscricao(modal: any) {
     if (!this.confirmarPagamento) {
       this.toast.info(
-        'Você precisa confirmar que leu as instruções para o pagamento da sua inscrição.'
+        'Você precisa confirmar que leu as instruções para o pagamento da sua inscrição.',
       );
       return;
     }
@@ -268,7 +270,7 @@ export class InscricaoComponent implements OnInit {
       this.toast.error(
         'Não é possível salvar inscrição com horário sobreposto',
         'Horário sobreposto',
-        { timeOut: 10000 }
+        { timeOut: 10000 },
       );
     }
     return horarioSobreposto;
@@ -305,7 +307,7 @@ export class InscricaoComponent implements OnInit {
 
   transformTextoPagamento() {
     return this.sanitizer.bypassSecurityTrustHtml(
-      this.semanaAtiva.texto_pagamento || ''
+      this.semanaAtiva.texto_pagamento || '',
     );
   }
 }
